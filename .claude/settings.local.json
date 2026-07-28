@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(venvScriptspython *)",
+      "Bash(venv/Scripts/python *)",
+      "Bash(venv/Scripts/pip list *)",
+      "Bash(venv/Scripts/pip install *)",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(chcp 65001)",
+      "Bash(PYTHONIOENCODING=utf-8 venv/Scripts/python *)",
+      "Bash(pip list *)",
+      "Bash(/d/vscode_code/code/venv/Scripts/python.exe -c \"import numpy; print\\('numpy ok'\\)\")",
+      "Bash(/d/vscode_code/code/venv/Scripts/python.exe -c \"import gradio; print\\('gradio ok'\\)\")",
+      "Bash(venv/Scripts/python.exe debug_tools.py)",
+      "Bash(git --version)",
+      "Bash(gh --version)"
+    ]
+  }
+}
