@@ -327,3 +327,70 @@ def compute_hall_effect(work_currents, hall_voltages, excitation_currents=None):
             "x_label": "I (mA)",
             "y_label": "U_H (mV)",
         }
+
+
+# ==============================================
+# 工具7：通用实验插件运行器
+# ==============================================
+def run_experiment_plugin(experiment_name, data):
+    """
+    运行任意已注册的实验插件，自动完成数据处理、图表生成和报告生成。
+
+    Parameters
+    ----------
+    experiment_name : str
+        实验名称（必须与已注册插件名完全一致）。
+    data : dict
+        实验数据，键为数据项名称，值为数值列表。
+        e.g. {"钢丝直径(mm)": [0.495, 0.497, ...], "砝码质量(kg)": [0, 1, 2, ...]}
+
+    Returns
+    -------
+    dict
+        包含处理结果、图表路径、报告内容等。
+    """
+    from plugins import PluginRegistry
+
+    plugin_cls = PluginRegistry.get(experiment_name)
+    if plugin_cls is None:
+        available = PluginRegistry.list_all()
+        return {
+            "status": "error",
+            "message": f"未找到实验插件「{experiment_name}」。可用的实验：{', '.join(available)}"
+        }
+
+    plugin = plugin_cls() if isinstance(plugin_cls, type) else plugin_cls
+
+    try:
+        # 1. 计算
+        results = plugin.calculate(data)
+
+        # 2. 生成图表
+        chart_dir = os.path.join(OUTPUT_DIR, "charts")
+        os.makedirs(chart_dir, exist_ok=True)
+        chart_paths = []
+        try:
+            chart_paths = plugin.generate_chart(data, results, chart_dir)
+        except Exception as e:
+            print(f"  [警告] 图表生成失败: {e}")
+
+        # 3. 获取报告内容
+        report_content = {}
+        try:
+            report_content = plugin.get_report_content(data, results)
+        except Exception as e:
+            print(f"  [警告] 报告内容生成失败: {e}")
+
+        return {
+            "status": "success",
+            "experiment_name": experiment_name,
+            "results": results,
+            "chart_paths": chart_paths,
+            "report_content": report_content,
+            "message": f"实验「{experiment_name}」处理完成。"
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"实验「{experiment_name}」处理失败：{str(e)}"
+        }

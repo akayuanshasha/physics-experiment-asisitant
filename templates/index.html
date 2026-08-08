@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; color: #333; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px 50px; text-align: center; }
+        .hero h1 { font-size: 2.4em; margin-bottom: 10px; letter-spacing: 2px; }
+        .hero p { font-size: 1.1em; opacity: 0.9; margin-top: 8px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .module-cards { display: flex; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
+        .module-card { background: white; border-radius: 12px; padding: 36px 28px; flex: 1; min-width: 300px; max-width: 500px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-align: center; text-decoration: none; color: inherit; display: block; }
+        .module-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .module-card .icon { font-size: 48px; margin-bottom: 16px; }
+        .module-card h2 { font-size: 1.4em; margin-bottom: 10px; color: #333; }
+        .module-card p { color: #666; font-size: 0.95em; line-height: 1.6; }
+        .section-title { font-size: 1.5em; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; display: inline-block; }
+        .category-group { margin-bottom: 24px; }
+        .category-header { font-size: 1.15em; font-weight: bold; color: #667eea; margin-bottom: 10px; padding: 8px 16px; background: #f0f2ff; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .category-header .arrow { transition: transform 0.3s; }
+        .category-header.collapsed .arrow { transform: rotate(-90deg); }
+        .exp-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+        .exp-list.hidden { display: none; }
+        .exp-tag { display: inline-block; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 0.88em; cursor: pointer; transition: all 0.2s; text-decoration: none; color: #555; }
+        .exp-tag:hover { background: #667eea; color: white; border-color: #667eea; }
+        .footer { text-align: center; padding: 30px; color: #999; font-size: 0.85em; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.6em; }
+            .module-cards { flex-direction: column; align-items: center; }
+            .module-card { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>AI 物理实验助教系统</h1>
+        <p>智能数据处理 · 自动报告生成 · AI助教问答 · 知识库检索</p>
+    </div>
+
+    <div class="container">
+        <!-- 两大功能模块入口 -->
+        <div class="module-cards">
+            <a href="#experiment-section" class="module-card">
+                <div class="icon">🔬</div>
+                <h2>实验数据计算与报告生成</h2>
+                <p>选择实验 → 输入数据 → 自动计算 → AI生成实验报告<br>支持 50+ 物理实验的数据处理与分析</p>
+            </a>
+            <a href="/chat" class="module-card">
+                <div class="icon">🤖</div>
+                <h2>AI 智能助教问答</h2>
+                <p>向AI助教提问实验相关问题<br>支持知识库检索，精准回答实验原理、操作等问题</p>
+            </a>
+        </div>
+
+        <!-- 实验列表区域 -->
+        <div id="experiment-section">
+            <div class="section-title">📋 可用实验列表</div>
+
+            {% for cat_name, exps in categories.items() %}
+            <div class="category-group">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>{{ cat_name }} ({{ exps|length }}个实验)</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="exp-list">
+                    {% for exp in exps %}
+                    {% if exp.mod_name %}
+                    <a href="/experiment/{{ exp.mod_name }}" class="exp-tag">{{ exp.name }}</a>
+                    {% else %}
+                    <span class="exp-tag" title="{{ exp.description }}">{{ exp.name }}</span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not categories %}
+            <p style="color:#999; margin-top:20px;">暂无可用实验模块，请检查插件加载。</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>AI物理实验助教系统 · 数据处理与智能问答</p>
+    </div>
+
+    <script>
+        function toggleCategory(header) {
+            var list = header.nextElementSibling;
+            if (list) {
+                list.classList.toggle('hidden');
+                header.classList.toggle('collapsed');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>{{name}} - AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; color: #333; }
+        .top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 20px; }
+        .top-bar a { color: white; text-decoration: none; margin-right: 16px; opacity: 0.9; }
+        .top-bar a:hover { opacity: 1; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .card h2 { font-size: 1.3em; margin-bottom: 16px; color: #333; }
+        .table-wrapper { overflow-x: auto; margin: 10px 0; }
+        .data-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+        .data-table th { background: #f2f2f2; border: 1px solid #d2d2d2; padding: 10px 6px; text-align: center; min-width: 80px; font-weight: bold; position: sticky; top: 0; }
+        .data-table td { border: 1px solid #d2d2d2; padding: 2px; text-align: center; }
+        .data-table input { width: 100%; min-width: 70px; border: none; outline: none; text-align: center; padding: 8px 4px; font-size: 13px; background: transparent; }
+        .data-table input:focus { background-color: #e8f4fd; outline: 1px solid #5bc0de; }
+        .data-table tr:hover td { background-color: #f9f9f9; }
+        .row-num { color: #999; font-size: 11px; min-width: 30px; width: 30px; }
+        .btn-group { text-align: center; margin: 16px 0; }
+        .btn-group .btn { display: inline-block; padding: 8px 20px; margin: 4px 6px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd6; }
+        .btn-secondary { background: #f0f0f0; color: #555; }
+        .btn-secondary:hover { background: #e0e0e0; }
+        .btn-success { background: #52c41a; color: white; }
+        .btn-success:hover { background: #46a817; }
+        .btn-warning { background: #fa8c16; color: white; }
+        .btn-warning:hover { background: #d87a12; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .result-area { margin-top: 20px; padding: 16px; background: #f9f9f9; border-radius: 8px; display: none; }
+        .result-area h3 { margin-bottom: 10px; color: #667eea; }
+        .result-area pre { white-space: pre-wrap; word-break: break-all; font-size: 13px; line-height: 1.6; }
+        .chart-area { margin-top: 20px; padding: 20px; background: #f0f7ff; border: 1px solid #b3d4fc; border-radius: 8px; display: none; }
+        .chart-area h3 { color: #2980b9; margin-bottom: 12px; }
+        .chart-area img { max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .chart-info { margin-top: 12px; padding: 10px; background: white; border-radius: 6px; font-size: 13px; }
+        .chart-info .fit-eq { font-family: 'Consolas', monospace; color: #e74c3c; font-weight: bold; }
+        .chart-info .r2 { color: #27ae60; font-weight: bold; }
+        .abnormal-area { margin-top: 20px; padding: 20px; background: #fff8f0; border: 1px solid #ffd699; border-radius: 8px; display: none; max-height: 500px; overflow-y: auto; }
+        .abnormal-area h3 { color: #e67e22; margin-bottom: 12px; }
+        .abnormal-area pre { white-space: pre-wrap; word-break: break-all; font-size: 13px; line-height: 1.7; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 12px; }
+        .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
+        .stat-card .label { color: #999; }
+        .stat-card .value { font-weight: bold; color: #333; }
+        .stat-card .outlier { color: #e74c3c; font-weight: bold; }
+        .report-area { margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; display: none; max-height: 600px; overflow-y: auto; }
+        .report-area h3 { color: #667eea; margin-bottom: 12px; }
+        .report-content { line-height: 1.8; font-size: 14px; }
+        .report-content h1, .report-content h2, .report-content h3 { margin: 12px 0 8px; }
+        .loading { text-align: center; padding: 30px; color: #999; }
+        .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 24px; border-radius: 6px; z-index: 9999; display: none; }
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.7); z-index: 9998; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .spinner { width: 40px; height: 40px; border: 4px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loading-overlay .msg { margin-top: 16px; font-size: 15px; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="/">← 返回首页</a>
+        <a href="/chat">AI助教问答</a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>{{name}}</h2>
+            <p style="color:#666; margin-bottom:16px;">在下方表格中输入实验数据，系统将自动计算并生成报告文档。</p>
+
+            <div class="btn-group" style="text-align:left; margin-bottom:12px;">
+                <button class="btn btn-secondary" id="sampleBtn" onclick="fillExample()" disabled>📋 填入示例数据</button>
+                <button class="btn btn-secondary" onclick="addRow()">＋ 添加行</button>
+                <button class="btn btn-secondary" onclick="removeRow()">－ 删除行</button>
+            </div>
+
+            <p id="loadingTip" style="font-size:13px;color:#999; text-align:center; padding:20px;">正在加载表格结构…</p>
+            <p id="errorTip" style="font-size:13px;color:#c00;display:none; text-align:center;"></p>
+
+            <div class="table-wrapper" id="tableWrapper" style="display:none;">
+                <table class="data-table" id="dataTable">
+                    <thead id="tableHead"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="submitBtn" onclick="submitData()" style="display:none;">📊 提交计算</button>
+            </div>
+        </div>
+
+        <!-- 计算结果区域 -->
+        <div class="card result-area" id="resultArea">
+            <h3>📊 计算结果</h3>
+            <pre id="resultContent"></pre>
+            <div class="btn-group" style="margin-top:16px;">
+                <a class="btn btn-success" id="downloadbtn" style="display:none; text-decoration:none;">📥 下载Word文档</a>
+                <button class="btn btn-info" id="chartBtn" onclick="generateChart()" style="display:none; background:#2980b9; color:white;">📈 生成图表</button>
+                <button class="btn btn-danger" id="abnormalBtn" onclick="runAbnormalDetect()" style="display:none;">🔍 数据异常检测</button>
+                <button class="btn btn-warning" id="aiReportBtn" onclick="generateAIReport()" style="display:none;">🤖 生成实验报告</button>
+            </div>
+        </div>
+
+        <!-- 图表展示区域 -->
+        <div class="card chart-area" id="chartArea">
+            <h3>📈 实验数据图表</h3>
+            <div style="text-align:center;">
+                <img id="chartImage" src="" alt="实验图表" style="display:none;" />
+            </div>
+            <div class="chart-info" id="chartInfo" style="display:none;"></div>
+        </div>
+
+        <!-- 异常检测报告区域 -->
+        <div class="card abnormal-area" id="abnormalArea">
+            <h3>🔍 数据异常检测报告</h3>
+            <div id="statsPreview"></div>
+            <pre id="abnormalReport"></pre>
+        </div>
+
+        <!-- AI报告区域 -->
+        <div class="card report-area" id="reportArea">
+            <h3>🤖 AI生成的实验报告（LaTeX）</h3>
+            <p style="font-size:13px; color:#888; margin-bottom:12px;">以下为完整 LaTeX 源码，可复制到 Overleaf 等在线编辑器或本地 TeX 环境编译。</p>
+            <pre id="reportContent" style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace;"></pre>
+            <div class="btn-group" style="margin-top:16px;">
+                <a class="btn btn-primary" id="texDownloadBtn" style="display:none; text-decoration:none;">📝 下载 TEX 源码</a>
+                <a class="btn btn-primary" id="chartDownloadBtn" style="display:none; text-decoration:none; background:#2196F3;">🖼️ 下载图表图片</a>
+                <button class="btn btn-secondary" onclick="copyReport()">📋 复制全部代码</button>
+            </div>
+            <p id="chartDownloadTip" style="display:none; font-size:12px; color:#666; margin-top:8px;">⚠️ 请将 TEX 文件和图表图片放在同一目录下编译，或上传到 Overleaf 时同时上传这两个文件。</p>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="msg" id="loadingMsg">处理中，请稍候…</div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        var tableColumns = [];
+        var exampleData = [];
+        var initialRowCount = 1;
+        var lastCalcResult = null;
+        var lastUserData = null;
+        var lastAbnormalReport = '';
+        var lastChartInfo = null;  // 存储图表信息
+
+        // 页面加载时获取表格结构
+        (function initTable() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/{{num}}/table-info', true);
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var info = JSON.parse(xhr.responseText);
+                    tableColumns = info.columns || [];
+                    exampleData = info.exampleData || [];
+                    initialRowCount = info.rowCount > 0 ? info.rowCount : 1;
+                    buildTable();
+                } else {
+                    document.getElementById('errorTip').innerText = '加载表格结构失败';
+                    document.getElementById('errorTip').style.display = '';
+                    document.getElementById('loadingTip').style.display = 'none';
+                }
+            };
+            xhr.onerror = function() {
+                document.getElementById('errorTip').innerText = '网络错误';
+                document.getElementById('errorTip').style.display = '';
+                document.getElementById('loadingTip').style.display = 'none';
+            };
+            xhr.send();
+        })();
+
+        function buildTable() {
+            if (tableColumns.length === 0) {
+                document.getElementById('loadingTip').innerText = '暂无示例数据，请手动输入';
+                document.getElementById('sampleBtn').disabled = true;
+                return;
+            }
+            document.getElementById('loadingTip').style.display = 'none';
+            document.getElementById('tableWrapper').style.display = '';
+            document.getElementById('submitBtn').style.display = '';
+            document.getElementById('sampleBtn').disabled = false;
+
+            var thead = document.getElementById('tableHead');
+            var headerRow = '<tr><th class="row-num">#</th>';
+            for (var i = 0; i < tableColumns.length; i++) {
+                headerRow += '<th>' + escapeHtml(tableColumns[i]) + '</th>';
+            }
+            headerRow += '</tr>';
+            thead.innerHTML = headerRow;
+
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            for (var r = 0; r < Math.min(initialRowCount, 20); r++) {
+                addRowTo(r + 1);
+            }
+            if (initialRowCount === 0) addRowTo(1);
+        }
+
+        function addRowTo(rowNum) {
+            var tbody = document.getElementById('tableBody');
+            var tr = document.createElement('tr');
+            var td = document.createElement('td');
+            td.className = 'row-num';
+            td.innerText = rowNum || (tbody.children.length + 1);
+            tr.appendChild(td);
+            for (var c = 0; c < tableColumns.length; c++) {
+                var td2 = document.createElement('td');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.setAttribute('data-col', c);
+                input.setAttribute('data-row', tbody.children.length);
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        var curRow = parseInt(this.getAttribute('data-row'));
+                        var curCol = parseInt(this.getAttribute('data-col'));
+                        var next = document.querySelector('input[data-row="' + (curRow+1) + '"][data-col="' + curCol + '"]');
+                        if (next) next.focus();
+                    }
+                });
+                td2.appendChild(input);
+                tr.appendChild(td2);
+            }
+            tbody.appendChild(tr);
+        }
+
+        function addRow() {
+            addRowTo(document.getElementById('tableBody').children.length + 1);
+            updateRowNumbers();
+            document.getElementById('tableBody').lastChild.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+
+        function removeRow() {
+            var tbody = document.getElementById('tableBody');
+            if (tbody.children.length <= 1) return;
+            tbody.removeChild(tbody.lastChild);
+            updateRowNumbers();
+        }
+
+        function updateRowNumbers() {
+            var tbody = document.getElementById('tableBody');
+            for (var i = 0; i < tbody.children.length; i++) {
+                tbody.children[i].children[0].innerText = i + 1;
+                var inputs = tbody.children[i].querySelectorAll('input');
+                for (var j = 0; j < inputs.length; j++) inputs[j].setAttribute('data-row', i);
+            }
+        }
+
+        function fillExample() {
+            if (exampleData.length === 0) { showToast('暂无示例数据'); return; }
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            for (var r = 0; r < exampleData.length; r++) {
+                addRowTo(r + 1);
+                var row = tbody.children[r];
+                var inputs = row.querySelectorAll('input');
+                for (var c = 0; c < Math.min(inputs.length, exampleData[r].length); c++) {
+                    inputs[c].value = exampleData[r][c] != null ? exampleData[r][c] : '';
+                }
+            }
+            for (var r = exampleData.length; r < exampleData.length + 3; r++) addRowTo(r + 1);
+            updateRowNumbers();
+            showToast('示例数据已填入');
+        }
+
+        function submitData() {
+            var tbody = document.getElementById('tableBody');
+            var rows = tbody.querySelectorAll('tr');
+            var data = [];
+            for (var r = 0; r < rows.length; r++) {
+                var inputs = rows[r].querySelectorAll('input');
+                var row = [];
+                var allEmpty = true;
+                for (var c = 0; c < inputs.length; c++) {
+                    var val = inputs[c].value.trim();
+                    row.push(val);
+                    if (val !== '') allEmpty = false;
+                }
+                if (!allEmpty) data.push(row);
+            }
+            if (data.length === 0) { showToast('请先输入数据'); return; }
+
+            showLoading('正在计算实验数据…');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/handle-table', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.code == 0) {
+                        // 显示结果
+                        var resultArea = document.getElementById('resultArea');
+                        resultArea.style.display = 'block';
+                        document.getElementById('resultContent').innerText = '文档生成成功！\n\n实验名称：{{name}}\n文件ID：' + res.data;
+                        document.getElementById('submitBtn').style.display = 'none';
+                        document.getElementById('downloadbtn').href = '/api/download/{{num}}/' + res.data + '.docx';
+                        document.getElementById('downloadbtn').style.display = 'inline-block';
+                        document.getElementById('chartBtn').style.display = 'inline-block';
+                        document.getElementById('abnormalBtn').style.display = 'inline-block';
+                        document.getElementById('aiReportBtn').style.display = 'inline-block';
+                        // 保存数据用于AI报告
+                        lastUserData = { columns: tableColumns, data: data };
+                        lastCalcResult = { fileid: res.data, exp_name: res.exp_name };
+                        showToast('计算完成！');
+                        hideLoading();
+                        // 隐藏表格
+                        document.getElementById('tableWrapper').style.display = 'none';
+                    } else {
+                        showToast(res.data || '处理失败');
+                    }
+                } else {
+                    showToast('提交失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({ columns: tableColumns, data: data }));
+        }
+
+        function runAbnormalDetect() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            showLoading('正在进行数据异常检测，请耐心等待（约1-3分钟）…');
+        
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/abnormal-detect', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.report) {
+                        lastAbnormalReport = res.report;
+                        // 显示统计预分析
+                        var statsHtml = '';
+                        if (res.stats && Object.keys(res.stats).length > 0) {
+                            statsHtml = '<div class="stats-grid">';
+                            for (var col in res.stats) {
+                                var s = res.stats[col];
+                                var outlierText = s.outliers_3sigma.length > 0
+                                    ? '<span class="outlier">发现 ' + s.outliers_3sigma.length + ' 个离群值</span>'
+                                    : '<span style="color:#52c41a;">无离群值</span>';
+                                statsHtml += '<div class="stat-card">'
+                                    + '<div class="label">' + escapeHtml(col) + '</div>'
+                                    + '<div class="value">均值: ' + s.mean + ' | σ: ' + s.std + '</div>'
+                                    + '<div>' + outlierText + '</div>'
+                                    + '</div>';
+                            }
+                            statsHtml += '</div>';
+                        }
+                        document.getElementById('statsPreview').innerHTML = statsHtml;
+                        document.getElementById('abnormalReport').innerText = res.report;
+                        document.getElementById('abnormalArea').style.display = 'block';
+                        document.getElementById('abnormalArea').scrollIntoView({behavior: 'smooth'});
+                        showToast('异常检测完成！');
+                        hideLoading();
+                    } else {
+                        showToast(res.error || '检测失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('异常检测请求失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                experiment_name: '{{name}}',
+                mod_name: '{{num}}',
+                columns: lastUserData.columns,
+                data: lastUserData.data,
+                pdf_text: ''
+            }));
+        }
+
+        function generateChart() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            showLoading('AI 正在分析数据关系并生成图表…');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/generate-chart', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.success && res.chart_url) {
+                        var chartArea = document.getElementById('chartArea');
+                        var chartImg = document.getElementById('chartImage');
+                        var chartInfo = document.getElementById('chartInfo');
+
+                        chartImg.src = res.chart_url + '?t=' + Date.now();
+                        chartImg.style.display = 'block';
+
+                        // 显示拟合信息 + AI 分析理由
+                        var infoHtml = '';
+                        if (res.ai_reason) {
+                            infoHtml += '<div style="background:#e8f5e9; padding:8px 12px; border-radius:4px; margin-bottom:8px; font-size:13px; color:#2e7d32;"><strong>🧠 AI 分析：</strong>' + escapeHtml(res.ai_reason) + '</div>';
+                        }
+                        if (res.fit_result) {
+                            var f = res.fit_result;
+                            infoHtml += '<strong>线性拟合结果：</strong><br>'
+                                + '<span class="fit-eq">' + escapeHtml(f.equation) + '</span><br>'
+                                + '<span class="r2">R² = ' + f.R2 + '</span>';
+                        }
+                        if (infoHtml) {
+                            chartInfo.innerHTML = infoHtml;
+                            chartInfo.style.display = 'block';
+                        } else {
+                            chartInfo.style.display = 'none';
+                        }
+
+                        chartArea.style.display = 'block';
+                        chartArea.scrollIntoView({behavior: 'smooth'});
+
+                        // 存储图表信息用于报告生成
+                        lastChartInfo = {
+                            x_label: res.x_label || '',
+                            y_label: res.y_label || '',
+                            fit_result: res.fit_result || null,
+                            chart_url: res.chart_url,
+                            chart_path: res.chart_config ? res.chart_config.chart_path : null
+                        };
+
+                        showToast('图表生成完成！');
+                        hideLoading();
+                    } else {
+                        showToast(res.error || '图表生成失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('图表生成失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                columns: lastUserData.columns,
+                data: lastUserData.data,
+                experiment_name: '{{name}}',
+                save_name: 'chart_{{num}}.png'
+            }));
+        }
+        
+        function generateAIReport() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            var hasAbnormal = lastAbnormalReport && lastAbnormalReport.trim() !== '';
+            var hasChart = lastChartInfo !== null;
+            var msg = 'AI正在生成报告';
+            if (hasAbnormal && hasChart) msg += '（含异常检测分析+图表）…';
+            else if (hasAbnormal) msg += '（含异常检测分析）…';
+            else if (hasChart) msg += '（含图表）…';
+            else msg += '…';
+            showLoading(msg);
+        
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/generate-report', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.report) {
+                        var reportArea = document.getElementById('reportArea');
+                        reportArea.style.display = 'block';
+                        document.getElementById('reportContent').innerText = res.report;
+                        
+                        // 处理 TEX 下载链接
+                        var texBtn = document.getElementById('texDownloadBtn');
+                        if (res.tex_url) {
+                            texBtn.href = res.tex_url;
+                            texBtn.style.display = 'inline-block';
+                        }
+                        
+                        // 处理图表下载链接
+                        var chartBtn = document.getElementById('chartDownloadBtn');
+                        var chartTip = document.getElementById('chartDownloadTip');
+                        if (res.has_chart && res.report_id) {
+                            chartBtn.href = '/api/report-chart/' + res.report_id;
+                            chartBtn.style.display = 'inline-block';
+                            chartTip.style.display = 'block';
+                        } else {
+                            chartBtn.style.display = 'none';
+                            chartTip.style.display = 'none';
+                        }
+                        
+                        showToast('LaTeX 报告生成完成！');
+                        hideLoading();
+                        reportArea.scrollIntoView({behavior: 'smooth'});
+                    } else {
+                        showToast(res.error || '报告生成失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('报告生成失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                experiment_name: '{{name}}',
+                user_data: lastUserData,
+                calc_results: lastCalcResult,
+                abnormal_report: lastAbnormalReport,
+                chart_info: lastChartInfo
+            }));
+        }
+
+        function copyReport() {
+            var text = document.getElementById('reportContent').innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('已复制到剪贴板');
+            }).catch(function() {
+                showToast('复制失败，请手动选择复制');
+            });
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(text));
+            return div.innerHTML;
+        }
+
+        function showLoading(msg) {
+            document.getElementById('loadingMsg').innerText = msg || '处理中，请稍候…';
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+        function showToast(msg, duration) {
+            var t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(function() { t.style.display = 'none'; }, duration || 2000);
+        }
+    </script>
+</body>
+</html>

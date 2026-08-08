@@ -1,6 +1,6 @@
 # 🧪 物理实验AI助教系统
 
-> 一个以**大语言模型（GLM5.2）**为"大脑"，自动完成物理实验数据处理、图表绘制和报告生成的智能体系统。
+> 一个以**大语言模型（OpenAI 兼容 API）**为"大脑"，自动完成物理实验数据处理、图表绘制和报告生成的智能体系统。
 
 ## 快速启动
 
@@ -8,8 +8,11 @@
 # 1. 依赖安装
 pip install -r requirements.txt
 
-# 2. 设置API Key
-export ZHIPUAI_API_KEY=your_api_key_here
+# 2. 设置LLM API 环境变量
+#    (支持任何 OpenAI 兼容的 API，如学校提供的 LLM 服务)
+export LLM_API_KEY=your_api_key_here
+export LLM_BASE_URL=https://your-api-host/v1
+export LLM_MODEL=your_model_name      # 可选，默认 glm-5.2
 
 # 3. 运行调试脚本（不依赖API，建议先跑这个）
 venv/Scripts/python.exe debug_tools.py
@@ -57,7 +60,7 @@ D:\vscode_code\code\
 
 ### A同学 —— AI对话引擎（assistant.py）
 
-**负责模块：** 对接GLM API、Function Calling、对话管理、Prompt工程
+**负责模块：** 对接 LLM API（OpenAI 兼容）、Function Calling、对话管理、Prompt工程
 
 | 文件 | 职责 | 核心工作 |
 |------|------|---------|
@@ -65,10 +68,10 @@ D:\vscode_code\code\
 
 **需要添加/修改的内容：**
 
-1. **接入GLM API（核心工作）**
-   - 在 `assistant.py` 的 `chat()` 方法中，替换当前的模拟代码，接入 `zhipuai` SDK
-   - 参考代码：`from zhipuai import ZhipuAI`
-   - 实现流程：用户输入 → 调用GLM API → 解析返回的 tool_calls → 执行工具 → 返回结果给用户
+1. **接入 LLM API（核心工作）**
+   - 在 `assistant.py` 的 `chat()` 方法中，替换当前的模拟代码，接入 `openai` SDK
+   - 参考代码：`from openai import OpenAI`
+   - 实现流程：用户输入 → 调用 LLM API → 解析返回的 tool_calls → 执行工具 → 返回结果给用户
 
 2. **完善工具描述（Tool Definitions）**
    - 当前的 `TOOL_DESCRIPTIONS` 列表是模拟GLM API的tool格式
@@ -83,9 +86,11 @@ D:\vscode_code\code\
 **操作流程：**
 ```python
 # 在 assistant.py 的 chat() 方法中实现以下逻辑：
-# 1. 调用 GLM API
+# 1. 初始化 OpenAI 兼容客户端
+client = OpenAI(api_key="your-api-key", base_url="https://your-host/v1")
+# 2. 调用 LLM API
 response = client.chat.completions.create(
-    model="glm-5.2",
+    model="your-model-name",
     messages=[
         {"role": "system", "content": self.build_system_prompt(state)},
         {"role": "user", "content": user_input}
@@ -93,10 +98,10 @@ response = client.chat.completions.create(
     tools=TOOL_DESCRIPTIONS,   # 注册好的工具列表
     tool_choice="auto"
 )
-# 2. 处理 tool_calls
+# 3. 处理 tool_calls
 if response.choices[0].message.tool_calls:
     results = self.handle_tool_calls(response.choices[0].message.tool_calls, state)
-# 3. 将工具结果送回GLM，生成最终回复
+# 4. 将工具结果送回 LLM，生成最终回复
 ```
 
 **测试方式：**
@@ -280,7 +285,7 @@ print('报告生成在:', report_path)
 
 | 组件 | 技术 | 负责人 |
 |------|------|--------|
-| AI引擎 | GLM5.2 (智谱AI) | A同学 |
+| AI引擎 | OpenAI 兼容 API（可配置） | A同学 |
 | 科学计算 | NumPy, SciPy | B同学 |
 | 图表生成 | Matplotlib | C同学 |
 | 报告输出 | HTML / python-docx | C同学 |

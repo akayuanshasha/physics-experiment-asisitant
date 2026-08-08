@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>AI智能助教 - AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; height: 100vh; display: flex; flex-direction: column; }
+        .top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .top-bar a { color: white; text-decoration: none; margin-right: 16px; opacity: 0.9; font-size: 14px; }
+        .top-bar a:hover { opacity: 1; }
+        .top-bar h1 { font-size: 1.2em; font-weight: 500; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; max-width: 900px; width: 100%; margin: 0 auto; padding: 0 16px; overflow: hidden; }
+        .mode-tabs { display: flex; gap: 8px; padding: 12px 0; flex-shrink: 0; }
+        .mode-tab { padding: 8px 20px; border: 2px solid #667eea; border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; background: white; color: #667eea; }
+        .mode-tab.active { background: #667eea; color: white; }
+        .mode-tab:hover { opacity: 0.85; }
+        .messages { flex: 1; overflow-y: auto; padding: 16px 0; }
+        .message { margin-bottom: 16px; display: flex; gap: 10px; }
+        .message.user { flex-direction: row-reverse; }
+        .message .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .message.user .avatar { background: #667eea; color: white; }
+        .message.assistant .avatar { background: #52c41a; color: white; }
+        .message .bubble { max-width: 75%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.7; word-break: break-word; white-space: pre-wrap; }
+        .message.user .bubble { background: #667eea; color: white; border-top-right-radius: 4px; }
+        .message.assistant .bubble { background: white; color: #333; border-top-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .input-area { flex-shrink: 0; padding: 12px 0 16px; display: flex; gap: 10px; align-items: flex-end; }
+        .input-area textarea { flex: 1; border: 2px solid #e0e0e0; border-radius: 12px; padding: 12px 16px; font-size: 14px; font-family: inherit; resize: none; outline: none; min-height: 48px; max-height: 120px; transition: border-color 0.2s; }
+        .input-area textarea:focus { border-color: #667eea; }
+        .send-btn { background: #667eea; color: white; border: none; border-radius: 12px; padding: 12px 24px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.2s; white-space: nowrap; }
+        .send-btn:hover { background: #5a6fd6; }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .welcome { text-align: center; padding: 40px 20px; color: #999; }
+        .welcome h2 { color: #333; margin-bottom: 12px; }
+        .welcome .tips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px; }
+        .welcome .tip { padding: 8px 16px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; color: #555; }
+        .welcome .tip:hover { border-color: #667eea; color: #667eea; }
+        .knowledge-upload { padding: 8px 0; flex-shrink: 0; }
+        .knowledge-upload label { font-size: 13px; color: #667eea; cursor: pointer; }
+        .knowledge-upload input { display: none; }
+        .loading-dots::after { content: ''; animation: dots 1.5s infinite; }
+        @keyframes dots { 0%,20% { content: '.'; } 40% { content: '..'; } 60%,100% { content: '...'; } }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div style="display:flex;align-items:center;">
+            <a href="/">← 返回首页</a>
+            <h1 style="margin-left:8px;">🤖 AI 智能实验助教</h1>
+        </div>
+        <div>
+            <button onclick="resetChat()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;">🔄 新对话</button>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="mode-tabs">
+            <div class="mode-tab active" onclick="switchMode('chat')" id="tab-chat">💬 AI对话</div>
+            <div class="mode-tab" onclick="switchMode('knowledge')" id="tab-knowledge">📚 知识库问答</div>
+            <div class="knowledge-upload" id="upload-area" style="display:none; margin-left:auto;">
+                <label class="btn" style="background:#f0f2ff;padding:6px 14px;border-radius:6px;font-size:13px;">
+                    📁 上传知识资料
+                    <input type="file" accept=".txt,.md,.csv" onchange="uploadKnowledge(this)">
+                </label>
+            </div>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="welcome" id="welcome">
+                <h2>你好！我是AI物理实验助教 👋</h2>
+                <p>我可以帮你解答物理实验相关的问题，试试点击下面的问题：</p>
+                <div class="tips">
+                    <div class="tip" onclick="askQuestion(this)">不确定度怎么计算？</div>
+                    <div class="tip" onclick="askQuestion(this)">杨氏模量实验的原理是什么？</div>
+                    <div class="tip" onclick="askQuestion(this)">最小二乘法怎么用？</div>
+                    <div class="tip" onclick="askQuestion(this)">霍尔效应实验注意事项</div>
+                    <div class="tip" onclick="askQuestion(this)">如何减小实验误差？</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <textarea id="userInput" placeholder="输入你的问题…" rows="1" onkeydown="handleKey(event)"></textarea>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <script>
+        var currentMode = 'chat';
+        var sessionId = 'session_' + Date.now();
+        var isLoading = false;
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById('tab-chat').classList.toggle('active', mode === 'chat');
+            document.getElementById('tab-knowledge').classList.toggle('active', mode === 'knowledge');
+            document.getElementById('upload-area').style.display = mode === 'knowledge' ? '' : 'none';
+            document.getElementById('userInput').placeholder = mode === 'knowledge' ? '输入实验相关问题（将优先检索知识库）…' : '输入你的问题…';
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function askQuestion(el) {
+            document.getElementById('userInput').value = el.innerText;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            var input = document.getElementById('userInput');
+            var msg = input.value.trim();
+            if (!msg || isLoading) return;
+
+            // 隐藏欢迎
+            var welcome = document.getElementById('welcome');
+            if (welcome) welcome.style.display = 'none';
+
+            // 添加用户消息
+            appendMessage('user', msg);
+            input.value = '';
+            input.style.height = 'auto';
+
+            // 显示加载
+            isLoading = true;
+            document.getElementById('sendBtn').disabled = true;
+            var loadingEl = appendMessage('assistant', '思考中', true);
+
+            // 发送请求
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', currentMode === 'knowledge' ? '/api/knowledge-chat' : '/api/chat', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                isLoading = false;
+                document.getElementById('sendBtn').disabled = false;
+                loadingEl.remove();
+
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    var reply = res.reply || res.answer || '抱歉，无法获取回答。';
+                    appendMessage('assistant', reply);
+                } else {
+                    appendMessage('assistant', '❌ 请求失败，请检查网络连接或API配置。');
+                }
+            };
+            xhr.onerror = function() {
+                isLoading = false;
+                document.getElementById('sendBtn').disabled = false;
+                loadingEl.remove();
+                appendMessage('assistant', '❌ 网络错误');
+            };
+
+            var body = currentMode === 'knowledge'
+                ? JSON.stringify({ question: msg })
+                : JSON.stringify({ message: msg, session_id: sessionId });
+            xhr.send(body);
+        }
+
+        function appendMessage(role, text, isLoadingMsg) {
+            var container = document.getElementById('messages');
+            var div = document.createElement('div');
+            div.className = 'message ' + role;
+
+            var avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerText = role === 'user' ? '🧑' : '🤖';
+
+            var bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            if (isLoadingMsg) {
+                bubble.className = 'bubble loading-dots';
+            }
+            bubble.innerText = text;
+
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div;
+        }
+
+        function resetChat() {
+            sessionId = 'session_' + Date.now();
+            var container = document.getElementById('messages');
+            container.innerHTML = '';
+            // 重新显示欢迎
+            container.innerHTML = '<div class="welcome" id="welcome"><h2>你好！我是AI物理实验助教 👋</h2><p>新对话已开始，有什么可以帮你的？</p></div>';
+            // 通知后端重置
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/chat/reset', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({ session_id: sessionId }));
+        }
+
+        function uploadKnowledge(input) {
+            if (!input.files || input.files.length === 0) return;
+            var file = input.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/knowledge-upload', true);
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    appendMessage('assistant', '📚 知识资料「' + file.name + '」已上传成功！现在可以基于该资料进行问答了。');
+                } else {
+                    appendMessage('assistant', '❌ 上传失败');
+                }
+            };
+            xhr.send(formData);
+            input.value = '';
+        }
+
+        // 自动调整输入框高度
+        document.getElementById('userInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+    </script>
+</body>
+</html>

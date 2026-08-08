@@ -1,24 +1,28 @@
 # ============================================
-# 物理实验AI助教 —— 依赖清单
+# AI物理实验助教系统 —— 依赖清单
 # ============================================
 # 安装方式：pip install -r requirements.txt
 
 # --- 核心依赖 ---
-zhipuai>=2.0.0           # GLM5.2 API Python SDK
+openai>=1.0.0            # OpenAI 兼容 API SDK（支持第三方 base_url）
+python-dotenv>=1.0.0     # 从 .env 文件加载 API 密钥等环境变量
+
+# --- Web框架 ---
+flask>=2.3.0             # Web应用框架
 
 # --- 科学计算 ---
 numpy>=1.24.0            # 数组与统计运算
 scipy>=1.10.0            # curve_fit 数据拟合
 matplotlib>=3.7.0        # 科学图表绘制
-uncertainties>=3.1.7     # 自动不确定度传递（可选）
+uncertainties>=3.1.7     # 自动不确定度传递
 lmfit>=1.2.0             # 高级非线性拟合（可选）
-
-# --- Web界面 ---
-gradio>=4.0.0            # 交互式Web UI
+sympy>=1.12              # 符号计算（不确定度公式推导）
+pandas>=1.5.0            # 表格数据处理
+chardet>=5.0.0           # 文件编码检测
 
 # --- 报告生成 ---
 python-docx>=0.8.11      # Word报告生成
-
-# --- 音频处理（语音输入模块） ---
-# faster-whisper>=1.0.0  # 本地语音识别（可选，需要时取消注释）
-# sounddevice>=0.4.6     # 录音（可选）
+lxml>=4.9.0              # XML/XSLT转换（LaTeX转Word公式）
+latex2mathml>=3.80.0     # LaTeX转MathML（配合lxml使用）
+openpyxl>=3.0.0          # Excel文件读取
+PyPDF2>=3.0.0            # PDF实验指导书文本提取（异常检测知识库）

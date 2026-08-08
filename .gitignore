@@ -1,12 +1,14 @@
 venv/
-  __pycache__/
-  *.pyc
-  *.pyo
-  output/
-  outputs/
-  .DS_Store
-  Thumbs.db
-  .vscode/
-  .idea/
-  .claude/
-  
+__pycache__/
+*.pyc
+*.pyo
+output/
+outputs/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
+
+# 保护 API 密钥，不要提交到仓库
+.env
