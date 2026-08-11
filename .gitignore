@@ -3,6 +3,9 @@ __pycache__/
 *.pyc
 *.pyo
 output/
+!b_static/vendor/mathjax/output/
+!b_static/vendor/mathjax/output/chtml.js
+!b_static/vendor/mathjax/output/svg.js
 outputs/
 .DS_Store
 Thumbs.db
