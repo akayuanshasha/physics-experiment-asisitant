@@ -47,7 +47,21 @@
         .chart-info .r2 { color: #27ae60; font-weight: bold; }
         .abnormal-area { margin-top: 20px; padding: 20px; background: #fff8f0; border: 1px solid #ffd699; border-radius: 8px; display: none; max-height: 500px; overflow-y: auto; }
         .abnormal-area h3 { color: #e67e22; margin-bottom: 12px; }
-        .abnormal-area pre { white-space: pre-wrap; word-break: break-all; font-size: 13px; line-height: 1.7; }
+        .rich-content { font-size: 14px; line-height: 1.8; word-break: break-word; }
+        .rich-content p { margin: 0 0 0.75em; }
+        .rich-content p:last-child { margin-bottom: 0; }
+        .rich-content h1, .rich-content h2, .rich-content h3, .rich-content h4 { margin: 1em 0 0.5em; line-height: 1.4; }
+        .rich-content h1:first-child, .rich-content h2:first-child, .rich-content h3:first-child, .rich-content h4:first-child { margin-top: 0; }
+        .rich-content ul, .rich-content ol { margin: 0.6em 0; padding-left: 1.8em; }
+        .rich-content blockquote { margin: 0.7em 0; padding: 0.5em 0.9em; border-left: 4px solid #667eea; background: #f6f7ff; color: #555; }
+        .rich-content code { padding: 0.12em 0.35em; border-radius: 4px; background: #f2f3f5; font-family: Consolas, 'Courier New', monospace; }
+        .rich-content pre { overflow-x: auto; margin: 0.8em 0; padding: 12px; border-radius: 8px; background: #1f2329; color: #f5f5f5; white-space: pre; }
+        .rich-content pre code { padding: 0; background: transparent; color: inherit; }
+        .rich-content a { color: #4c63d2; }
+        .rich-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 0.8em 0; }
+        .rich-content th, .rich-content td { padding: 7px 10px; border: 1px solid #ddd; text-align: left; }
+        .rich-content th { background: #f2f3f5; }
+        .rich-content mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; margin: 0.9em 0 !important; padding: 0.15em 0; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 12px; }
         .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
         .stat-card .label { color: #999; }
@@ -55,8 +69,10 @@
         .stat-card .outlier { color: #e74c3c; font-weight: bold; }
         .report-area { margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; display: none; max-height: 600px; overflow-y: auto; }
         .report-area h3 { color: #667eea; margin-bottom: 12px; }
-        .report-content { line-height: 1.8; font-size: 14px; }
-        .report-content h1, .report-content h2, .report-content h3 { margin: 12px 0 8px; }
+        .report-preview { padding: 16px; border: 1px solid #e6e8ef; border-radius: 8px; background: #fcfcff; }
+        .report-source { margin-top: 16px; }
+        .report-source summary { cursor: pointer; color: #667eea; font-weight: bold; }
+        .report-source pre { margin-top: 10px; background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace; }
         .loading { text-align: center; padding: 30px; color: #999; }
         .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -124,14 +140,18 @@
         <div class="card abnormal-area" id="abnormalArea">
             <h3>🔍 数据异常检测报告</h3>
             <div id="statsPreview"></div>
-            <pre id="abnormalReport"></pre>
+            <div class="rich-content" id="abnormalReport"></div>
         </div>
 
         <!-- AI报告区域 -->
         <div class="card report-area" id="reportArea">
-            <h3>🤖 AI生成的实验报告（LaTeX）</h3>
-            <p style="font-size:13px; color:#888; margin-bottom:12px;">以下为完整 LaTeX 源码，可复制到 Overleaf 等在线编辑器或本地 TeX 环境编译。</p>
-            <pre id="reportContent" style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace;"></pre>
+            <h3>🤖 AI生成的实验报告</h3>
+            <div class="rich-content report-preview" id="reportPreview"></div>
+            <details class="report-source">
+                <summary>查看完整 LaTeX 源码</summary>
+                <p style="font-size:13px; color:#888; margin-top:10px;">可复制到 Overleaf 等在线编辑器或本地 TeX 环境编译。</p>
+                <pre id="reportContent"></pre>
+            </details>
             <div class="btn-group" style="margin-top:16px;">
                 <a class="btn btn-primary" id="texDownloadBtn" style="display:none; text-decoration:none;">📝 下载 TEX 源码</a>
                 <a class="btn btn-primary" id="chartDownloadBtn" style="display:none; text-decoration:none; background:#2196F3;">🖼️ 下载图表图片</a>
@@ -148,6 +168,33 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        window.MathJax = {
+            loader: {
+                paths: {
+                    mathjax: '/static/vendor/mathjax',
+                    'mathjax-newcm': '/static/vendor/mathjax',
+                    fonts: '/static/vendor/mathjax'
+                }
+            },
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true
+            },
+            chtml: {
+                fontURL: '/static/vendor/mathjax/chtml/woff2',
+                dynamicPrefix: '/static/vendor/mathjax/chtml/dynamic'
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="/static/vendor/markdown-it/markdown-it.min.js"></script>
+    <script src="/static/vendor/dompurify/purify.min.js"></script>
+    <script id="MathJax-script" src="/static/vendor/mathjax/tex-mml-chtml-mathjax-newcm.js"></script>
+
+    <script>
         var tableColumns = [];
         var exampleData = [];
         var initialRowCount = 1;
@@ -155,6 +202,90 @@
         var lastUserData = null;
         var lastAbnormalReport = '';
         var lastChartInfo = null;  // 存储图表信息
+        var markdownRenderer = typeof window.markdownit === 'function'
+            ? window.markdownit({
+                html: false,
+                breaks: true,
+                linkify: true,
+                typographer: false
+            })
+            : null;
+
+        function protectMath(text) {
+            var segments = [];
+
+            function save(segment) {
+                var index = segments.length;
+                segments.push(segment);
+                return 'MATHPLACEHOLDER' + index + 'END';
+            }
+
+            var protectedText = String(text == null ? '' : text)
+                .replace(/\$\$[\s\S]*?\$\$/g, save)
+                .replace(/\\\[[\s\S]*?\\\]/g, save)
+                .replace(/\\\([\s\S]*?\\\)/g, save)
+                .replace(/\$(?!\$)(?:\\.|[^$\n])+\$/g, save);
+
+            return { text: protectedText, segments: segments };
+        }
+
+        function restoreMath(html, segments) {
+            return html.replace(/MATHPLACEHOLDER(\d+)END/g, function(_, index) {
+                return escapeHtml(segments[Number(index)] || '');
+            });
+        }
+
+        function renderRichContent(text) {
+            if (!markdownRenderer || !window.DOMPurify) {
+                return null;
+            }
+
+            var protectedResult = protectMath(text);
+            var markdownHtml = markdownRenderer.render(protectedResult.text);
+            var htmlWithMath = restoreMath(markdownHtml, protectedResult.segments);
+
+            return window.DOMPurify.sanitize(htmlWithMath, {
+                USE_PROFILES: { html: true },
+                FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'img'],
+                FORBID_ATTR: ['style', 'srcset', 'onerror', 'onclick', 'onload']
+            });
+        }
+
+        function renderMath(element) {
+            if (!window.MathJax || !window.MathJax.typesetPromise) {
+                return Promise.resolve();
+            }
+
+            var startupReady = window.MathJax.startup && window.MathJax.startup.promise
+                ? window.MathJax.startup.promise
+                : Promise.resolve();
+
+            return startupReady
+                .then(function() {
+                    if (window.MathJax.typesetClear) {
+                        window.MathJax.typesetClear([element]);
+                    }
+                    return window.MathJax.typesetPromise([element]);
+                })
+                .catch(function(error) {
+                    console.error('数学公式渲染失败：', error);
+                });
+        }
+
+        function setRichContent(element, text) {
+            var rendered = renderRichContent(text);
+            if (rendered === null) {
+                element.textContent = String(text == null ? '' : text);
+                return Promise.resolve();
+            }
+
+            element.innerHTML = rendered;
+            element.querySelectorAll('a').forEach(function(link) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
+            return renderMath(element);
+        }
 
         // 页面加载时获取表格结构
         (function initTable() {
@@ -360,9 +491,12 @@
                             statsHtml += '</div>';
                         }
                         document.getElementById('statsPreview').innerHTML = statsHtml;
-                        document.getElementById('abnormalReport').innerText = res.report;
-                        document.getElementById('abnormalArea').style.display = 'block';
-                        document.getElementById('abnormalArea').scrollIntoView({behavior: 'smooth'});
+                        var abnormalArea = document.getElementById('abnormalArea');
+                        abnormalArea.style.display = 'block';
+                        setRichContent(document.getElementById('abnormalReport'), res.report)
+                            .then(function() {
+                                abnormalArea.scrollIntoView({behavior: 'smooth'});
+                            });
                         showToast('异常检测完成！');
                         hideLoading();
                     } else {
@@ -472,7 +606,11 @@
                     if (res.report) {
                         var reportArea = document.getElementById('reportArea');
                         reportArea.style.display = 'block';
-                        document.getElementById('reportContent').innerText = res.report;
+                        document.getElementById('reportContent').textContent = res.report;
+                        setRichContent(
+                            document.getElementById('reportPreview'),
+                            res.preview || '格式化预览暂不可用，请展开下方区域查看完整 LaTeX 源码。'
+                        );
                         
                         // 处理 TEX 下载链接
                         var texBtn = document.getElementById('texDownloadBtn');
@@ -516,7 +654,7 @@
         }
 
         function copyReport() {
-            var text = document.getElementById('reportContent').innerText;
+            var text = document.getElementById('reportContent').textContent;
             navigator.clipboard.writeText(text).then(function() {
                 showToast('已复制到剪贴板');
             }).catch(function() {

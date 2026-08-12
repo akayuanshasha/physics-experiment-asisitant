@@ -387,7 +387,11 @@ def serve_chart_image(filename):
 @app.route('/api/generate-report', methods=['POST'])
 def api_generate_report():
     """AI生成实验报告（LaTeX格式），返回完整 .tex 代码"""
-    from report_generator import LATEX_REPORT_SYSTEM_PROMPT, build_latex_document
+    from report_generator import (
+        LATEX_REPORT_SYSTEM_PROMPT,
+        build_latex_document,
+        latex_to_markdown_preview,
+    )
 
     data = request.get_json()
     experiment_name = data.get('experiment_name', '物理实验')
@@ -418,6 +422,7 @@ def api_generate_report():
 
         # 2. 包装为完整 LaTeX 文档
         tex_content = build_latex_document(experiment_name, latex_body)
+        report_preview = latex_to_markdown_preview(latex_body)
 
         # 3. 保存 .tex 文件供下载
         report_id = str(random.randrange(1000000))
@@ -438,6 +443,7 @@ def api_generate_report():
 
         return jsonify({
             "report": tex_content,
+            "preview": report_preview,
             "report_id": report_id,
             "tex_url": f"/api/report-tex/{report_id}",
             "has_chart": has_chart

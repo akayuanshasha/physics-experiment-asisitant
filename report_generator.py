@@ -176,6 +176,168 @@ def build_latex_document(title, body_content):
     return document
 
 
+def latex_to_markdown_preview(body_content):
+    """将 AI 生成的 LaTeX 正文转换为适合网页展示的 Markdown。
+
+    该转换器只处理报告提示词允许使用的常见结构命令。数学片段会先被保护，
+    最终仍以 LaTeX 定界符返回，由浏览器中的 MathJax 负责排版。完整的 LaTeX
+    源码不会被修改，仍由 ``build_latex_document`` 用于下载和离线编译。
+    """
+    if not body_content:
+        return ""
+
+    text = str(body_content).strip()
+    text = re.sub(r'^```(?:latex|tex)?\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\s*```$', '', text)
+
+    math_segments = []
+
+    def save_math(content):
+        index = len(math_segments)
+        math_segments.append(content)
+        return f"LATEXMATHPLACEHOLDER{index}END"
+
+    # 先保护数学环境，避免后续结构转换破坏公式中的 LaTeX 命令。
+    text = re.sub(
+        r'\\begin\{(equation\*?|align\*?|gather\*?)\}([\s\S]*?)\\end\{\1\}',
+        lambda match: save_math(r'\[' + match.group(2).strip() + r'\]'),
+        text,
+    )
+    text = re.sub(r'\$\$[\s\S]*?\$\$', lambda match: save_math(match.group(0)), text)
+    text = re.sub(r'\\\[[\s\S]*?\\\]', lambda match: save_math(match.group(0)), text)
+    text = re.sub(r'\\\([\s\S]*?\\\)', lambda match: save_math(match.group(0)), text)
+    text = re.sub(
+        r'(?<!\\)\$(?!\$)(?:\\.|[^$\n])+?(?<!\\)\$',
+        lambda match: save_math(match.group(0)),
+        text,
+    )
+
+    def convert_table(match):
+        table_body = match.group(1)
+        table_body = re.sub(
+            r'\\(?:toprule|midrule|bottomrule|hline|cline\{[^}]*\}|cmidrule\{[^}]*\})',
+            '',
+            table_body,
+        )
+        rows = []
+        for raw_row in re.split(r'\\\\(?:\[[^\]]*\])?', table_body):
+            raw_row = raw_row.strip()
+            if not raw_row:
+                continue
+            cells = [cell.strip().replace('|', r'\|')
+                     for cell in re.split(r'(?<!\\)&', raw_row)]
+            if cells:
+                rows.append(cells)
+
+        if not rows:
+            return ""
+
+        column_count = max(len(row) for row in rows)
+        rows = [row + [""] * (column_count - len(row)) for row in rows]
+        header = rows[0]
+        separator = ["---"] * column_count
+        markdown_rows = [header, separator] + rows[1:]
+        return "\n\n" + "\n".join(
+            "| " + " | ".join(row) + " |" for row in markdown_rows
+        ) + "\n\n"
+
+    text = re.sub(
+        r'\\begin\{(?:tabular\*?|tabularx|longtable)\}(?:\{[^{}]*\}){1,2}'
+        r'([\s\S]*?)\\end\{(?:tabular\*?|tabularx|longtable)\}',
+        convert_table,
+        text,
+    )
+
+    def convert_list(match):
+        kind = match.group(1)
+        items = re.split(r'\\item(?:\[[^\]]*\])?\s*', match.group(2))[1:]
+        lines = []
+        for index, item in enumerate(items, start=1):
+            item = re.sub(r'\s*\n\s*', ' ', item).strip()
+            marker = f"{index}." if kind == "enumerate" else "-"
+            if item:
+                lines.append(f"{marker} {item}")
+        return "\n\n" + "\n".join(lines) + "\n\n"
+
+    # 处理提示词允许的列表；重复执行可覆盖少量嵌套列表。
+    for _ in range(3):
+        converted = re.sub(
+            r'\\begin\{(itemize|enumerate)\}([\s\S]*?)\\end\{\1\}',
+            convert_list,
+            text,
+        )
+        if converted == text:
+            break
+        text = converted
+
+    # 将报告章节转换为 Markdown 标题。
+    text = re.sub(r'\\section\*?\{([^{}]*)\}', r'\n\n## \1\n\n', text)
+    text = re.sub(r'\\subsection\*?\{([^{}]*)\}', r'\n\n### \1\n\n', text)
+    text = re.sub(r'\\paragraph\*?\{([^{}]*)\}', r'\n\n#### \1\n\n', text)
+
+    # 由内向外转换常用的行内样式命令。
+    inline_commands = (
+        ('textbf', '**', '**'),
+        ('mathbf', '**', '**'),
+        ('emph', '*', '*'),
+        ('textit', '*', '*'),
+        ('underline', '', ''),
+        ('textrm', '', ''),
+        ('mathrm', '', ''),
+    )
+    for command, prefix, suffix in inline_commands:
+        for _ in range(5):
+            converted = re.sub(
+                rf'\\{command}\{{([^{{}}]*)\}}',
+                lambda match, p=prefix, s=suffix: p + match.group(1) + s,
+                text,
+            )
+            if converted == text:
+                break
+            text = converted
+    text = re.sub(r'\\texttt\{([^{}]*)\}', r'`\1`', text)
+
+    text = re.sub(
+        r'\\caption\{([^{}]*)\}',
+        r'\n\n**图表说明：** \1\n\n',
+        text,
+    )
+    text = re.sub(
+        r'\\includegraphics(?:\[[^\]]*\])?\{([^{}]*)\}',
+        r'\n\n> 报告图表：\1（请查看随 TEX 下载的图表文件）\n\n',
+        text,
+    )
+    text = re.sub(r'\\href\{([^{}]*)\}\{([^{}]*)\}', r'[\2](\1)', text)
+    text = re.sub(r'\\url\{([^{}]*)\}', r'<\1>', text)
+
+    # 去掉只影响 LaTeX 排版、不应在网页中显示的命令和环境。
+    text = re.sub(r'(?m)(?<!\\)%.*$', '', text)
+    text = re.sub(r'\\(?:label|ref|pageref)\{[^{}]*\}', '', text)
+    text = re.sub(r'\\(?:vspace|hspace)\*?\{[^{}]*\}', '', text)
+    text = re.sub(r'\\(?:begin|end)\{(?:document|table|figure|center|flushleft|flushright)\}(?:\[[^\]]*\])?', '', text)
+    text = re.sub(r'\\(?:centering|noindent|newpage|clearpage)\b', '', text)
+    text = re.sub(r'\\documentclass(?:\[[^\]]*\])?\{[^{}]*\}', '', text)
+    text = re.sub(r'\\usepackage(?:\[[^\]]*\])?\{[^{}]*\}', '', text)
+    text = text.replace(r'\\', '\n')
+
+    # 恢复正文中的常见转义字符；数学片段仍处于占位保护状态。
+    for escaped, literal in (
+        (r'\&', '&'), (r'\%', '%'), (r'\#', '#'), (r'\_', '_'),
+        (r'\{', '{'), (r'\}', '}'), (r'\textasciitilde{}', '~'),
+        (r'\textasciicircum{}', '^'),
+    ):
+        text = text.replace(escaped, literal)
+    text = text.replace('~', ' ')
+    text = re.sub(r'[ \t]+\n', '\n', text)
+    text = re.sub(r'\n{3,}', '\n\n', text).strip()
+
+    def restore_math(match):
+        index = int(match.group(1))
+        return math_segments[index] if index < len(math_segments) else ""
+
+    return re.sub(r'LATEXMATHPLACEHOLDER(\d+)END', restore_math, text)
+
+
 def compile_latex_to_pdf(tex_content, output_dir):
     """编译 LaTeX 文档为 PDF
 
