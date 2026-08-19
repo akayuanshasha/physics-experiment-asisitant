@@ -88,3 +88,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "双缝衍射的数据输入与处理。",
+        [make_table("table1", "双缝衍射数据", ["距离L/mm","双缝间距d/μm","暗（亮）条纹级数","暗条纹位置/mm"],
+                    sample=[["212","150","1","16.635"],["","","2","17.54"],["","","3","18.421"],["","","4","19.366"],["","","5","20.271"],["","","6","21.228"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

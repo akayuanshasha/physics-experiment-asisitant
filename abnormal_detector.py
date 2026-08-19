@@ -92,7 +92,7 @@ class AbnormalDetector:
         self.client = llm_client
         self.model = model_name
 
-    def detect(self, experiment_name, pdf_text, columns, data_rows):
+    def detect(self, experiment_name, pdf_text, columns, data_rows, analysis_hints=None):
         """执行异常检测
 
         参数:
@@ -100,6 +100,7 @@ class AbnormalDetector:
             pdf_text: str, 实验指导书文本（可为空字符串）
             columns: list[str], 表格列名
             data_rows: list[list[str]], 表格数据行
+            analysis_hints: str|None, 实验特定的分析提示（覆盖默认四维度）
 
         返回:
             str, 异常检测报告文本
@@ -107,25 +108,34 @@ class AbnormalDetector:
         # 1. 将数据转换为 Markdown 表格
         table_md = self._build_markdown_table(columns, data_rows)
 
-        # 2. 构造用户 Prompt
+        # 2. 构造 System Prompt（如有自定义提示则追加）
+        system_prompt = ABNORMAL_SYSTEM_PROMPT
+        if analysis_hints and analysis_hints.strip():
+            system_prompt += "\n\n" + analysis_hints.strip()
+
+        # 3. 构造用户 Prompt
         user_prompt = self._build_user_prompt(experiment_name, pdf_text, columns, data_rows, table_md)
 
-        # 3. 调用 LLM
+        # 4. 调用 LLM
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": ABNORMAL_SYSTEM_PROMPT},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
                 temperature=0.2,
+                max_tokens=4096,
+                extra_body={"chat_template_kwargs": {"enable_thinking": False}},
             )
             report_text = response.choices[0].message.content
+            if not report_text:
+                return "❌ 模型未生成有效内容（可能 token 不足），请重试。"
             return report_text
         except Exception as e:
             return f"❌ 异常检测调用失败: {str(e)}"
 
-    def detect_with_stats(self, experiment_name, pdf_text, columns, data_rows):
+    def detect_with_stats(self, experiment_name, pdf_text, columns, data_rows, analysis_hints=None):
         """执行异常检测，同时返回统计预分析结果
 
         返回:
@@ -138,7 +148,7 @@ class AbnormalDetector:
         stats = self._statistical_analysis(columns, data_rows)
 
         # 再调用 AI 检测
-        report = self.detect(experiment_name, pdf_text, columns, data_rows)
+        report = self.detect(experiment_name, pdf_text, columns, data_rows, analysis_hints=analysis_hints)
 
         return {
             "report": report,

@@ -6,6 +6,7 @@
     <title>{{name}} - AI物理实验助教系统</title>
     <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/rich-text.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; color: #333; }
@@ -23,6 +24,35 @@
         .data-table input:focus { background-color: #e8f4fd; outline: 1px solid #5bc0de; }
         .data-table tr:hover td { background-color: #f9f9f9; }
         .row-num { color: #999; font-size: 11px; min-width: 30px; width: 30px; }
+        .structured-wrapper { display: none; }
+        .schema-description { padding: 12px 14px; background: #f3f6ff; border-left: 4px solid #667eea; border-radius: 4px; margin-bottom: 16px; line-height: 1.7; }
+        .parameter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 18px; }
+        .parameter-item label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 5px; }
+        .parameter-item input, .parameter-item select { width: 100%; border: 1px solid #d9d9d9; border-radius: 5px; padding: 8px 10px; background: white; }
+        .parameter-help, .table-help { color: #777; font-size: 12px; line-height: 1.55; margin-top: 4px; }
+        .schema-table-card { border: 1px solid #dfe4ea; border-radius: 8px; padding: 16px; margin: 14px 0; background: #fcfdff; }
+        .schema-table-card h3 { font-size: 16px; margin-bottom: 6px; color: #3f51b5; }
+        .schema-table-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0; }
+        .table-action-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .table-action-button { appearance: none; border: 0; outline: 0; border-radius: 999px; padding: 7px 14px; background: #eef1ff; color: #5367cc; font-family: inherit; font-size: 13px; line-height: 1.35; cursor: pointer; box-shadow: none; transition: background-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease; }
+        .table-action-button:hover { background: #dde3ff; color: #4054bd; transform: translateY(-1px); }
+        .table-action-button:active { transform: translateY(0); }
+        .table-action-button:focus-visible { box-shadow: 0 0 0 3px rgba(102,126,234,.22); }
+        .table-action-button.sample { background: #e8f7f0; color: #23865f; }
+        .table-action-button.sample:hover { background: #d6f1e4; color: #176b4a; }
+        .table-action-button.remove { background: #fff1f0; color: #cf4b48; }
+        .table-action-button.remove:hover { background: #ffe2df; color: #b43b38; }
+        .keyboard-hint { color: #8b93a7; font-size: 12px; line-height: 1.5; }
+        .optional-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 999px; background: #f5f6fa; font-size: 13px; color: #555; cursor: pointer; }
+        .required-mark { color: #e74c3c; margin-left: 4px; }
+        .image-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 12px 0; }
+        .image-slot { padding: 10px; background: white; border: 1px solid #e0e4eb; border-radius: 6px; }
+        .image-slot label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 6px; }
+        .image-slot input { display: block; width: 100%; font-size: 12px; }
+        .image-process-result { display: none; margin-top: 12px; padding: 12px; border-radius: 6px; background: #f4f8ff; white-space: pre-wrap; line-height: 1.65; font-size: 13px; }
+        .chart-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+        .chart-gallery figure { margin: 0; padding: 10px; background: white; border-radius: 6px; }
+        .chart-gallery figcaption { text-align: center; margin-top: 8px; color: #555; font-size: 13px; }
         .btn-group { text-align: center; margin: 16px 0; }
         .btn-group .btn { display: inline-block; padding: 8px 20px; margin: 4px 6px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
         .btn-primary { background: #667eea; color: white; }
@@ -47,32 +77,23 @@
         .chart-info .r2 { color: #27ae60; font-weight: bold; }
         .abnormal-area { margin-top: 20px; padding: 20px; background: #fff8f0; border: 1px solid #ffd699; border-radius: 8px; display: none; max-height: 500px; overflow-y: auto; }
         .abnormal-area h3 { color: #e67e22; margin-bottom: 12px; }
-        .rich-content { font-size: 14px; line-height: 1.8; word-break: break-word; }
-        .rich-content p { margin: 0 0 0.75em; }
-        .rich-content p:last-child { margin-bottom: 0; }
-        .rich-content h1, .rich-content h2, .rich-content h3, .rich-content h4 { margin: 1em 0 0.5em; line-height: 1.4; }
-        .rich-content h1:first-child, .rich-content h2:first-child, .rich-content h3:first-child, .rich-content h4:first-child { margin-top: 0; }
-        .rich-content ul, .rich-content ol { margin: 0.6em 0; padding-left: 1.8em; }
-        .rich-content blockquote { margin: 0.7em 0; padding: 0.5em 0.9em; border-left: 4px solid #667eea; background: #f6f7ff; color: #555; }
-        .rich-content code { padding: 0.12em 0.35em; border-radius: 4px; background: #f2f3f5; font-family: Consolas, 'Courier New', monospace; }
-        .rich-content pre { overflow-x: auto; margin: 0.8em 0; padding: 12px; border-radius: 8px; background: #1f2329; color: #f5f5f5; white-space: pre; }
-        .rich-content pre code { padding: 0; background: transparent; color: inherit; }
-        .rich-content a { color: #4c63d2; }
-        .rich-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 0.8em 0; }
-        .rich-content th, .rich-content td { padding: 7px 10px; border: 1px solid #ddd; text-align: left; }
-        .rich-content th { background: #f2f3f5; }
-        .rich-content mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; margin: 0.9em 0 !important; padding: 0.15em 0; }
+        .abnormal-area .rich-text-output { font-size: 13px; line-height: 1.75; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 12px; }
         .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
         .stat-card .label { color: #999; }
         .stat-card .value { font-weight: bold; color: #333; }
         .stat-card .outlier { color: #e74c3c; font-weight: bold; }
-        .report-area { margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; display: none; max-height: 600px; overflow-y: auto; }
+        .report-area { margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; display: none; }
         .report-area h3 { color: #667eea; margin-bottom: 12px; }
-        .report-preview { padding: 16px; border: 1px solid #e6e8ef; border-radius: 8px; background: #fcfcff; }
-        .report-source { margin-top: 16px; }
-        .report-source summary { cursor: pointer; color: #667eea; font-weight: bold; }
-        .report-source pre { margin-top: 10px; background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace; }
+        .report-content { line-height: 1.8; font-size: 14px; }
+        .report-content h1, .report-content h2, .report-content h3 { margin: 12px 0 8px; }
+        .draft-status { color: #7b8498; font-size: 12px; padding: 6px 10px; border-radius: 999px; background: #f5f6fa; }
+        .table-action-button.chart { background: #eaf5ff; color: #2474a8; }
+        .table-action-button.analysis { background: #fff5e8; color: #b56b13; }
+        .data-table input[readonly] { color: #315b89; background: #f2f7fc; cursor: default; font-weight: 600; }
+        .report-preview { display: none; margin-top: 16px; }
+        .report-preview iframe { width: 100%; height: 680px; border: 1px solid #dfe4ea; border-radius: 8px; background: #fff; }
+        .report-fallback { margin-top: 14px; }
         .loading { text-align: center; padding: 30px; color: #999; }
         .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -94,7 +115,7 @@
             <h2>{{name}}</h2>
             <p style="color:#666; margin-bottom:16px;">在下方表格中输入实验数据，系统将自动计算并生成报告文档。</p>
 
-            <div class="btn-group" style="text-align:left; margin-bottom:12px;">
+            <div class="btn-group" id="legacyControls" style="text-align:left; margin-bottom:12px;">
                 <button class="btn btn-secondary" id="sampleBtn" onclick="fillExample()" disabled>📋 填入示例数据</button>
                 <button class="btn btn-secondary" onclick="addRow()">＋ 添加行</button>
                 <button class="btn btn-secondary" onclick="removeRow()">－ 删除行</button>
@@ -109,6 +130,8 @@
                     <tbody id="tableBody"></tbody>
                 </table>
             </div>
+
+            <div class="structured-wrapper" id="structuredWrapper"></div>
 
             <div class="btn-group">
                 <button class="btn btn-primary" id="submitBtn" onclick="submitData()" style="display:none;">📊 提交计算</button>
@@ -130,6 +153,7 @@
         <!-- 图表展示区域 -->
         <div class="card chart-area" id="chartArea">
             <h3>📈 实验数据图表</h3>
+            <div class="chart-gallery" id="chartGallery"></div>
             <div style="text-align:center;">
                 <img id="chartImage" src="" alt="实验图表" style="display:none;" />
             </div>
@@ -140,24 +164,24 @@
         <div class="card abnormal-area" id="abnormalArea">
             <h3>🔍 数据异常检测报告</h3>
             <div id="statsPreview"></div>
-            <div class="rich-content" id="abnormalReport"></div>
+            <div id="abnormalReport" class="rich-text-output"></div>
         </div>
 
         <!-- AI报告区域 -->
         <div class="card report-area" id="reportArea">
             <h3>🤖 AI生成的实验报告</h3>
-            <div class="rich-content report-preview" id="reportPreview"></div>
-            <details class="report-source">
-                <summary>查看完整 LaTeX 源码</summary>
-                <p style="font-size:13px; color:#888; margin-top:10px;">可复制到 Overleaf 等在线编辑器或本地 TeX 环境编译。</p>
-                <pre id="reportContent"></pre>
+            <p style="font-size:13px; color:#888; margin-bottom:12px;">本机安装 LaTeX 编译器时优先在线预览 PDF；否则仍可下载 TEX 源码继续编译。</p>
+            <div class="report-preview" id="reportPreview"><iframe id="reportPdfFrame" title="实验报告 PDF 在线预览"></iframe></div>
+            <details class="report-fallback" id="reportSourceDetails">
+                <summary>查看 LaTeX 源码</summary>
+                <pre id="reportContent" style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace;"></pre>
             </details>
             <div class="btn-group" style="margin-top:16px;">
                 <a class="btn btn-primary" id="texDownloadBtn" style="display:none; text-decoration:none;">📝 下载 TEX 源码</a>
-                <a class="btn btn-primary" id="chartDownloadBtn" style="display:none; text-decoration:none; background:#2196F3;">🖼️ 下载图表图片</a>
+                <a class="btn btn-primary" id="pdfDownloadBtn" style="display:none; text-decoration:none; background:#e53935;">📕 下载 PDF 报告</a>
                 <button class="btn btn-secondary" onclick="copyReport()">📋 复制全部代码</button>
             </div>
-            <p id="chartDownloadTip" style="display:none; font-size:12px; color:#666; margin-top:8px;">⚠️ 请将 TEX 文件和图表图片放在同一目录下编译，或上传到 Overleaf 时同时上传这两个文件。</p>
+            <p id="reportCompileTip" style="display:none; font-size:12px; color:#a35d00; margin-top:8px;"></p>
         </div>
     </div>
 
@@ -185,15 +209,16 @@
                 fontURL: '/static/vendor/mathjax/chtml/woff2',
                 dynamicPrefix: '/static/vendor/mathjax/chtml/dynamic'
             },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-            }
+            options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}
         };
     </script>
     <script src="/static/vendor/markdown-it/markdown-it.min.js"></script>
     <script src="/static/vendor/dompurify/purify.min.js"></script>
     <script id="MathJax-script" src="/static/vendor/mathjax/tex-mml-chtml-mathjax-newcm.js"></script>
-
+    <script src="/static/js/rich-text-renderer.js"></script>
+    <script>
+        window.EXPERIMENT_CONTEXT = { id: {{ num|tojson }}, name: {{ name|tojson }} };
+    </script>
     <script>
         var tableColumns = [];
         var exampleData = [];
@@ -202,90 +227,8 @@
         var lastUserData = null;
         var lastAbnormalReport = '';
         var lastChartInfo = null;  // 存储图表信息
-        var markdownRenderer = typeof window.markdownit === 'function'
-            ? window.markdownit({
-                html: false,
-                breaks: true,
-                linkify: true,
-                typographer: false
-            })
-            : null;
-
-        function protectMath(text) {
-            var segments = [];
-
-            function save(segment) {
-                var index = segments.length;
-                segments.push(segment);
-                return 'MATHPLACEHOLDER' + index + 'END';
-            }
-
-            var protectedText = String(text == null ? '' : text)
-                .replace(/\$\$[\s\S]*?\$\$/g, save)
-                .replace(/\\\[[\s\S]*?\\\]/g, save)
-                .replace(/\\\([\s\S]*?\\\)/g, save)
-                .replace(/\$(?!\$)(?:\\.|[^$\n])+\$/g, save);
-
-            return { text: protectedText, segments: segments };
-        }
-
-        function restoreMath(html, segments) {
-            return html.replace(/MATHPLACEHOLDER(\d+)END/g, function(_, index) {
-                return escapeHtml(segments[Number(index)] || '');
-            });
-        }
-
-        function renderRichContent(text) {
-            if (!markdownRenderer || !window.DOMPurify) {
-                return null;
-            }
-
-            var protectedResult = protectMath(text);
-            var markdownHtml = markdownRenderer.render(protectedResult.text);
-            var htmlWithMath = restoreMath(markdownHtml, protectedResult.segments);
-
-            return window.DOMPurify.sanitize(htmlWithMath, {
-                USE_PROFILES: { html: true },
-                FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'img'],
-                FORBID_ATTR: ['style', 'srcset', 'onerror', 'onclick', 'onload']
-            });
-        }
-
-        function renderMath(element) {
-            if (!window.MathJax || !window.MathJax.typesetPromise) {
-                return Promise.resolve();
-            }
-
-            var startupReady = window.MathJax.startup && window.MathJax.startup.promise
-                ? window.MathJax.startup.promise
-                : Promise.resolve();
-
-            return startupReady
-                .then(function() {
-                    if (window.MathJax.typesetClear) {
-                        window.MathJax.typesetClear([element]);
-                    }
-                    return window.MathJax.typesetPromise([element]);
-                })
-                .catch(function(error) {
-                    console.error('数学公式渲染失败：', error);
-                });
-        }
-
-        function setRichContent(element, text) {
-            var rendered = renderRichContent(text);
-            if (rendered === null) {
-                element.textContent = String(text == null ? '' : text);
-                return Promise.resolve();
-            }
-
-            element.innerHTML = rendered;
-            element.querySelectorAll('a').forEach(function(link) {
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-            });
-            return renderMath(element);
-        }
+        var structuredMode = false;
+        var experimentSchema = null;
 
         // 页面加载时获取表格结构
         (function initTable() {
@@ -294,6 +237,12 @@
             xhr.onload = function() {
                 if (xhr.status == 200) {
                     var info = JSON.parse(xhr.responseText);
+                    if (info.schema_version === 2) {
+                        structuredMode = true;
+                        experimentSchema = info;
+                        buildStructuredUI();
+                        return;
+                    }
                     tableColumns = info.columns || [];
                     exampleData = info.exampleData || [];
                     initialRowCount = info.rowCount > 0 ? info.rowCount : 1;
@@ -311,6 +260,443 @@
             };
             xhr.send();
         })();
+
+        function buildStructuredUI() {
+            document.getElementById('loadingTip').style.display = 'none';
+            document.getElementById('legacyControls').style.display = 'none';
+            document.getElementById('structuredWrapper').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'inline-block';
+
+            var wrapper = document.getElementById('structuredWrapper');
+            wrapper.innerHTML = '';
+            if (experimentSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'schema-description';
+                description.textContent = experimentSchema.description;
+                wrapper.appendChild(description);
+            }
+
+            var parameters = experimentSchema.parameters || [];
+            if (parameters.length) {
+                var parameterTitle = document.createElement('h3');
+                parameterTitle.textContent = '实验参数';
+                wrapper.appendChild(parameterTitle);
+                var grid = document.createElement('div');
+                grid.className = 'parameter-grid';
+                parameters.forEach(function(parameter) {
+                    var item = document.createElement('div');
+                    item.className = 'parameter-item';
+                    item.dataset.condition = JSON.stringify(parameter.condition || {});
+                    var label = document.createElement('label');
+                    label.textContent = parameter.label + (parameter.unit ? '（' + parameter.unit + '）' : '');
+                    if (parameter.required) {
+                        var mark = document.createElement('span');
+                        mark.className = 'required-mark';
+                        mark.textContent = '*';
+                        label.appendChild(mark);
+                    }
+                    item.appendChild(label);
+                    var input;
+                    if (parameter.type === 'select') {
+                        input = document.createElement('select');
+                        (parameter.options || []).forEach(function(option) {
+                            var element = document.createElement('option');
+                            element.value = option.value;
+                            element.textContent = option.label;
+                            input.appendChild(element);
+                        });
+                    } else {
+                        input = document.createElement('input');
+                        input.type = parameter.type === 'number' ? 'number' : 'text';
+                        if (parameter.step != null) input.step = parameter.step;
+                        if (parameter.min != null) input.min = parameter.min;
+                        if (parameter.max != null) input.max = parameter.max;
+                    }
+                    input.id = 'param-' + parameter.id;
+                    input.value = parameter.default != null ? parameter.default : '';
+                    input.dataset.parameterId = parameter.id;
+                    input.addEventListener('change', updateStructuredVisibility);
+                    item.appendChild(input);
+                    if (parameter.help) {
+                        var help = document.createElement('div');
+                        help.className = 'parameter-help';
+                        help.textContent = parameter.help;
+                        item.appendChild(help);
+                    }
+                    grid.appendChild(item);
+                });
+                wrapper.appendChild(grid);
+            }
+
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                wrapper.appendChild(createStructuredTable(tableSchema));
+            });
+
+            if (experimentSchema.image_upload) {
+                wrapper.appendChild(createStructuredImageUpload(experimentSchema.image_upload));
+            }
+
+            updateStructuredVisibility();
+        }
+
+        function createStructuredImageUpload(uploadSchema) {
+            var card = document.createElement('section');
+            card.className = 'schema-table-card';
+            card.id = 'structured-image-upload';
+            card.dataset.condition = JSON.stringify(uploadSchema.condition || {});
+            var title = document.createElement('h3');
+            title.textContent = uploadSchema.title || '实验图像处理';
+            card.appendChild(title);
+            if (uploadSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'table-help';
+                description.textContent = uploadSchema.description;
+                card.appendChild(description);
+            }
+            var grid = document.createElement('div');
+            grid.className = 'image-slot-grid';
+            (uploadSchema.slots || []).forEach(function(slot) {
+                var item = document.createElement('div');
+                item.className = 'image-slot';
+                var label = document.createElement('label');
+                label.htmlFor = 'image-slot-' + slot.id;
+                label.textContent = slot.label;
+                item.appendChild(label);
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/png,image/jpeg,image/bmp,image/tiff';
+                input.id = 'image-slot-' + slot.id;
+                input.dataset.slotId = slot.id;
+                item.appendChild(input);
+                grid.appendChild(item);
+            });
+            card.appendChild(grid);
+            var action = document.createElement('div');
+            action.className = 'btn-group';
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn btn-primary';
+            button.textContent = '🖼️ 拼接谱图并检测候选峰';
+            button.onclick = processStructuredImages;
+            action.appendChild(button);
+            card.appendChild(action);
+            var result = document.createElement('div');
+            result.id = 'image-process-result';
+            result.className = 'image-process-result';
+            card.appendChild(result);
+            return card;
+        }
+
+        function processStructuredImages() {
+            var uploadSchema = experimentSchema.image_upload || {};
+            var formData = new FormData();
+            var missing = [];
+            (uploadSchema.slots || []).forEach(function(slot) {
+                var input = document.getElementById('image-slot-' + slot.id);
+                if (!input || !input.files || !input.files[0]) {
+                    missing.push(slot.label);
+                    return;
+                }
+                formData.append(slot.id, input.files[0], input.files[0].name);
+            });
+            if (missing.length) {
+                showToast('请先补齐9张谱图；尚缺：' + missing.join('、'), 6000);
+                return;
+            }
+            showLoading('正在增强、拼接谱图并检测候选峰…');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/process-images', true);
+            xhr.onload = function() {
+                hideLoading();
+                if (xhr.status !== 200) {
+                    showToast('图像上传或处理失败', 4500);
+                    return;
+                }
+                var response = JSON.parse(xhr.responseText);
+                if (response.code !== 0) {
+                    showToast(response.data || '图像处理失败', 6000);
+                    return;
+                }
+                var lines = ['图像处理完成。请对照下方拼接图人工复核峰中心：'];
+                (response.summary || []).forEach(function(item) { lines.push('• ' + item); });
+                (response.warnings || []).forEach(function(item) { lines.push('⚠ ' + item); });
+                var result = document.getElementById('image-process-result');
+                result.textContent = lines.join('\n');
+                result.style.display = 'block';
+                renderStructuredCharts(response.charts || []);
+                document.getElementById('chartArea').scrollIntoView({behavior: 'smooth'});
+                showToast('谱图处理完成');
+            };
+            xhr.onerror = function() { hideLoading(); showToast('网络错误'); };
+            xhr.send(formData);
+        }
+
+        function createStructuredTable(tableSchema) {
+            var card = document.createElement('section');
+            card.className = 'schema-table-card';
+            card.id = 'schema-table-' + tableSchema.id;
+            card.dataset.tableId = tableSchema.id;
+            card.dataset.condition = JSON.stringify(tableSchema.condition || {});
+
+            var title = document.createElement('h3');
+            title.textContent = tableSchema.title;
+            if (tableSchema.required) {
+                var mark = document.createElement('span');
+                mark.className = 'required-mark';
+                mark.textContent = '*';
+                title.appendChild(mark);
+            }
+            card.appendChild(title);
+            if (tableSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'table-help';
+                description.textContent = tableSchema.description;
+                card.appendChild(description);
+            }
+
+            var toolbar = document.createElement('div');
+            toolbar.className = 'schema-table-toolbar';
+            var controls = document.createElement('div');
+            controls.className = 'table-action-group';
+            if (tableSchema.sample && tableSchema.sample.length) {
+                var sampleButton = document.createElement('button');
+                sampleButton.type = 'button';
+                sampleButton.className = 'table-action-button sample';
+                sampleButton.textContent = '📋 填入本表全部示例数据';
+                sampleButton.onclick = function() { fillStructuredTableExample(tableSchema.id); };
+                controls.appendChild(sampleButton);
+            }
+            var addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'table-action-button';
+            addButton.textContent = '＋ 添加行';
+            addButton.onclick = function() { addStructuredRowFromButton(tableSchema.id); };
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'table-action-button remove';
+            removeButton.textContent = '－ 删除行';
+            removeButton.onclick = function() { removeStructuredRow(tableSchema.id); };
+            controls.appendChild(addButton);
+            controls.appendChild(removeButton);
+            toolbar.appendChild(controls);
+            if (!tableSchema.required) {
+                var toggleLabel = document.createElement('label');
+                toggleLabel.className = 'optional-toggle';
+                var toggle = document.createElement('input');
+                toggle.type = 'checkbox';
+                toggle.id = 'enable-table-' + tableSchema.id;
+                toggle.checked = !!tableSchema.enabled_by_default;
+                toggle.addEventListener('change', function() {
+                    card.querySelector('.table-wrapper').style.display = toggle.checked ? 'block' : 'none';
+                    if (toggle.checked) {
+                        var currentBody = document.getElementById('schema-body-' + tableSchema.id);
+                        if (currentBody && !currentBody.children.length) addStructuredRow(tableSchema.id);
+                    }
+                });
+                toggleLabel.appendChild(toggle);
+                toggleLabel.appendChild(document.createTextNode(' 启用此选做数据表'));
+                toolbar.appendChild(toggleLabel);
+            }
+            card.appendChild(toolbar);
+            var keyboardHint = document.createElement('div');
+            keyboardHint.className = 'keyboard-hint';
+            keyboardHint.textContent = '键盘操作：Tab / Shift+Tab 左右切换，Enter / ↑ / ↓ 上下切换；在最后一格按 Enter 或 Tab 会自动新增一行。';
+            card.appendChild(keyboardHint);
+
+            var tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-wrapper';
+            if (!tableSchema.required && !tableSchema.enabled_by_default) tableWrapper.style.display = 'none';
+            var table = document.createElement('table');
+            table.className = 'data-table';
+            var thead = document.createElement('thead');
+            var header = document.createElement('tr');
+            var rowNumber = document.createElement('th');
+            rowNumber.className = 'row-num';
+            rowNumber.textContent = '#';
+            header.appendChild(rowNumber);
+            (tableSchema.columns || []).forEach(function(column) {
+                var th = document.createElement('th');
+                th.textContent = column.label + (column.unit ? ' / ' + column.unit : '');
+                if (column.help) th.title = column.help;
+                header.appendChild(th);
+            });
+            thead.appendChild(header);
+            table.appendChild(thead);
+            var tbody = document.createElement('tbody');
+            tbody.id = 'schema-body-' + tableSchema.id;
+            table.appendChild(tbody);
+            tableWrapper.appendChild(table);
+            card.appendChild(tableWrapper);
+
+            var count = (!tableSchema.required && !tableSchema.enabled_by_default)
+                ? 0
+                : Math.max(1, tableSchema.initial_rows || tableSchema.min_rows || 1);
+            for (var index = 0; index < count; index++) addStructuredRow(tableSchema.id, null, tbody, tableSchema);
+            return card;
+        }
+
+        function getTableSchema(tableId) {
+            return (experimentSchema.tables || []).find(function(item) { return item.id === tableId; });
+        }
+
+        function addStructuredRow(tableId, values, suppliedBody, suppliedSchema) {
+            var tableSchema = suppliedSchema || getTableSchema(tableId);
+            var tbody = suppliedBody || document.getElementById('schema-body-' + tableId);
+            if (!tableSchema || !tbody) return;
+            var tr = document.createElement('tr');
+            var numberCell = document.createElement('td');
+            numberCell.className = 'row-num';
+            numberCell.textContent = tbody.children.length + 1;
+            tr.appendChild(numberCell);
+            (tableSchema.columns || []).forEach(function(column) {
+                var td = document.createElement('td');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.columnId = column.id;
+                input.dataset.gridInput = 'true';
+                input.value = values && values[column.id] != null ? values[column.id] : '';
+                input.placeholder = column.placeholder || '';
+                input.addEventListener('keydown', function(event) {
+                    handleGridKeydown(event, function() {
+                        addStructuredRow(tableId);
+                    });
+                });
+                td.appendChild(input);
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+            updateStructuredRowNumbers(tableId);
+            return tr;
+        }
+
+        function enableStructuredTable(tableId) {
+            var toggle = document.getElementById('enable-table-' + tableId);
+            if (toggle && !toggle.checked) toggle.checked = true;
+            var tbody = document.getElementById('schema-body-' + tableId);
+            var wrapper = tbody ? tbody.closest('.table-wrapper') : null;
+            if (wrapper) wrapper.style.display = 'block';
+        }
+
+        function addStructuredRowFromButton(tableId) {
+            enableStructuredTable(tableId);
+            var row = addStructuredRow(tableId);
+            var firstInput = row ? row.querySelector('input[data-grid-input]') : null;
+            if (firstInput) {
+                firstInput.focus();
+                firstInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+        }
+
+        function focusGridCell(input, targetRow, targetColumn, addRowCallback) {
+            var tbody = input.closest('tbody');
+            if (!tbody) return;
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+            if (targetRow >= rows.length && addRowCallback) {
+                addRowCallback();
+                rows = Array.from(tbody.querySelectorAll('tr'));
+            }
+            if (!rows.length) return;
+            targetRow = Math.max(0, Math.min(targetRow, rows.length - 1));
+            var inputs = Array.from(rows[targetRow].querySelectorAll('input[data-grid-input]'));
+            if (!inputs.length) return;
+            targetColumn = Math.max(0, Math.min(targetColumn, inputs.length - 1));
+            inputs[targetColumn].focus();
+            inputs[targetColumn].select();
+        }
+
+        function handleGridKeydown(event, addRowCallback) {
+            var input = event.currentTarget;
+            var tbody = input.closest('tbody');
+            var row = input.closest('tr');
+            if (!tbody || !row) return;
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+            var inputs = Array.from(row.querySelectorAll('input[data-grid-input]'));
+            var rowIndex = rows.indexOf(row);
+            var columnIndex = inputs.indexOf(input);
+            var lastColumn = inputs.length - 1;
+            var atStart = input.selectionStart === 0 && input.selectionEnd === 0;
+            var atEnd = input.selectionStart === input.value.length && input.selectionEnd === input.value.length;
+
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + (event.shiftKey ? -1 : 1), columnIndex, event.shiftKey ? null : addRowCallback);
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + 1, columnIndex, addRowCallback);
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex - 1, columnIndex, null);
+            } else if (event.key === 'ArrowRight' && atEnd) {
+                event.preventDefault();
+                if (columnIndex < lastColumn) {
+                    focusGridCell(input, rowIndex, columnIndex + 1, null);
+                } else {
+                    focusGridCell(input, rowIndex + 1, 0, addRowCallback);
+                }
+            } else if (event.key === 'ArrowLeft' && atStart) {
+                event.preventDefault();
+                if (columnIndex > 0) {
+                    focusGridCell(input, rowIndex, columnIndex - 1, null);
+                } else if (rowIndex > 0) {
+                    var previousInputs = rows[rowIndex - 1].querySelectorAll('input[data-grid-input]');
+                    focusGridCell(input, rowIndex - 1, Math.max(0, previousInputs.length - 1), null);
+                }
+            } else if (event.key === 'Tab' && !event.shiftKey && rowIndex === rows.length - 1 && columnIndex === lastColumn) {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + 1, 0, addRowCallback);
+            }
+        }
+
+        function removeStructuredRow(tableId) {
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tbody || !tbody.children.length) {
+                showToast('当前表格已经没有数据行');
+                return;
+            }
+            tbody.removeChild(tbody.lastElementChild);
+            updateStructuredRowNumbers(tableId);
+        }
+
+        function updateStructuredRowNumbers(tableId) {
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tbody) return;
+            tbody.querySelectorAll('tr').forEach(function(row, rowIndex) {
+                var numberCell = row.querySelector('.row-num');
+                if (numberCell) numberCell.textContent = rowIndex + 1;
+            });
+        }
+
+        function fillStructuredTableExample(tableId) {
+            var tableSchema = getTableSchema(tableId);
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tableSchema || !tbody || !tableSchema.sample || !tableSchema.sample.length) {
+                showToast('本表暂无示例数据');
+                return;
+            }
+            tbody.innerHTML = '';
+            tableSchema.sample.forEach(function(row) { addStructuredRow(tableId, row); });
+            if (!tableSchema.required) enableStructuredTable(tableId);
+            updateStructuredRowNumbers(tableId);
+            var firstInput = tbody.querySelector('input[data-grid-input]');
+            if (firstInput) firstInput.focus();
+            showToast('“' + tableSchema.title + '”示例数据已填入');
+        }
+
+        function conditionMatches(condition) {
+            if (!condition || !condition.parameter) return true;
+            var input = document.getElementById('param-' + condition.parameter);
+            if (!input) return true;
+            var values = condition.in || [condition.equals];
+            return values.indexOf(input.value) >= 0;
+        }
+
+        function updateStructuredVisibility() {
+            document.querySelectorAll('[data-condition]').forEach(function(element) {
+                var condition = {};
+                try { condition = JSON.parse(element.dataset.condition || '{}'); } catch (error) {}
+                element.style.display = conditionMatches(condition) ? '' : 'none';
+            });
+        }
 
         function buildTable() {
             if (tableColumns.length === 0) {
@@ -350,16 +736,14 @@
                 var td2 = document.createElement('td');
                 var input = document.createElement('input');
                 input.type = 'text';
+                input.dataset.gridInput = 'true';
                 input.setAttribute('data-col', c);
                 input.setAttribute('data-row', tbody.children.length);
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        var curRow = parseInt(this.getAttribute('data-row'));
-                        var curCol = parseInt(this.getAttribute('data-col'));
-                        var next = document.querySelector('input[data-row="' + (curRow+1) + '"][data-col="' + curCol + '"]');
-                        if (next) next.focus();
-                    }
+                input.addEventListener('keydown', function(event) {
+                    handleGridKeydown(event, function() {
+                        addRowTo(document.getElementById('tableBody').children.length + 1);
+                        updateRowNumbers();
+                    });
                 });
                 td2.appendChild(input);
                 tr.appendChild(td2);
@@ -368,14 +752,26 @@
         }
 
         function addRow() {
+            if (!tableColumns.length) {
+                showToast('该实验还没有定义数据列，暂时无法添加输入行');
+                return;
+            }
             addRowTo(document.getElementById('tableBody').children.length + 1);
             updateRowNumbers();
-            document.getElementById('tableBody').lastChild.scrollIntoView({behavior:'smooth', block:'center'});
+            var lastRow = document.getElementById('tableBody').lastElementChild;
+            if (lastRow) {
+                var firstInput = lastRow.querySelector('input[data-grid-input]');
+                if (firstInput) firstInput.focus();
+                lastRow.scrollIntoView({behavior:'smooth', block:'center'});
+            }
         }
 
         function removeRow() {
             var tbody = document.getElementById('tableBody');
-            if (tbody.children.length <= 1) return;
+            if (!tbody.children.length) {
+                showToast('当前表格已经没有数据行');
+                return;
+            }
             tbody.removeChild(tbody.lastChild);
             updateRowNumbers();
         }
@@ -407,6 +803,10 @@
         }
 
         function submitData() {
+            if (structuredMode) {
+                submitStructuredData();
+                return;
+            }
             var tbody = document.getElementById('tableBody');
             var rows = tbody.querySelectorAll('tr');
             var data = [];
@@ -461,6 +861,107 @@
             xhr.send(JSON.stringify({ columns: tableColumns, data: data }));
         }
 
+        function collectStructuredPayload() {
+            var payload = { schema_version: 2, parameters: {}, tables: {} };
+            (experimentSchema.parameters || []).forEach(function(parameter) {
+                var input = document.getElementById('param-' + parameter.id);
+                if (input) payload.parameters[parameter.id] = input.value.trim();
+            });
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                var card = document.getElementById('schema-table-' + tableSchema.id);
+                if (!card || card.style.display === 'none') return;
+                var enabled = tableSchema.required;
+                if (!enabled) {
+                    var toggle = document.getElementById('enable-table-' + tableSchema.id);
+                    enabled = !!(toggle && toggle.checked);
+                }
+                if (!enabled) return;
+                var rows = [];
+                var tbody = document.getElementById('schema-body-' + tableSchema.id);
+                tbody.querySelectorAll('tr').forEach(function(tr) {
+                    var row = {};
+                    var hasValue = false;
+                    tr.querySelectorAll('input[data-column-id]').forEach(function(input) {
+                        var value = input.value.trim();
+                        row[input.dataset.columnId] = value;
+                        if (value !== '') hasValue = true;
+                    });
+                    if (hasValue) rows.push(row);
+                });
+                payload.tables[tableSchema.id] = rows;
+            });
+            return payload;
+        }
+
+        function submitStructuredData() {
+            var payload = collectStructuredPayload();
+            showLoading('正在按实验指导书处理多组数据…');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/handle-table', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                hideLoading();
+                if (xhr.status !== 200) {
+                    showToast('提交失败');
+                    return;
+                }
+                var res = JSON.parse(xhr.responseText);
+                if (res.code !== 0) {
+                    showToast(res.data || '处理失败', 4500);
+                    return;
+                }
+                var resultArea = document.getElementById('resultArea');
+                resultArea.style.display = 'block';
+                var lines = ['文档生成成功！', '', '实验名称：{{name}}', '文件ID：' + res.data];
+                if (res.summary && res.summary.length) {
+                    lines.push('', '主要计算结果：');
+                    res.summary.forEach(function(item) { lines.push('• ' + item); });
+                }
+                if (res.warnings && res.warnings.length) {
+                    lines.push('', '数据检查提示：');
+                    res.warnings.forEach(function(item) { lines.push('⚠ ' + item); });
+                }
+                document.getElementById('resultContent').innerText = lines.join('\n');
+                document.getElementById('downloadbtn').href = '/api/download/{{num}}/' + res.data + '.docx';
+                document.getElementById('downloadbtn').style.display = 'inline-block';
+                document.getElementById('chartBtn').style.display = 'none';
+                document.getElementById('abnormalBtn').style.display = 'inline-block';
+                document.getElementById('aiReportBtn').style.display = 'inline-block';
+                lastUserData = payload;
+                lastCalcResult = { fileid: res.data, exp_name: res.exp_name, summary: res.summary || [], warnings: res.warnings || [] };
+                renderStructuredCharts(res.charts || []);
+                resultArea.scrollIntoView({behavior: 'smooth'});
+                showToast('计算完成！');
+            };
+            xhr.onerror = function() { hideLoading(); showToast('网络错误'); };
+            xhr.send(JSON.stringify(payload));
+        }
+
+        function renderStructuredCharts(charts) {
+            var gallery = document.getElementById('chartGallery');
+            gallery.innerHTML = '';
+            document.getElementById('chartImage').style.display = 'none';
+            document.getElementById('chartInfo').style.display = 'none';
+            if (!charts.length) {
+                document.getElementById('chartArea').style.display = 'none';
+                lastChartInfo = null;
+                return;
+            }
+            charts.forEach(function(chart) {
+                var figure = document.createElement('figure');
+                var image = document.createElement('img');
+                image.src = chart.url + '?t=' + Date.now();
+                image.alt = chart.title || '实验图表';
+                figure.appendChild(image);
+                var caption = document.createElement('figcaption');
+                caption.textContent = chart.title || chart.filename;
+                figure.appendChild(caption);
+                gallery.appendChild(figure);
+            });
+            document.getElementById('chartArea').style.display = 'block';
+            lastChartInfo = { charts: charts };
+        }
+
         function runAbnormalDetect() {
             if (!lastUserData) { showToast('请先提交数据'); return; }
             showLoading('正在进行数据异常检测，请耐心等待（约1-3分钟）…');
@@ -491,12 +992,9 @@
                             statsHtml += '</div>';
                         }
                         document.getElementById('statsPreview').innerHTML = statsHtml;
-                        var abnormalArea = document.getElementById('abnormalArea');
-                        abnormalArea.style.display = 'block';
-                        setRichContent(document.getElementById('abnormalReport'), res.report)
-                            .then(function() {
-                                abnormalArea.scrollIntoView({behavior: 'smooth'});
-                            });
+                        document.getElementById('abnormalReport').innerText = res.report;
+                        document.getElementById('abnormalArea').style.display = 'block';
+                        document.getElementById('abnormalArea').scrollIntoView({behavior: 'smooth'});
                         showToast('异常检测完成！');
                         hideLoading();
                     } else {
@@ -512,8 +1010,9 @@
             xhr.send(JSON.stringify({
                 experiment_name: '{{name}}',
                 mod_name: '{{num}}',
-                columns: lastUserData.columns,
-                data: lastUserData.data,
+                columns: lastUserData.columns || [],
+                data: lastUserData.data || [],
+                tables: lastUserData.tables || {},
                 pdf_text: ''
             }));
         }
@@ -606,11 +1105,7 @@
                     if (res.report) {
                         var reportArea = document.getElementById('reportArea');
                         reportArea.style.display = 'block';
-                        document.getElementById('reportContent').textContent = res.report;
-                        setRichContent(
-                            document.getElementById('reportPreview'),
-                            res.preview || '格式化预览暂不可用，请展开下方区域查看完整 LaTeX 源码。'
-                        );
+                        document.getElementById('reportContent').innerText = res.report;
                         
                         // 处理 TEX 下载链接
                         var texBtn = document.getElementById('texDownloadBtn');
@@ -654,7 +1149,7 @@
         }
 
         function copyReport() {
-            var text = document.getElementById('reportContent').textContent;
+            var text = document.getElementById('reportContent').innerText;
             navigator.clipboard.writeText(text).then(function() {
                 showToast('已复制到剪贴板');
             }).catch(function() {
@@ -682,5 +1177,6 @@
             setTimeout(function() { t.style.display = 'none'; }, duration || 2000);
         }
     </script>
+    <script src="/static/js/unified-experiment.js"></script>
 </body>
 </html>

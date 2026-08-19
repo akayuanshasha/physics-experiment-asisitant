@@ -94,3 +94,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "测量弹簧参数的数据输入与处理。",
+        [make_table("table1", "测量弹簧参数数据", ["距离L/mm","较宽暗条纹宽度/mm","较窄暗条纹宽度/mm"],
+                    sample=[["264.5","0.86","0.075"],["","0.874","0.079"],["","0.817","0.057"],["","0.813","0.053"],["","0.808","0.071"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

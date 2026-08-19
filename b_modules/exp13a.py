@@ -88,3 +88,24 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "整流滤波（信号源频率对滤波效果的影响）的数据输入与处理。",
+        [make_table(
+            "table1",
+            "整流滤波（信号源频率对滤波效果的影响）数据",
+            ["f(Hz)","π型RC电路U_DC(V)","π型RC电路U_AC(V)","全波滤波电路U_DC(V)","全波滤波电路U_AC(V)"],
+            sample=[["20","1.042","0.5971","1.939","1.233"],["50","1.124","0.4806","1.987","1.169"],["100","1.236","0.3257","2.090","1.044"],["200","1.355","0.1670","2.286","0.832"],["500","1.479","0.0450","2.606","0.491"],["1000","1.525","0.0123","2.769","0.276"],["2000","1.553","0.0003","2.840","0.0630"]],
+            text_columns=[],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

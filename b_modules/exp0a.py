@@ -42,3 +42,25 @@ def handle(workpath, extension):
     except:
         traceback.print_exc()  # 打印错误
         return 1  # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "平均值、标准差、不确定度计算的数据输入与处理。",
+        [make_table(
+            "table1",
+            "平均值、标准差、不确定度计算数据",
+            ["x","单位","仪器最大允差Δ_仪","估读最大允差Δ_估","置信系数C","置信概率P"],
+            sample=[["80.01","m","0.02","0.05","3","0.95"],["80.13","","","","",""],["79.96","","","","",""],["79.99","","","","",""],["80.12","","","","",""]],
+            text_columns=[1],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    # 旧算法把 CSV 第一行当作物理量符号，需保留 schema 表头。
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

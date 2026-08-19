@@ -1,0 +1,22 @@
+<nav class="primary-switcher-shell" aria-label="主要功能">
+    <div class="primary-switcher"
+         data-primary-switcher
+         data-current="{{ active_page }}"
+         data-active="{{ active_page }}">
+        <span class="primary-switcher__indicator" aria-hidden="true"></span>
+        <a class="primary-switcher__link{% if active_page == 'experiments' %} is-active{% endif %}"
+           data-switch-target="experiments"
+           href="/"
+           {% if active_page == 'experiments' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">🧪</span>
+            <span>实验列表</span>
+        </a>
+        <a class="primary-switcher__link{% if active_page == 'assistant' %} is-active{% endif %}"
+           data-switch-target="assistant"
+           href="/chat"
+           {% if active_page == 'assistant' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">💬</span>
+            <span>AI助教问答</span>
+        </a>
+    </div>
+</nav>

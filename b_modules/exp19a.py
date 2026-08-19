@@ -57,3 +57,24 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "干涉法测微小量（测曲率半径）的数据输入与处理。",
+        [make_table(
+            "table1",
+            "干涉法测微小量（测曲率半径）数据",
+            ["单位: mm"," 第 5 圈"," 第 10 圈"," 第 15 圈"," 第 20 圈"," 第 25 圈"," 第 30 圈"],
+            sample=[["测直径第 1 次 (右)"," 4.981"," 5.467"," 5.935"," 6.600"," 7.413"," 8.561"],["测直径第 1 次 (左)"," 14.303"," 13.893"," 13.548"," 13.076"," 12.486"," 11.119"],["测直径第 2 次 (右)"," 6.271"," 6.639"," 7.056"," 7.532"," 8.078"," 8.793"],["测直径第 2 次 (左)"," 15.524"," 15.115"," 14.593"," 14.082"," 13.395"," 12.614"],["测直径第 3 次 (右)"," 3.728"," 4.154"," 4.569"," 5.069"," 5.705"," 6.481"],["测直径第 3 次 (左)"," 12.410"," 11.899"," 11.487"," 10.831"," 10.305"," 9.526"]],
+            text_columns=[0],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

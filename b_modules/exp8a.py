@@ -88,3 +88,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "匀变速运动中速度与加速度的测量的数据输入与处理。",
+        [make_table("table1", "匀变速运动中速度与加速度的测量数据", ["挡光宽度Δs/mm","滑块初始位置距光电门s/cm","第1次挡光时间/ms","第2次挡光时间/ms","第3次挡光时间/ms"],
+                    sample=[["10.1","20","38.65","38.68","38.67"],["垫块高h/cm","30","31.58","31.6","31.61"],["1.498","40","27.35","27.34","27.37"],["斜面长L/cm","50","24.46","24.48","24.5"],["86.1","60","22.33","22.31","22.3"]], text_columns=[0])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

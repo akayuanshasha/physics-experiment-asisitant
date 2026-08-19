@@ -54,3 +54,24 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "半导体温度计的数据输入与处理。",
+        [make_table(
+            "table1",
+            "半导体温度计数据",
+            ["电流 I/µA"],
+            sample=[["0.0"],["6.0"],["12.0"],["18.0"],["23.7"],["29.0"],["34.0"],["38.7"],["43.0"],["46.4"],["50.0"]],
+            text_columns=[],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

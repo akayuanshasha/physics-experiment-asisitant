@@ -59,3 +59,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "研究三种碰撞状态下的守恒定律的数据输入与处理。",
+        [make_table("table1", "研究三种碰撞状态下的守恒定律数据", ["m1/g","Δt10/ms","Δt1/ms","Δt2/ms"],
+                    sample=[["329.8","158.51","385.99","152.23"],["m2/g","162.13","347.34","175.15"],["174","154.83","364.93","157.37"],["挡光宽度Δs/mm","162.09","419.08","154.63"],["4.993","155.93","385.49","149.66"]], text_columns=[0])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

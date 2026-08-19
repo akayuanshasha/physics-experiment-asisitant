@@ -86,3 +86,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "密立根油滴电量与电荷数线性回归分析的数据输入与处理。",
+        [make_table("table1", "密立根油滴电量与电荷数线性回归分析数据", ["q/E-18 c","n"],
+                    sample=[["2.098","13"],["2.532","16"],["2.463","15"],["3.712","23"],["6.984","44"],["7.607","47"],["5.702","36"],["2.367","15"],["4.413","28"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

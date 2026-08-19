@@ -100,3 +100,24 @@ def handle(workpath, extension):
     except:
         traceback.print_exc()  # 打印错误
         return 1  # failed
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "硅光电池开路电压、短路电流与光照特性测量的数据输入与处理。",
+        [make_table(
+            "table1",
+            "硅光电池开路电压、短路电流与光照特性测量数据",
+            ["Uoc/v","Ur/mv"],
+            sample=[["4.5","25"],["4.1","16"],["3.7","11"],["3.4","8"],["3.1","6"],["2.9","5"],["2.7","4"]],
+            text_columns=[],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

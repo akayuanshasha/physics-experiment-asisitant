@@ -63,3 +63,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "光电效应验证饱和光电流与光强（距离的负二次方）成正比的数据输入与处理。",
+        [make_table("table1", "光电效应验证饱和光电流与光强（距离的负二次方）成正比数据", ["I_436/nA","I_546/nA"],
+                    sample=[["5.52","0.65"],["4.58","0.54"],["3.96","0.46"],["3.40","0.40"],["2.95","0.35"],["2.60","0.30"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

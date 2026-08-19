@@ -1,0 +1,152 @@
+{
+  "exp26": {
+    "name": "磁阻效应",
+    "category": "电磁学",
+    "text_length": 2208,
+    "source_file": "磁阻效应（实验指导）.pdf"
+  },
+  "exp27": {
+    "name": "非平衡电桥",
+    "category": "电磁学",
+    "text_length": 8311,
+    "source_file": "非平衡电桥（实验指导）.pdf"
+  },
+  "exp28": {
+    "name": "霍尔效应",
+    "category": "电磁学",
+    "text_length": 3503,
+    "source_file": "霍尔效应（实验指导）.pdf"
+  },
+  "exp29": {
+    "name": "交流谐振电路",
+    "category": "电磁学",
+    "text_length": 11643,
+    "source_file": "交流谐振电路（实验指导）.pdf"
+  },
+  "exp30": {
+    "name": "介电常数",
+    "category": "电磁学",
+    "text_length": 3712,
+    "source_file": "介电常数（实验指导）.docx"
+  },
+  "exp31": {
+    "name": "数字表改装",
+    "category": "电磁学",
+    "text_length": 8592,
+    "source_file": "数字表改装（实验指导）.pdf"
+  },
+  "exp32": {
+    "name": "双臂电桥",
+    "category": "电磁学",
+    "text_length": 5100,
+    "source_file": "双臂电桥（实验指导）.pdf"
+  },
+  "exp33": {
+    "name": "对切透镜的光学实验",
+    "category": "光学",
+    "text_length": 5226,
+    "source_file": "对切透镜的光学实验（实验指导）.docx"
+  },
+  "exp34": {
+    "name": "光纤传感器",
+    "category": "光学",
+    "text_length": 16915,
+    "source_file": "光纤传感器（实验指导）.pdf"
+  },
+  "exp35": {
+    "name": "迈氏干涉仪",
+    "category": "光学",
+    "text_length": 8248,
+    "source_file": "迈氏干涉仪（实验指导）.pdf"
+  },
+  "exp36": {
+    "name": "偏振光",
+    "category": "光学",
+    "text_length": 7881,
+    "source_file": "偏振光（实验指导）.pdf"
+  },
+  "exp37": {
+    "name": "摄谱/单色仪",
+    "category": "光学",
+    "text_length": 17996,
+    "source_file": "摄谱_单色仪（实验指导）.pdf"
+  },
+  "exp38": {
+    "name": "双光栅实验",
+    "category": "光学",
+    "text_length": 4856,
+    "source_file": "双光栅实验（实验指导）.pdf"
+  },
+  "exp39": {
+    "name": "F-H实验",
+    "category": "近代物理",
+    "text_length": 4347,
+    "source_file": "F-H实验（实验指导）.pdf"
+  },
+  "exp40": {
+    "name": "测量金属丝的杨氏模量及泊松比",
+    "category": "力学",
+    "text_length": 3582,
+    "source_file": "测量金属丝的杨氏模量及泊松比（实验指导）.pdf"
+  },
+  "exp41": {
+    "name": "超声定位与形貌成像",
+    "category": "力学",
+    "text_length": 9480,
+    "source_file": "超声光栅（实验指导）.pdf"
+  },
+  "exp42": {
+    "name": "超声光栅",
+    "category": "力学",
+    "text_length": 9480,
+    "source_file": "超声光栅（实验指导）.pdf"
+  },
+  "exp43": {
+    "name": "刚体转动惯量",
+    "category": "力学",
+    "text_length": 4507,
+    "source_file": "刚体转动惯量（实验指导）.pdf"
+  },
+  "exp44": {
+    "name": "凯特摆",
+    "category": "力学",
+    "text_length": 3448,
+    "source_file": "凯特摆（实验指导）.docx"
+  },
+  "exp45": {
+    "name": "空气阻尼测定实验",
+    "category": "力学",
+    "text_length": 9274,
+    "source_file": "空气阻尼测定实验（实验指导）.pdf"
+  },
+  "exp46": {
+    "name": "导热系数",
+    "category": "热学",
+    "text_length": 12771,
+    "source_file": "导热系数（实验指导）.pdf"
+  },
+  "exp47": {
+    "name": "接触角仪",
+    "category": "热学",
+    "text_length": 7757,
+    "source_file": "接触角仪（实验指导）.pdf"
+  },
+  "exp48": {
+    "name": "传感器",
+    "category": "综合",
+    "text_length": 4439,
+    "source_file": "传感器（实验指导）.pdf"
+  },
+  "exp49": {
+    "name": "电子小制作",
+    "category": "综合",
+    "text_length": 6593,
+    "source_file": "电子小制作（实验指导）.pdf"
+  },
+  "exp50": {
+    "name": "医学物理实验",
+    "category": "综合",
+    "text_length": 15934,
+    "source_file": "医学物理实验（实验指导）.pdf"
+  }
+}

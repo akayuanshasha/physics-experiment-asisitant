@@ -67,3 +67,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "表面张力（用金属圈测量）的数据输入与处理。",
+        [make_table("table1", "表面张力（用金属圈测量）数据", ["弹簧劲度系数 N/m","金属圈直径/cm","l_0/cm","极限位置刻度/cm"],
+                    sample=[["0.85445","3.32","1.24","2.15"],["","3.31","","2.15"],["","3.39","","2.08"],["","","","2.11"],["","","","2.13"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

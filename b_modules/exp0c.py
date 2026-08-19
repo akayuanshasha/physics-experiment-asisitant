@@ -45,3 +45,24 @@ def handle(workpath, extension):
     except:
         traceback.print_exc()  # 打印错误
         return 1  # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "表达式及合成不确定度计算的数据输入与处理。",
+        [make_table(
+            "table1",
+            "表达式及合成不确定度计算数据",
+            ["表达式","变量符号","变量对应值","变量对应不确定度","常量符号","常量对应值","运算结果的单位","置信概率P"],
+            sample=[["k=a*(b^2+c)","a","0.6976","0.0021","c","1.567","m/s^2","0.95"],["","b","1.677","0.0064","","","",""]],
+            text_columns=[0,1,4,6],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

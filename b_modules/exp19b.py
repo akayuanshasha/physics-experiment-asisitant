@@ -75,3 +75,24 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "干涉法测微小量（测头发丝直径）的数据输入与处理。",
+        [make_table(
+            "table1",
+            "干涉法测微小量（测头发丝直径）数据",
+            ["单位: mm"," 第 1 次"," 第 2 次"," 第 3 次"],
+            sample=[["测 20 根条纹 (左端点)"," 6.098"," 17.622"," 26.788"],["测 20 根条纹 (右端点)"," 2.968"," 14.132"," 23.133"],["测总干涉条纹长度 (左端点)"," 0.932"," 0.867"," 0.916"],["测总干涉条纹长度 (右端点)"," 35.463"," 35.677"," 35.693"]],
+            text_columns=[0],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

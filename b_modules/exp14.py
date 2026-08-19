@@ -73,3 +73,24 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "直流电源特性的数据输入与处理。",
+        [make_table(
+            "table1",
+            "直流电源特性数据",
+            ["R/Ω","U_DC/V","U_AC/V"],
+            sample=[["20","0.0376","0.01629"],["100","0.17918","0.06724"],["300","0.4889","0.123"],["500","0.7453","0.1356"],["700","0.9609","0.1354"],["900","1.1445","0.1317"],["1000","1.2269","0.1284"],["1100","1.3034","0.1255"],["1300","1.4421","0.1197"],["1500","1.5641","0.1142"],["1700","1.6729","0.1089"],["2000","1.8159","0.1018"]],
+            text_columns=[],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

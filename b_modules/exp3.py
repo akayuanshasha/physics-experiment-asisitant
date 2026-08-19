@@ -122,3 +122,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "落球法测定液体的粘度的数据输入与处理。",
+        [make_table("table1", "落球法测定液体的粘度数据", ["钢球密度ρ/(g/cm^3)","油的密度ρ0/(g/cm^3)","重力加速度g/(m/s^2)","液面高度h/cm","匀速下降区l/cm ","量筒直径D/mm ","小球直径d/mm","下落时间t/s"],
+                    sample=[["7.874","0.9552","9.7947","30.92","20.02","89.2","2.372","6.22"],["","","","30.9","19.98","89.24","2.377","6.24"],["","","","30.93","19.99","89.22","2.373","6.2"],["","","","","","","2.376","6.33"],["","","","","","","2.375","6.28"],["","","","","","","2.372","6.32"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

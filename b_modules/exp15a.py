@@ -64,3 +64,24 @@ def handle(workpath, extension):
     except:
         traceback.print_exc()  # 打印错误
         return 1  # failed
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "硅光电池暗伏安特性测量的数据输入与处理。",
+        [make_table(
+            "table1",
+            "硅光电池暗伏安特性测量数据",
+            ["U/V","I/mA"],
+            sample=[["1","1"],["2","1"],["3","4"],["4","5"],["6","1"],["7","4"]],
+            text_columns=[],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

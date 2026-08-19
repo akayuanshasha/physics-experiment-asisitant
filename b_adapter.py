@@ -24,7 +24,6 @@ from plugins import ExperimentPlugin, PluginRegistry
 
 # B 模块所在目录
 _B_MODULES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "b_modules")
-_B_STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "b_static")
 _PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # 确保 b_modules 在 sys.path 中（这样 from head import * 才能工作）
@@ -41,37 +40,17 @@ def _discover_b_modules():
     for fname in os.listdir(_B_MODULES_DIR):
         if fname.startswith("exp") and fname.endswith(".py"):
             modname = fname[:-3]  # 去掉 .py
+            old_cwd = os.getcwd()
             try:
                 # 临时切换到 b_modules 目录，以便模块内的相对路径能正常工作
-                old_cwd = os.getcwd()
                 os.chdir(_B_MODULES_DIR)
                 mod = importlib.import_module(modname)
-                os.chdir(old_cwd)
                 modules[modname] = mod
             except Exception as e:
                 print(f"  [警告] 无法导入 b_modules/{fname}: {e}")
+            finally:
+                os.chdir(old_cwd)
     return modules
-
-
-def _get_example_data(mod_name):
-    """读取B模块的示例数据CSV，返回列名和示例数据"""
-    csv_path = os.path.join(_B_STATIC_DIR, "experiment", mod_name)
-    if not os.path.isdir(csv_path):
-        return None, None
-    
-    # 查找示例数据文件
-    for f in os.listdir(csv_path):
-        if "示例数据" in f and f.endswith(".csv"):
-            full_path = os.path.join(csv_path, f)
-            try:
-                import chardet
-                with open(full_path, 'rb') as fh:
-                    encode = chardet.detect(fh.read())['encoding']
-                df = pd.read_csv(full_path, header=0, encoding=encode, dtype=str, keep_default_na=False)
-                return list(df.columns), df.values.tolist()
-            except Exception:
-                return None, None
-    return None, None
 
 
 class BModuleAdapter(ExperimentPlugin):
@@ -83,10 +62,11 @@ class BModuleAdapter(ExperimentPlugin):
     def __init__(self, mod_name, mod):
         self._mod_name = mod_name
         self._mod = mod
-        self.name = mod.name()
+        display_name = getattr(mod, "display_name", None)
+        self.name = display_name() if callable(display_name) else mod.name()
         self.category = self._infer_category(mod_name)
         self.description = f"{self.name}（B同学模块适配）"
-        self.required_fields = self._infer_fields(mod_name)
+        self.required_fields = self._infer_fields()
     
     @staticmethod
     def _infer_category(mod_name):
@@ -96,7 +76,7 @@ class BModuleAdapter(ExperimentPlugin):
         base = ''.join(c for c in num if c.isdigit())
         base = int(base) if base else 0
         
-        # 特殊分类映射
+        # 分类映射（一级实验 + 二级实验）
         _CATEGORY_MAP = {
             0: "基础工具",      # exp0a/b/c: 不确定度、最小二乘法
             1: "力学",          # 自由落体、单摆
@@ -124,15 +104,50 @@ class BModuleAdapter(ExperimentPlugin):
             23: "近代物理",     # 光电效应
             24: "近代物理",     # 密立根油滴
             25: "综合",         # 生活中的物理
+            # ── 二级大物实验 ──
+            26: "电磁学",       # 磁阻效应
+            27: "电磁学",       # 非平衡电桥
+            28: "电磁学",       # 霍尔效应
+            29: "电磁学",       # 交流谐振电路
+            30: "电磁学",       # 介电常数
+            31: "电磁学",       # 数字表改装
+            32: "电磁学",       # 双臂电桥
+            33: "光学",         # 对切透镜的光学实验
+            34: "光学",         # 光纤传感器
+            35: "光学",         # 迈氏干涉仪
+            36: "光学",         # 偏振光
+            37: "光学",         # 摄谱/单色仪
+            38: "光学",         # 双光栅实验
+            39: "近代物理",     # F-H实验
+            40: "力学",         # 杨氏模量及泊松比
+            41: "力学",         # 超声光栅
+            42: "力学",         # 超声定位与形貌成像
+            43: "力学",         # 刚体转动惯量
+            44: "力学",         # 凯特摆
+            45: "力学",         # 空气阻尼测定实验
+            46: "热学",         # 导热系数
+            47: "热学",         # 接触角仪
+            48: "综合",         # 传感器
+            49: "综合",         # 电子小制作
+            50: "综合",         # 医学物理实验
         }
-        return _CATEGORY_MAP.get(base, "综合")
+        subject = _CATEGORY_MAP.get(base, "综合")
+        if base == 0:
+            return "基础工具"
+        level = "一级" if base <= 25 else "二级"
+        return f"{level}-{subject}"
     
-    def _infer_fields(self, mod_name):
-        """从示例数据CSV推断需要的数据字段"""
-        cols, _ = _get_example_data(mod_name)
-        if cols:
-            return cols
-        return []
+    def _infer_fields(self):
+        """从模块自己的 schema 汇总字段，不再读取静态示例 CSV。"""
+        schema_factory = getattr(self._mod, "schema", None)
+        if not callable(schema_factory):
+            return []
+        schema = schema_factory()
+        return [
+            column.get("label", column.get("id", ""))
+            for table in schema.get("tables", [])
+            for column in table.get("columns", [])
+        ]
     
     def calculate(self, data, constants=None):
         """调用B模块的handle()处理数据
@@ -141,6 +156,7 @@ class BModuleAdapter(ExperimentPlugin):
         """
         # 创建临时工作目录
         work_dir = tempfile.mkdtemp(prefix="bmod_")
+        old_cwd = os.getcwd()
         
         try:
             # 将 dict 数据写入 CSV
@@ -150,13 +166,10 @@ class BModuleAdapter(ExperimentPlugin):
             df.to_csv(csv_path, index=False, encoding='utf-8-sig')
             
             # 切换到B模块目录（因为字体路径等依赖相对路径）
-            old_cwd = os.getcwd()
             os.chdir(_B_MODULES_DIR)
             
             # 调用B模块的handle
             result = self._mod.handle(work_dir + os.sep, "csv")
-            
-            os.chdir(old_cwd)
             
             if result == 0:
                 # 成功：读取生成的 Word 文档路径
@@ -180,11 +193,12 @@ class BModuleAdapter(ExperimentPlugin):
                 }
         except Exception as e:
             traceback.print_exc()
-            os.chdir(old_cwd)
             return {
                 "status": "error",
                 "message": f"实验「{self.name}」处理出错：{str(e)}"
             }
+        finally:
+            os.chdir(old_cwd)
     
     def generate_chart(self, data, results, save_dir):
         """从B模块的处理结果中提取图表"""
@@ -206,27 +220,24 @@ class BModuleAdapter(ExperimentPlugin):
 
 
 # ──────────────────────────────────────────────
-# 自动注册所有B同学的实验模块
+# 自动注册所有实验模块
 # ──────────────────────────────────────────────
 def register_all_b_modules():
-    """扫描并注册所有B同学的实验模块为插件"""
+    """扫描并注册所有 ``b_modules/expXX.py`` 实验模块。"""
     b_modules = _discover_b_modules()
     count = 0
     
     for mod_name, mod in sorted(b_modules.items()):
         try:
-            # 跳过没有实现handle的模块（如磁力摆）
-            exp_name = mod.name()
-            
             # 创建适配器并注册
             adapter = BModuleAdapter(mod_name, mod)
             
             # 手动注册到 PluginRegistry
             PluginRegistry._plugins[adapter.name] = adapter
-            print(f"  [B模块适配] {mod_name} → 「{exp_name}」({adapter.category})")
+            print(f"  [B模块适配] {mod_name} → 「{adapter.name}」({adapter.category})")
             count += 1
         except Exception as e:
             print(f"  [警告] 无法注册 b_modules/{mod_name}: {e}")
     
-    print(f"  共注册 {count} 个B同学实验模块")
+    print(f"  共注册 {count} 个实验模块")
     return count

@@ -66,3 +66,25 @@ def handle(workpath, extension):
     except:
         traceback.print_exc()  # 打印错误
         return 1  # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "最小二乘法线性回归的数据输入与处理。",
+        [make_table(
+            "table1",
+            "最小二乘法线性回归数据",
+            ["x","y","X轴单位","Y轴单位","斜率单位"],
+            sample=[["10","11","N","m","m/N"],["20","20","","",""],["30","29","","",""],["40","44","","",""],["50","51","","",""],["60","60","","",""],["70","72","","",""],["80","81","","",""]],
+            text_columns=[2,3,4],
+        )],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    # 旧算法把 CSV 第一行当作坐标轴符号，需保留 schema 表头。
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

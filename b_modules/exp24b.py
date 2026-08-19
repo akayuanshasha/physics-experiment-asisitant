@@ -123,3 +123,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "平衡测量法测油滴带电量的数据输入与处理。",
+        [make_table("table1", "平衡测量法测油滴带电量数据", ["t/s","U/V","t/s","U/V","t/s","U/V"],
+                    sample=[["34.8","-143","32.56","164","33.43","168"],["34.87","-153","32.53","159","35.16","164"],["35.77","-157","33.69","166","34.99","160"],["36.4","-156","34.01","171","33.99","157"],["36.04","-147","32.12","174","33.87","156"],["35.2","-151","33.04","178","33.98","172"],["34.77","-146","33.53","181","33.5","165"],["36.17","-145","32.26","185","33.41","162"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

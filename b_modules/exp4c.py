@@ -39,3 +39,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "模拟太空失重环境用动力学方法测量物体的质量的数据输入与处理。",
+        [make_table("table1", "模拟太空失重环境用动力学方法测量物体的质量数据", ["空盘10T/s","加砝码10T/s","再加物体10T/s","砝码质量/g"],
+                    sample=[["12.18","17.19","19.23","99.77"]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

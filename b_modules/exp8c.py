@@ -77,3 +77,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "匀加速运动验证牛顿第二定律的数据输入与处理。",
+        [make_table("table1", "匀加速运动验证牛顿第二定律数据", ["砝码盘和砝码总质量m/g","砝码盘和盘中砝码的质量mn/g","第1次挡光时间/ms","第2次挡光时间/ms","第3次挡光时间/ms"],
+                    sample=[["353","26","15.88","15.93","16.21"],["滑轮等效质量me/g","21","18.21","18.28","18.08"],["0.3","16","20.89","21.01","20.98"],["滑块初始位置距光电门s/cm","11","25.5","25.41","25.43"],["50","6","35.76","35.75","35.76"],["挡光宽度Δs/mm","1","100.99","101.2","100.85"],["9.84","","","",""]], text_columns=[0])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

@@ -6,10 +6,11 @@
 核心流程：
 1. AI 分析实验数据关系，判断应该画什么图（如 h-t²、U-I 等）
 2. 根据 AI 建议的配置生成图表
-3. 支持线性拟合、二次函数拟合等
+3. 支持多种拟合模型：线性、二次、指数、幂函数、对数、反比
+4. auto 模式自动尝试所有模型，选 R² 最高的
 
 支持：
-- 散点图 + 线性拟合线
+- 散点图 + 多种拟合线
 - 数据变换（x²、√x、1/x 等）
 - 跨列运算（如 nT÷n 得到 T，再平方得 T²）
 - 自定义坐标轴标签和标题
@@ -17,6 +18,7 @@
 """
 
 import os
+import re
 import json
 import numpy as np
 import matplotlib
@@ -43,10 +45,44 @@ COLORS = ["#4472C4", "#E74C3C", "#2ECC71", "#F39C12", "#9B59B6",
 STYLES = ["o", "s", "^", "D", "v", "p", "h", "*"]
 
 
+def _html_to_plain(text):
+    """将含 HTML 标签的物理量文本转为纯文本（用于 matplotlib 坐标轴标签）"""
+    if not text:
+        return text
+    # 下标字符映射
+    _sub_map = {'0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄',
+                '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+                'a': 'ₐ', 'e': 'ₑ', 'i': 'ᵢ', 'o': 'ₒ', 'u': 'ᵤ',
+                'x': 'ₓ', '+': '₊', '-': '₋'}
+    _sup_map = {'0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+                '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+                '+': '⁺', '-': '⁻'}
+
+    def _to_sub(m):
+        inner = m.group(1)
+        return ''.join(_sub_map.get(c, c) for c in inner)
+
+    def _to_sup(m):
+        inner = m.group(1)
+        return ''.join(_sup_map.get(c, c) for c in inner)
+
+    text = re.sub(r'<sub>(.*?)</sub>', _to_sub, text)
+    text = re.sub(r'<sup>(.*?)</sup>', _to_sup, text)
+    text = re.sub(r'<[^>]+>', '', text)  # 移除剩余标签
+    return text
+
+
 def _setup_chinese():
     """配置 matplotlib 中文支持"""
     plt.rcParams["font.family"] = _CN_FONT
     plt.rcParams["axes.unicode_minus"] = False
+
+
+def _calc_r2(y_arr, y_pred):
+    """计算决定系数 R²"""
+    ss_res = np.sum((y_arr - y_pred) ** 2)
+    ss_tot = np.sum((y_arr - np.mean(y_arr)) ** 2)
+    return 1 - ss_res / ss_tot if ss_tot != 0 else 0
 
 
 def _linear_fit(x, y):
@@ -56,12 +92,224 @@ def _linear_fit(x, y):
     A = np.vstack([x_arr, np.ones_like(x_arr)]).T
     a, b = np.linalg.lstsq(A, y_arr, rcond=None)[0]
     y_pred = a * x_arr + b
-    ss_res = np.sum((y_arr - y_pred) ** 2)
-    ss_tot = np.sum((y_arr - np.mean(y_arr)) ** 2)
-    r2 = 1 - ss_res / ss_tot if ss_tot != 0 else 0
+    r2 = _calc_r2(y_arr, y_pred)
     x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
     y_line = a * x_line + b
     return a, b, r2, x_line, y_line
+
+
+def _quadratic_fit(x, y):
+    """二次拟合 y = ax² + bx + c，返回 (a, b, c, r2, x_line, y_line)"""
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    A = np.vstack([x_arr**2, x_arr, np.ones_like(x_arr)]).T
+    coeffs = np.linalg.lstsq(A, y_arr, rcond=None)[0]
+    a, b, c = coeffs
+    y_pred = a * x_arr**2 + b * x_arr + c
+    r2 = _calc_r2(y_arr, y_pred)
+    x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
+    y_line = a * x_line**2 + b * x_line + c
+    return a, b, c, r2, x_line, y_line
+
+
+def _exponential_fit(x, y):
+    """指数拟合 y = a·e^(bx)，对 y 取 ln 后线性拟合，返回 (a, b, r2, x_line, y_line)"""
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    # 仅保留 y > 0 的点
+    mask = y_arr > 0
+    if np.sum(mask) < 2:
+        return None
+    x_m, y_m = x_arr[mask], y_arr[mask]
+    ln_y = np.log(y_m)
+    A = np.vstack([x_m, np.ones_like(x_m)]).T
+    b, ln_a = np.linalg.lstsq(A, ln_y, rcond=None)[0]
+    a = np.exp(ln_a)
+    y_pred = a * np.exp(b * x_arr)
+    r2 = _calc_r2(y_arr, y_pred)
+    x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
+    y_line = a * np.exp(b * x_line)
+    return a, b, r2, x_line, y_line
+
+
+def _power_fit(x, y):
+    """幂函数拟合 y = a·x^b，对两边取 ln 后线性拟合，返回 (a, b, r2, x_line, y_line)"""
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    mask = (x_arr > 0) & (y_arr > 0)
+    if np.sum(mask) < 2:
+        return None
+    x_m, y_m = x_arr[mask], y_arr[mask]
+    ln_x, ln_y = np.log(x_m), np.log(y_m)
+    A = np.vstack([ln_x, np.ones_like(ln_x)]).T
+    b, ln_a = np.linalg.lstsq(A, ln_y, rcond=None)[0]
+    a = np.exp(ln_a)
+    y_pred = a * np.power(x_arr, b)
+    r2 = _calc_r2(y_arr, y_pred)
+    x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
+    y_line = a * np.power(x_line, b)
+    return a, b, r2, x_line, y_line
+
+
+def _log_fit(x, y):
+    """对数拟合 y = a·ln(x) + b，返回 (a, b, r2, x_line, y_line)"""
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    mask = x_arr > 0
+    if np.sum(mask) < 2:
+        return None
+    x_m, y_m = x_arr[mask], y_arr[mask]
+    ln_x = np.log(x_m)
+    A = np.vstack([ln_x, np.ones_like(ln_x)]).T
+    a, b = np.linalg.lstsq(A, y_m, rcond=None)[0]
+    y_pred_full = a * np.log(x_arr) + b
+    r2 = _calc_r2(y_arr, y_pred_full)
+    x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
+    y_line = a * np.log(x_line) + b
+    return a, b, r2, x_line, y_line
+
+
+def _inverse_fit(x, y):
+    """反比拟合 y = a/x + b，返回 (a, b, r2, x_line, y_line)"""
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    mask = x_arr != 0
+    if np.sum(mask) < 2:
+        return None
+    x_m, y_m = x_arr[mask], y_arr[mask]
+    inv_x = 1.0 / x_m
+    A = np.vstack([inv_x, np.ones_like(inv_x)]).T
+    a, b = np.linalg.lstsq(A, y_m, rcond=None)[0]
+    y_pred_full = a / x_arr + b
+    r2 = _calc_r2(y_arr, y_pred_full)
+    x_line = np.linspace(x_arr.min(), x_arr.max(), 200)
+    # 避免除以 0
+    x_line = x_line[x_line != 0]
+    y_line = a / x_line + b
+    return a, b, r2, x_line, y_line
+
+
+def _auto_best_fit(x, y):
+    """自动尝试所有拟合模型，返回 R² 最高的结果
+
+    返回: dict {
+        "type": str,          # 最优模型类型
+        "label": str,         # 模型中文名
+        "equation": str,      # 拟合方程
+        "r2": float,          # R²
+        "x_line": ndarray,    # 绘图用 x
+        "y_line": ndarray,    # 绘图用 y
+        "params": dict,       # 模型参数
+    }
+    """
+    x_arr = np.array(x, dtype=float)
+    y_arr = np.array(y, dtype=float)
+    n = len(x_arr)
+    if n < 2:
+        return None
+
+    candidates = []
+
+    # 1. 线性 y = ax + b  (k=2)
+    try:
+        a, b, r2, xl, yl = _linear_fit(x_arr, y_arr)
+        candidates.append({
+            "type": "linear", "label": "线性", "n_params": 2,
+            "equation": f"y = {a:.4f}x + {b:.4f}",
+            "r2": r2, "x_line": xl, "y_line": yl,
+            "params": {"a": a, "b": b}
+        })
+    except Exception:
+        pass
+
+    # 2. 二次 y = ax² + bx + c  (k=3)
+    if n >= 4:
+        try:
+            a, b, c, r2, xl, yl = _quadratic_fit(x_arr, y_arr)
+            candidates.append({
+                "type": "quadratic", "label": "二次", "n_params": 3,
+                "equation": f"y = {a:.4f}x² + {b:.4f}x + {c:.4f}",
+                "r2": r2, "x_line": xl, "y_line": yl,
+                "params": {"a": a, "b": b, "c": c}
+            })
+        except Exception:
+            pass
+
+    # 3. 指数 y = a·e^(bx)  (k=2)
+    try:
+        result = _exponential_fit(x_arr, y_arr)
+        if result is not None:
+            a, b, r2, xl, yl = result
+            candidates.append({
+                "type": "exponential", "label": "指数", "n_params": 2,
+                "equation": f"y = {a:.4f}·e^({b:.4f}x)",
+                "r2": r2, "x_line": xl, "y_line": yl,
+                "params": {"a": a, "b": b}
+            })
+    except Exception:
+        pass
+
+    # 4. 幂函数 y = a·x^b  (k=2)
+    try:
+        result = _power_fit(x_arr, y_arr)
+        if result is not None:
+            a, b, r2, xl, yl = result
+            candidates.append({
+                "type": "power", "label": "幂函数", "n_params": 2,
+                "equation": f"y = {a:.4f}·x^{b:.4f}",
+                "r2": r2, "x_line": xl, "y_line": yl,
+                "params": {"a": a, "b": b}
+            })
+    except Exception:
+        pass
+
+    # 5. 对数 y = a·ln(x) + b  (k=2)
+    try:
+        result = _log_fit(x_arr, y_arr)
+        if result is not None:
+            a, b, r2, xl, yl = result
+            candidates.append({
+                "type": "log", "label": "对数", "n_params": 2,
+                "equation": f"y = {a:.4f}·ln(x) + {b:.4f}",
+                "r2": r2, "x_line": xl, "y_line": yl,
+                "params": {"a": a, "b": b}
+            })
+    except Exception:
+        pass
+
+    # 6. 反比 y = a/x + b  (k=2)
+    try:
+        result = _inverse_fit(x_arr, y_arr)
+        if result is not None:
+            a, b, r2, xl, yl = result
+            candidates.append({
+                "type": "inverse", "label": "反比", "n_params": 2,
+                "equation": f"y = {a:.4f}/x + {b:.4f}",
+                "r2": r2, "x_line": xl, "y_line": yl,
+                "params": {"a": a, "b": b}
+            })
+    except Exception:
+        pass
+
+    if not candidates:
+        return None
+
+    # 用调整 R² 选择最优模型（惩罚参数更多的模型）
+    # Adj_R² = 1 - (1-R²)*(n-1)/(n-k-1)
+    for c in candidates:
+        k = c["n_params"]
+        if n > k + 1:
+            c["adj_r2"] = 1 - (1 - c["r2"]) * (n - 1) / (n - k - 1)
+        else:
+            c["adj_r2"] = c["r2"]  # 数据点不足时退化为普通 R²
+
+    best = max(candidates, key=lambda c: c["adj_r2"])
+    best["all_candidates"] = [
+        {"type": c["type"], "label": c["label"], "r2": round(c["r2"], 6),
+         "adj_r2": round(c["adj_r2"], 6), "equation": c["equation"]}
+        for c in sorted(candidates, key=lambda c: c["adj_r2"], reverse=True)
+    ]
+    return best
 
 
 # ──────────────────────────────────────────────
@@ -72,15 +320,26 @@ CHART_AI_PROMPT = """你是一位大学物理实验数据分析专家。
 用户会提供一个实验的名称和数据表格的列名及示例数据。
 你需要判断：
 1. 哪两列数据之间存在物理关系，应该作为图表的 X 和 Y 轴
-2. 这两个变量之间是什么关系（线性、二次函数、反比等）
-3. 为了验证这个关系，应该对数据做什么变换使其变成线性关系
+2. 这两个变量之间是什么函数关系（线性、二次、指数、幂函数、对数、反比等）
+3. 为了验证这个关系，应该对数据做什么变换使其变成线性关系（如果适用）
 4. 变换后的坐标轴标签应该怎么写
+5. 推荐哪种拟合模型
+
+支持的拟合模型：
+- linear: 线性 y = ax + b
+- quadratic: 二次 y = ax² + bx + c
+- exponential: 指数 y = a·e^(bx)
+- power: 幂函数 y = a·x^b
+- log: 对数 y = a·ln(x) + b
+- inverse: 反比 y = a/x + b
+- auto: 自动选择（系统会尝试所有模型，选 R² 最高的）
 
 例如：
-- 自由落体测重力加速度：h 与 t 是二次关系 h=½gt²，应该画 h 与 t² 的图，变换后是线性关系
-- 单摆测重力加速度：T² 与 L 是线性关系 T²=4π²L/g，应该画 L 与 T² 的图
-- 光电效应：遏止电压 U₀ 与频率 ν 是线性关系
-- 伏安特性：电流 I 与电压 U 是线性关系
+- 自由落体测重力加速度：h 与 t 是二次关系 h=½gt²，建议 fit="quadratic"，或画 h 与 t² 的图并 fit="linear"
+- 单摆测重力加速度：T² 与 L 是线性关系，fit="linear"
+- 光电效应：遏止电压 U₀ 与频率 ν 是线性关系，fit="linear"
+- RC 放电曲线：电压随时间指数衰减，fit="exponential"
+- 光强与距离：光强与距离平方成反比，fit="inverse"
 
 请严格按照以下 JSON 格式输出，不要输出其他内容：
 {
@@ -88,19 +347,21 @@ CHART_AI_PROMPT = """你是一位大学物理实验数据分析专家。
     "y_col": "Y轴列名（必须与提供的列名完全一致）",
     "x_transform": "none 或 square 或 sqrt 或 reciprocal",
     "y_transform": "none 或 square 或 sqrt 或 reciprocal",
-    "x_divide_by": "可选，如果需要先除以另一列再变换，填该列名（如 nT 列需要除以 n 列得到 T）",
+    "x_divide_by": "可选，如果需要先除以另一列再变换，填该列名",
     "y_divide_by": "可选，同上",
     "x_label": "变换后X轴的物理标签（含单位）",
     "y_label": "变换后Y轴的物理标签（含单位）",
     "title": "图表标题",
-    "fit": "linear",
+    "fit": "linear 或 quadratic 或 exponential 或 power 或 log 或 inverse 或 auto",
     "reason": "简要说明为什么这样选择（一句话）"
 }
 
 注意：
+- 如果原始数据是二次关系且你想直接拟合曲线，用 fit="quadratic"
+- 如果你想通过变量变换使其线性化，设置对应的 transform 并用 fit="linear"
+- 如果不确定哪种模型最合适，用 fit="auto"，系统会自动比较所有模型的 R² 并选最优
 - x_transform/y_transform 的含义：square 表示对原数据取平方，sqrt 表示取平方根，reciprocal 表示取倒数，none 表示不变换
-- x_divide_by/y_divide_by：当某列数据需要先除以另一列才有物理意义时使用。例如单摆实验中 nT/s 列是50个周期总时间，需要先除以 n 列得到周期 T，再对 T 取平方得 T²
-- 变换的目的是使两个变量之间的关系变成线性，从而通过线性拟合验证
+- x_divide_by/y_divide_by：当某列数据需要先除以另一列才有物理意义时使用
 - x_label/y_label 必须反映变换后的物理量，例如如果 X 轴是 t²，标签应写't²/s²'而不是't/s'"""
 
 
@@ -141,6 +402,8 @@ def ai_suggest_chart_config(experiment_name, columns, data_rows, llm_client=None
                 {"role": "user", "content": user_msg}
             ],
             temperature=0.1,
+            max_tokens=2048,
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
         )
         content = response.choices[0].message.content.strip()
 
@@ -313,7 +576,10 @@ def generate_chart(columns, data_rows, chart_config=None, save_name="chart.png")
 
     x_label = chart_config.get("x_label", columns[x_idx] if x_idx < len(columns) else "x")
     y_label = chart_config.get("y_label", columns[y_idx] if y_idx < len(columns) else "y")
-    title = chart_config.get("title", f"{y_label} vs {x_label}")
+    # 清理 HTML 标签用于 matplotlib 显示
+    x_label_clean = _html_to_plain(x_label)
+    y_label_clean = _html_to_plain(y_label)
+    title = chart_config.get("title", f"{y_label_clean} vs {x_label_clean}")
     fit_type = chart_config.get("fit")
 
     # 绘图
@@ -323,19 +589,105 @@ def generate_chart(columns, data_rows, chart_config=None, save_name="chart.png")
                label="测量数据", zorder=5, edgecolors="white", linewidth=0.5)
 
     fit_result = None
-    if fit_type == "linear" and len(x_arr) >= 2:
+    if fit_type == "auto" and len(x_arr) >= 3:
+        # 自动选择最优拟合模型
+        best = _auto_best_fit(x_arr, y_arr)
+        if best:
+            ax.plot(best["x_line"], best["y_line"], color=COLORS[1], linewidth=2,
+                    label=f"{best['label']}拟合: {best['equation']}\n$R^2$ = {best['r2']:.4f}")
+            fit_result = {
+                "type": best["type"],
+                "label": best["label"],
+                "equation": best["equation"],
+                "R2": round(best["r2"], 6),
+                "params": best["params"],
+                "all_candidates": best.get("all_candidates", [])
+            }
+    elif fit_type == "quadratic" and len(x_arr) >= 3:
+        a, b, c, r2, x_line, y_line = _quadratic_fit(x_arr, y_arr)
+        ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                label=f"二次拟合: y = {a:.4f}x² + {b:.4f}x + {c:.4f}\n$R^2$ = {r2:.4f}")
+        fit_result = {
+            "type": "quadratic", "label": "二次",
+            "equation": f"y = {a:.4f}x² + {b:.4f}x + {c:.4f}",
+            "R2": round(float(r2), 6),
+            "params": {"a": round(float(a), 6), "b": round(float(b), 6), "c": round(float(c), 6)}
+        }
+    elif fit_type == "exponential" and len(x_arr) >= 2:
+        result = _exponential_fit(x_arr, y_arr)
+        if result:
+            a, b, r2, x_line, y_line = result
+            ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                    label=f"指数拟合: y = {a:.4f}·e^({b:.4f}x)\n$R^2$ = {r2:.4f}")
+            fit_result = {
+                "type": "exponential", "label": "指数",
+                "equation": f"y = {a:.4f}·e^({b:.4f}x)",
+                "R2": round(float(r2), 6),
+                "params": {"a": round(float(a), 6), "b": round(float(b), 6)}
+            }
+    elif fit_type == "power" and len(x_arr) >= 2:
+        result = _power_fit(x_arr, y_arr)
+        if result:
+            a, b, r2, x_line, y_line = result
+            ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                    label=f"幂函数拟合: y = {a:.4f}·x^{b:.4f}\n$R^2$ = {r2:.4f}")
+            fit_result = {
+                "type": "power", "label": "幂函数",
+                "equation": f"y = {a:.4f}·x^{b:.4f}",
+                "R2": round(float(r2), 6),
+                "params": {"a": round(float(a), 6), "b": round(float(b), 6)}
+            }
+    elif fit_type == "log" and len(x_arr) >= 2:
+        result = _log_fit(x_arr, y_arr)
+        if result:
+            a, b, r2, x_line, y_line = result
+            ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                    label=f"对数拟合: y = {a:.4f}·ln(x) + {b:.4f}\n$R^2$ = {r2:.4f}")
+            fit_result = {
+                "type": "log", "label": "对数",
+                "equation": f"y = {a:.4f}·ln(x) + {b:.4f}",
+                "R2": round(float(r2), 6),
+                "params": {"a": round(float(a), 6), "b": round(float(b), 6)}
+            }
+    elif fit_type == "inverse" and len(x_arr) >= 2:
+        result = _inverse_fit(x_arr, y_arr)
+        if result:
+            a, b, r2, x_line, y_line = result
+            ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                    label=f"反比拟合: y = {a:.4f}/x + {b:.4f}\n$R^2$ = {r2:.4f}")
+            fit_result = {
+                "type": "inverse", "label": "反比",
+                "equation": f"y = {a:.4f}/x + {b:.4f}",
+                "R2": round(float(r2), 6),
+                "params": {"a": round(float(a), 6), "b": round(float(b), 6)}
+            }
+    elif fit_type == "linear" and len(x_arr) >= 2:
         a, b, r2, x_line, y_line = _linear_fit(x_arr, y_arr)
         ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
-                label=f"拟合线: y = {a:.4f}x + {b:.4f}\n$R^2$ = {r2:.4f}")
+                label=f"线性拟合: y = {a:.4f}x + {b:.4f}\n$R^2$ = {r2:.4f}")
         fit_result = {
-            "slope": round(float(a), 6),
-            "intercept": round(float(b), 6),
+            "type": "linear", "label": "线性",
+            "equation": f"y = {a:.4f}x + {b:.4f}",
             "R2": round(float(r2), 6),
-            "equation": f"y = {a:.4f}x + {b:.4f}"
+            "params": {"slope": round(float(a), 6), "intercept": round(float(b), 6)}
+        }
+    elif fit_type is None:
+        # 不做拟合，只画散点
+        pass
+    else:
+        # 默认回退到线性拟合
+        a, b, r2, x_line, y_line = _linear_fit(x_arr, y_arr)
+        ax.plot(x_line, y_line, color=COLORS[1], linewidth=2,
+                label=f"线性拟合: y = {a:.4f}x + {b:.4f}\n$R^2$ = {r2:.4f}")
+        fit_result = {
+            "type": "linear", "label": "线性",
+            "equation": f"y = {a:.4f}x + {b:.4f}",
+            "R2": round(float(r2), 6),
+            "params": {"slope": round(float(a), 6), "intercept": round(float(b), 6)}
         }
 
-    ax.set_xlabel(x_label, fontsize=12)
-    ax.set_ylabel(y_label, fontsize=12)
+    ax.set_xlabel(x_label_clean, fontsize=12)
+    ax.set_ylabel(y_label_clean, fontsize=12)
     ax.set_title(title, fontsize=14, fontweight="bold")
     ax.legend(fontsize=10, loc="best")
     ax.grid(True, linestyle="--", alpha=0.4)
@@ -406,7 +758,7 @@ def auto_detect_chart_config(columns, data_rows):
     config = {
         "x_col": x_idx,
         "y_col": y_idx,
-        "fit": "linear",
+        "fit": "auto",  # 自动选择最优拟合模型
     }
 
     # 根据列名关键词做特殊处理

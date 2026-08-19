@@ -97,3 +97,19 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
+
+from structured_support import handle_legacy_single_table, make_schema, make_table
+
+
+def schema():
+    """本实验唯一的前端输入结构与示例数据来源。"""
+    return make_schema(
+        "用转动定律测量物体的质量的数据输入与处理。",
+        [make_table("table1", "用转动定律测量物体的质量数据", ["r/cm","30T/s","L/cm","R/cm","30T/s","铜块2m/g"],
+                    sample=[["35.51","55.5","6.238","34.87","47.97","30"],["31.05","55.87","","","",""],["24.52","58.3","","","",""],["18.11","63.3","","","",""],["12.18","73.14","","","",""]])],
+        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
+    )
+
+
+def handle_structured(workpath, payload):
+    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)
