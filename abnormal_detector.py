@@ -92,7 +92,7 @@ class AbnormalDetector:
         self.client = llm_client
         self.model = model_name
 
-    def detect(self, experiment_name, pdf_text, columns, data_rows, analysis_hints=None):
+    def detect(self, experiment_name, pdf_text, columns, data_rows, analysis_hints=None, stats=None):
         """执行异常检测
 
         参数:
@@ -101,6 +101,7 @@ class AbnormalDetector:
             columns: list[str], 表格列名
             data_rows: list[list[str]], 表格数据行
             analysis_hints: str|None, 实验特定的分析提示（覆盖默认四维度）
+            stats: dict|None, 统计预分析结果（提供时注入 prompt 供模型核对）
 
         返回:
             str, 异常检测报告文本
@@ -114,7 +115,7 @@ class AbnormalDetector:
             system_prompt += "\n\n" + analysis_hints.strip()
 
         # 3. 构造用户 Prompt
-        user_prompt = self._build_user_prompt(experiment_name, pdf_text, columns, data_rows, table_md)
+        user_prompt = self._build_user_prompt(experiment_name, pdf_text, columns, data_rows, table_md, stats)
 
         # 4. 调用 LLM
         try:
@@ -147,8 +148,9 @@ class AbnormalDetector:
         # 先做统计预分析
         stats = self._statistical_analysis(columns, data_rows)
 
-        # 再调用 AI 检测
-        report = self.detect(experiment_name, pdf_text, columns, data_rows, analysis_hints=analysis_hints)
+        # 再调用 AI 检测（统计预分析结果注入 prompt，供模型直接核对引用）
+        report = self.detect(experiment_name, pdf_text, columns, data_rows,
+                             analysis_hints=analysis_hints, stats=stats)
 
         return {
             "report": report,
@@ -176,7 +178,24 @@ class AbnormalDetector:
         return "\n".join([header, separator] + rows)
 
     @staticmethod
-    def _build_user_prompt(experiment_name, pdf_text, columns, data_rows, table_md):
+    def _format_stats_md(stats):
+        """将统计预分析结果渲染为 Markdown 表格"""
+        lines = [
+            "| 列名 | 有效数据个数 | 均值 | 标准差σ | 最小值 | 最大值 | 3σ离群点(行号:数值) |",
+            "|---|---|---|---|---|---|---|"
+        ]
+        for col, s in stats.items():
+            outliers = ", ".join(
+                f"第{o['row']}行: {o['value']}" for o in s["outliers_3sigma"]
+            ) or "无"
+            lines.append(
+                f"| {col} | {s['n']} | {s['mean']} | {s['std']} | "
+                f"{s['min']} | {s['max']} | {outliers} |"
+            )
+        return "\n".join(lines)
+
+    @staticmethod
+    def _build_user_prompt(experiment_name, pdf_text, columns, data_rows, table_md, stats=None):
         """构造用户 Prompt"""
         pdf_section = ""
         if pdf_text and pdf_text.strip():
@@ -191,6 +210,17 @@ class AbnormalDetector:
                 "（未提供实验指导书文本，请仅基于数据本身和物理常识进行分析）\n\n"
             )
 
+        stats_section = ""
+        if stats:
+            stats_section = (
+                "## 统计预分析结果（程序预计算）\n"
+                "以下统计量由程序预先计算（3σ准则，仅列出有效数据不少于2个的数值列），"
+                "在“统计异常”部分可直接引用核对，无需重新推算；"
+                "判定时请结合样本量与实验指导中的仪器允差，"
+                "不要仅凭是否存在3σ离群点下结论。\n\n"
+                f"{AbnormalDetector._format_stats_md(stats)}\n\n"
+            )
+
         return (
             f"## 实验名称\n"
             f"{experiment_name}\n\n"
@@ -200,6 +230,8 @@ class AbnormalDetector:
             f"## 学生提交的实验数据\n"
             f"共 {len(data_rows)} 行，{len(columns)} 列：\n\n"
             f"{table_md}\n\n"
+
+            f"{stats_section}"
 
             f"请严格按照系统指令中的四个维度和输出格式要求，"
             f"对以上数据进行全面异常检测分析。"

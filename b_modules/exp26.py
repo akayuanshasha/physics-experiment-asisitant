@@ -1,5 +1,25 @@
+"""磁阻效应实验模块
+===============
+二级大物电磁学实验 —— 磁阻效应
+
+实验内容：
+测量磁阻相对变化 ΔR/R(0) 与磁感应强度 B 的关系。
+本实验包含两组独立测量，每组数据独立进行异常检验和图表生成，
+最终合并两组数据生成完整实验报告。
+
+物理背景：
+磁阻效应是指材料的电阻在外加磁场下发生变化的现象。
+在弱磁场下，磁阻与 B² 近似成正比：
+    ΔR/R(0) = α·B²
+其中 α 为磁阻系数，R(0) 为零磁场电阻。
+"""
+
 from head import * # 导入万能头
-from structured_support import make_schema, make_table, structured_result
+from structured_support import (
+    as_number, copied_tables, formatted, make_schema, make_table, structured_result,
+)
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name(): # 返回实验名称
     return "磁阻效应"
@@ -90,27 +110,51 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample1 = [[0, 0], [0.10, 0.012], [0.20, 0.048], [0.30, 0.109], [0.40, 0.194]]
-    sample2 = [[0, 0], [0.10, 0.010], [0.20, 0.041], [0.30, 0.093], [0.40, 0.166]]
+    _all = load_sample_data_numeric("exp26", "exp26_example")
+    _mid = len(_all) // 2
+    sample1 = _all[:_mid] or _all
+    sample2 = _all[_mid:] or _all
     chart = {
-        "x_column": "c0", "y_column": "c1",
-        "x_label": "磁感应强度 B (T)", "y_label": "ΔR/R(0)",
+        "x_column": "c0", "y_column": "c2",
+        "x_label": "励磁电流 I_M (A)", "y_label": "ΔR/R(0)",
         "title": "磁阻效应曲线", "fit": "quadratic",
     }
     return make_schema(
         "测量磁阻相对变化与磁感应强度的关系（双数据表）",
         [
             make_table("table1", "磁阻相对变化与磁感应强度关系数据表",
-                       ["B(T)", "ΔR/R(0)"], sample=sample1, initial_rows=3, chart=chart),
+                       ["I_M(A)", "R(Ω)", "ΔR/R(0)"],
+                       sample=sample1, readonly=(2,), initial_rows=3, chart=chart),
             make_table("table2", "磁阻相对变化与磁感应强度关系数据表（另一组测量）",
-                       ["B(T)", "ΔR/R(0)"], sample=sample2, initial_rows=3, chart=chart),
+                       ["I_M(A)", "R(Ω)", "ΔR/R(0)"],
+                       sample=sample2, readonly=(2,), initial_rows=3, chart=chart),
         ],
         analysis_hints="分别检查两组数据的单调性、弱磁场下与 B² 的近似关系以及两组测量的一致性。",
-    )
+        preview_enabled=True,
+        table_theory=get_table_theory("exp26"), report_enabled=False,)
+
+
+def preview(payload):
+    """实时计算 ΔR/R(0)，其中 R(0) 取每组第一个数据点的电阻值。"""
+    tables = copied_tables(payload)
+    for table_id in ("table1", "table2"):
+        rows = tables.get(table_id, [])
+        r0 = None
+        for row in rows:
+            r_val = as_number(row.get("c1"))
+            if r0 is None and r_val is not None:
+                r0 = r_val
+            if r_val is not None and r0 not in (None, 0):
+                row["c2"] = formatted((r_val - r0) / r0, 6)
+            else:
+                row["c2"] = ""
+    return {"tables": tables}
 
 
 def handle_structured(workpath, payload):
+    enriched = dict(payload)
+    enriched["tables"] = preview(payload)["tables"]
     return structured_result(
-        workpath, name(), schema(), payload,
+        workpath, name(), schema(), enriched,
         summary=["两组磁阻效应数据已接收，可分别绘制 ΔR/R(0)-B 曲线并比较。"],
     )

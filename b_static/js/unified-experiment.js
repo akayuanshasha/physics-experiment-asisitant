@@ -205,6 +205,17 @@
             analysis.type = 'button'; analysis.className = 'table-action-button analysis'; analysis.textContent = '🔍 分析本表异常';
             analysis.addEventListener('click', function () { runTableAbnormal(table.id); });
             controls.appendChild(analysis);
+            if (table.g_calc || table.calc) {
+                var gCalc = document.createElement('button');
+                gCalc.type = 'button'; gCalc.className = 'table-action-button chart';
+                gCalc.textContent = (table.calc && table.calc.label) || '📊 计算 g 及不确定度';
+                gCalc.addEventListener('click', function () { runTableCalc(table.id); });
+                controls.appendChild(gCalc);
+                var resultBox = document.createElement('div');
+                resultBox.className = 'g-calc-result'; resultBox.id = 'g-calc-result-' + table.id;
+                resultBox.style.cssText = 'display:none;margin:10px 0;padding:12px 16px;background:#f0f7f0;border-left:4px solid #4CAF50;border-radius:4px;font-size:14px;line-height:1.9;white-space:pre-wrap;';
+                controls.insertAdjacentElement('afterend', resultBox);
+            }
             var status = document.createElement('span');
             status.className = 'draft-status'; status.id = 'table-status-' + table.id; status.textContent = '未填写';
             controls.appendChild(status);
@@ -213,11 +224,20 @@
         var submitGroup = document.getElementById('submitBtn') && document.getElementById('submitBtn').parentElement;
         if (submitGroup && !document.getElementById('draftStatus')) {
             var charts = (schema().tables || []).filter(function (table) { return !!table.chart; });
-            if (charts.length > 1) {
+            if (charts.length >= 1) {
                 var allCharts = document.createElement('button');
-                allCharts.type = 'button'; allCharts.className = 'btn btn-secondary'; allCharts.textContent = '📊 生成全部配置图像';
-                allCharts.addEventListener('click', runAllCharts);
-                submitGroup.insertBefore(allCharts, submitGroup.firstChild);
+                allCharts.type = 'button'; allCharts.id = 'allChartsBtn'; allCharts.className = 'btn btn-secondary'; allCharts.textContent = '📊 生成所有配置图像';
+                allCharts.addEventListener('click', function () { runAllCharts(false); });
+                var reportBtn = document.getElementById('aiReportBtn');
+                if (reportBtn && reportBtn.parentElement) {
+                    reportBtn.parentElement.insertBefore(allCharts, reportBtn);
+                    var chartsAndReport = document.createElement('button');
+                    chartsAndReport.type = 'button'; chartsAndReport.id = 'chartsAndReportBtn';
+                    chartsAndReport.className = 'btn btn-success'; chartsAndReport.style.background = '#16a085'; chartsAndReport.style.color = 'white';
+                    chartsAndReport.textContent = '🚀 一键生成图像并生成报告';
+                    chartsAndReport.addEventListener('click', function () { runAllCharts(true); });
+                    reportBtn.parentElement.insertBefore(chartsAndReport, reportBtn.nextSibling);
+                } else submitGroup.insertBefore(allCharts, submitGroup.firstChild);
             }
             var clearDraft = document.createElement('button');
             clearDraft.type = 'button'; clearDraft.className = 'btn btn-secondary'; clearDraft.textContent = '🗑️ 清空本实验草稿';
@@ -230,6 +250,13 @@
             var draftStatus = document.createElement('span');
             draftStatus.id = 'draftStatus'; draftStatus.className = 'draft-status'; draftStatus.textContent = '输入内容将自动保存在本浏览器';
             submitGroup.appendChild(draftStatus);
+        }
+        // 实验可通过 schema 声明不需要 AI 报告（如仅需计算结果的实验）
+        if (schema().report_enabled === false) {
+            var hiddenReport = document.getElementById('aiReportBtn');
+            if (hiddenReport) hiddenReport.style.display = 'none';
+            var hiddenChartsReport = document.getElementById('chartsAndReportBtn');
+            if (hiddenChartsReport) hiddenChartsReport.style.display = 'none';
         }
     }
 
@@ -254,14 +281,24 @@
 
     function renderCharts() {
         var list = Object.keys(chartByTable).map(function (key) { return chartByTable[key]; });
+        console.log('[图表] renderCharts 调用, chartByTable keys:', Object.keys(chartByTable), 'list length:', list.length);
         var gallery = document.getElementById('chartGallery');
         gallery.innerHTML = '';
-        list.forEach(function (chart) {
+        list.forEach(function (chart, index) {
             var figure = document.createElement('figure'), link = document.createElement('a'), image = document.createElement('img'), caption = document.createElement('figcaption');
             link.href = chart.chart_url; link.target = '_blank'; link.rel = 'noopener';
             image.src = chart.chart_url + '?t=' + Date.now(); image.alt = chart.title; link.appendChild(image); figure.appendChild(link);
             caption.textContent = chart.title + (chart.fit_result ? '；' + chart.fit_result.equation + '，R²=' + chart.fit_result.R2 : '');
-            figure.appendChild(caption); gallery.appendChild(figure);
+            figure.appendChild(caption);
+            // 添加下载按钮
+            var downloadBtn = document.createElement('a');
+            downloadBtn.href = chart.chart_url;
+            downloadBtn.download = 'chart_' + (index + 1) + '.png';
+            downloadBtn.className = 'chart-download-btn';
+            downloadBtn.textContent = ' 下载图表';
+            downloadBtn.style.cssText = 'display:inline-block;margin-top:8px;padding:6px 12px;background:#4CAF50;color:white;text-decoration:none;border-radius:4px;font-size:14px;';
+            figure.appendChild(downloadBtn);
+            gallery.appendChild(figure);
         });
         document.getElementById('chartImage').style.display = 'none';
         document.getElementById('chartInfo').style.display = 'none';
@@ -269,6 +306,7 @@
         window.lastChartInfo = {charts: list.map(function (item) {
             return {title: item.title, chart_url: item.chart_url, chart_path: item.chart_path, x_label: item.x_label, y_label: item.y_label, fit_result: item.fit_result};
         })};
+        console.log('[图表] lastChartInfo 内容:', JSON.stringify(window.lastChartInfo, null, 2));
     }
 
     function runTableChart(tableId, quiet) {
@@ -301,14 +339,20 @@
         });
     }
 
-    function runAllCharts() {
+    function runAllCharts(thenReport) {
         var tables = (schema().tables || []).filter(function (table) { return table.chart && nonEmptyRows(table.id).length >= 2; });
-        if (!tables.length) { window.showToast('没有达到绘图条件的数据表'); return; }
-        window.showLoading('正在依次生成 ' + tables.length + ' 张实验图像…');
+        if (!tables.length) {
+            window.showToast('没有达到绘图条件的数据表');
+            if (thenReport) window.generateAIReport();
+            return;
+        }
+        window.showLoading(thenReport ? '正在先生成全部图像，随后自动撰写实验报告…' : '正在依次生成 ' + tables.length + ' 张实验图像…');
         var chain = Promise.resolve();
         tables.forEach(function (table) { chain = chain.then(function () { return runTableChart(table.id, true); }); });
         chain.then(function () {
-            window.hideLoading(); window.showToast('全部图表生成完成');
+            window.hideLoading();
+            if (thenReport) { window.generateAIReport(); return; }
+            window.showToast('全部图表生成完成');
             document.getElementById('chartArea').scrollIntoView({behavior: 'smooth'});
         }).catch(function (error) { window.hideLoading(); window.showToast(error.message, 4500); });
     }
@@ -319,6 +363,37 @@
         else target.textContent = report;
         document.getElementById('abnormalArea').style.display = 'block';
         document.getElementById('abnormalArea').scrollIntoView({behavior: 'smooth'});
+    }
+
+    function runTableCalc(tableId) {
+        var table = tableSchema(tableId), box = document.getElementById('g-calc-result-' + tableId);
+        if (!table || !(table.g_calc || table.calc)) return;
+        if (!nonEmptyRows(tableId).length) { window.showToast('请先填写本表数据'); return; }
+        if (typeof window.collectStructuredPayload !== 'function') return;
+        window.showLoading('正在自动计算…');
+        fetchJSON('/api/' + context.id + '/preview', window.collectStructuredPayload()).then(function (result) {
+            window.hideLoading();
+            if (!result || result.code !== 0) throw new Error('计算失败，请检查数据');
+            if (result.tables) applyPreviewTables(result.tables);
+            var info = ((result.calc_results || result.g_results) || {})[tableId];
+            if (!info || !(info.lines || []).length) {
+                var messages = result.calc_messages || [];
+                throw new Error(messages.length ? messages.join('；') : '无法计算：请检查顶部参数和表格数据是否完整、有效');
+            }
+            if (box) {
+                box.textContent = '📊 ' + table.title + '\n' + info.lines.join('\n');
+                if (result.chart_url) {
+                    var calcChartImg = document.createElement('img');
+                    calcChartImg.src = result.chart_url + '?t=' + Date.now();
+                    calcChartImg.alt = table.title;
+                    calcChartImg.style.cssText = 'max-width:100%;margin-top:12px;border:1px solid #ddd;border-radius:4px;';
+                    box.appendChild(calcChartImg);
+                }
+                box.style.display = 'block';
+                box.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            }
+            window.showToast('计算完成');
+        }).catch(function (error) { window.hideLoading(); window.showToast(error.message, 4500); });
     }
 
     function runTableAbnormal(tableId) {
@@ -364,6 +439,8 @@
 
         window.generateAIReport = function () {
             if (!window.lastUserData) { window.showToast('请先提交数据'); return; }
+            console.log('[报告] window.lastChartInfo 内容:', JSON.stringify(window.lastChartInfo, null, 2));
+            console.log('[报告] chartByTable keys:', Object.keys(chartByTable));
             window.showLoading('AI 正在生成实验报告并尝试编译 PDF…');
             fetchJSON('/api/generate-report', {
                 experiment_name: context.name,
@@ -391,7 +468,15 @@
                 document.getElementById('reportArea').style.display = 'block';
                 document.getElementById('reportArea').scrollIntoView({behavior: 'smooth'});
                 window.showToast(result.pdf_url ? '报告与 PDF 生成完成' : '报告源码生成完成');
-            }).catch(function (error) { window.hideLoading(); window.showToast(error.message, 5000); });
+            }).catch(function (error) {
+                window.hideLoading();
+                var msg = error.message || '报告生成失败';
+                if (msg.indexOf('timed out') >= 0 || msg.indexOf('timeout') >= 0 || msg.indexOf('超时') >= 0) {
+                    alert('⏱️ ' + msg + '\n\n可能原因：\n1. LLM API 服务响应缓慢或暂时不可用\n2. 网络连接不稳定\n\n请稍后重试。');
+                } else {
+                    alert('❌ ' + msg);
+                }
+            });
         };
     }
 

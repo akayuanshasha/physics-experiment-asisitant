@@ -1,7 +1,27 @@
+"""介电常数实验模块
+===============
+二级大物电磁学实验 —— 介电常数
+
+实验内容：
+本实验包含三个独立的数据处理模块：
+1. 电容表直接法测固体介电常数
+2. 固定间距法测固体介电常数（间距 3mm）
+3. 电容表法测液体相对介电常数
+
+每个模块包含公式展示、未知量说明和交互式计算功能。
+
+物理背景：
+相对介电常数 εr 反映电介质在电场中的极化程度。
+平行板电容器公式：C = ε₀εr·S/d
+其中 ε₀ 为真空介电常数，S 为极板面积，d 为极板间距。
+"""
+
 from head import * # 导入万能头
 from structured_support import (
     as_number, copied_tables, formatted, make_schema, make_table, structured_result,
 )
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "介电常数"
@@ -82,27 +102,32 @@ def _set_units(table, units):
 
 
 def schema():
+    _all = load_sample_data_numeric("exp30", "exp30_example")
+    _s0 = _all
+    _s1 = _all
+    _s2 = _all
     table1 = _set_units(make_table(
         "table1", "电容表直接法测固体相对介电常数",
         ["电容 C", "样品厚度 d", "极板有效面积 S", "相对介电常数 εr"],
-        sample=[[35.4, 2.00, 20.0, ""]], readonly=(3,), initial_rows=1,
+        sample=_s0, readonly=(3,), initial_rows=1,
     ), ["pF", "mm", "cm²", ""])
     table2 = _set_units(make_table(
         "table2", "固定极板间距法（D = 3 mm）",
         ["样品厚度 d", "极板有效面积 S", "无样品电容 C1", "有样品电容 C2", "相对介电常数 εr"],
-        sample=[[2.00, 20.0, 18.5, 25.0, ""]], readonly=(4,), initial_rows=1,
+        sample=_s1, readonly=(4,), initial_rows=1,
     ), ["mm", "cm²", "pF", "pF", ""])
     table3 = _set_units(make_table(
         "table3", "液体相对介电常数比较法",
         ["空气初态 C11", "空气终态 C12", "液体初态 C21", "液体终态 C22", "相对介电常数 εr"],
-        sample=[[12.0, 25.0, 15.0, 48.0, ""]], readonly=(4,), initial_rows=1,
+        sample=_s2, readonly=(4,), initial_rows=1,
     ), ["pF", "pF", "pF", "pF", ""])
     return make_schema(
         "电容表直接法、固定极板间距法和液体比较法分别计算相对介电常数。所有计算结果会在输入时自动更新。",
         [table1, table2, table3],
         analysis_hints="分别检查三个方法的量纲、分母是否接近零，以及相对介电常数是否为合理正值。",
         preview_enabled=True,
-    )
+    
+        table_theory=get_table_theory("exp30"), report_enabled=False,)
 
 
 def preview(payload):

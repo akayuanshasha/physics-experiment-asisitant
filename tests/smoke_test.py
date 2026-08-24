@@ -77,6 +77,10 @@ class UnifiedFrontendSmokeTest(unittest.TestCase):
                 self.assertTrue(callable(getattr(module, "handle_structured", None)))
                 schema = module.schema()
                 self.assertEqual(2, schema.get("schema_version"))
+                # 外壳实验（指导书已收录但功能待开发）没有数据表，跳过表格断言
+                if schema.get("shell"):
+                    self.assertFalse(schema.get("tables"))
+                    continue
                 self.assertTrue(schema.get("tables"))
                 for table in schema["tables"]:
                     self.assertTrue(table.get("columns"), table.get("id"))

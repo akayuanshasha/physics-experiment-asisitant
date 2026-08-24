@@ -59,18 +59,60 @@ class BModuleAdapter(ExperimentPlugin):
     将 B 的 handle(workpath, extension) 接口适配到新的插件系统。
     """
     
+    # 模块名 → 简化显示名映射（合并同名实验变体，名称与《一级大物实验指导》PDF一致）
+    _NAME_MAP = {
+        # 一级-力学（指导书：力学文件夹）
+        "exp1": "单摆法测重力加速度",
+        "exp2": "表面张力",
+        "exp3": "粘滞系数",
+        "exp4": "密度的测量",
+        "exp5": "杨氏模量",
+        "exp6": "切变模量",
+        "exp8": "匀加速运动",
+        "exp9": "声速测量",
+        # 一级-热学（指导书：热学文件夹）
+        "exp7": "固体比热",
+        "exp11": "半导体温度计",
+        "exp17": "数字体温计",
+        # 一级-电磁学（指导书：电磁学文件夹）
+        "exp10": "磁力摆",
+        "exp12": "示波器的使用",
+        "exp13": "整流滤波",
+        "exp14": "直流电源特性",
+        "exp15": "硅光电池",
+        # 一级-光学（指导书：光学文件夹）
+        "exp18": "分光计的调节和使用",
+        "exp19": "干涉法测微小量",
+        "exp20": "透镜参数测量",
+        "exp21": "显微镜",
+        "exp22": "衍射实验",
+        "exp18_b": "用分光计测三棱镜折射率",
+        "exp16": "配色实验",
+        # 一级-近代物理（指导书：近代物理文件夹）
+        "exp23": "光电效应",
+        "exp24": "密立根油滴实验",
+        # 一级-综合（指导书：综合文件夹）
+        "exp25": "生活中的物理实验",
+    }
+    
     def __init__(self, mod_name, mod):
         self._mod_name = mod_name
         self._mod = mod
         display_name = getattr(mod, "display_name", None)
-        self.name = display_name() if callable(display_name) else mod.name()
+        raw_name = display_name() if callable(display_name) else mod.name()
+        # 优先使用 _NAME_MAP 中的标准化名称（用于合并同名实验变体）
+        self.name = self._NAME_MAP.get(mod_name, raw_name)
         self.category = self._infer_category(mod_name)
         self.description = f"{self.name}（B同学模块适配）"
         self.required_fields = self._infer_fields()
     
+    # 外壳实验（配色 exp16、三棱镜 exp18_b）编号已 ≤25，默认即属一级大物，
+    # 无需再靠编号判定强制归类。
+    _FIRST_LEVEL_SHELLS = set()
+
     @staticmethod
     def _infer_category(mod_name):
-        """根据模块编号推断实验分类"""
+        """根据模块编号推断实验分类（分类依据《一级大物实验指导》文件夹结构）"""
         num = mod_name.replace("exp", "")
         # 去掉后缀字母
         base = ''.join(c for c in num if c.isdigit())
@@ -78,24 +120,24 @@ class BModuleAdapter(ExperimentPlugin):
         
         # 分类映射（一级实验 + 二级实验）
         _CATEGORY_MAP = {
-            0: "基础工具",      # exp0a/b/c: 不确定度、最小二乘法
+            0: "基础工具",      # exp0: 不确定度、最小二乘法
             1: "力学",          # 自由落体、单摆
             2: "力学",          # 表面张力
-            3: "力学",          # 落球法测粘度
+            3: "力学",          # 粘滞系数（落球法）
             4: "力学",          # 密度测量
             5: "力学",          # 杨氏模量
             6: "力学",          # 切变模量
             7: "热学",          # 固体比热
             8: "力学",          # 匀变速运动、碰撞、牛顿第二定律
-            9: "声学",          # 声速测量
+            9: "力学",          # 声速测量（指导书归入力学）
             10: "电磁学",       # 磁力摆
-            11: "电磁学",       # 半导体温度计
+            11: "热学",         # 半导体温度计（指导书归入热学）
             12: "电磁学",       # 示波器
             13: "电磁学",       # 整流滤波
             14: "电磁学",       # 直流电源特性
             15: "电磁学",       # 硅光电池
-            16: "电磁学",       # LED
-            17: "电磁学",       # 数字体温计
+            16: "光学",         # 配色实验（外壳）
+            17: "热学",         # 数字体温计（指导书归入热学）
             18: "光学",         # 分光计
             19: "光学",         # 干涉法
             20: "光学",         # 透镜
@@ -134,7 +176,7 @@ class BModuleAdapter(ExperimentPlugin):
         subject = _CATEGORY_MAP.get(base, "综合")
         if base == 0:
             return "基础工具"
-        level = "一级" if base <= 25 else "二级"
+        level = "一级" if (base <= 25 or base in BModuleAdapter._FIRST_LEVEL_SHELLS) else "二级"
         return f"{level}-{subject}"
     
     def _infer_fields(self):
@@ -219,15 +261,20 @@ class BModuleAdapter(ExperimentPlugin):
         }
 
 
-# ──────────────────────────────────────────────
+# ─────────────────────────────────────────────
 # 自动注册所有实验模块
 # ──────────────────────────────────────────────
+# 不注册的B模块（LED 已移出；配色实验并入 exp16 正常注册）
+_SKIP_B_MODULES = set()
+
 def register_all_b_modules():
     """扫描并注册所有 ``b_modules/expXX.py`` 实验模块。"""
     b_modules = _discover_b_modules()
     count = 0
     
     for mod_name, mod in sorted(b_modules.items()):
+        if mod_name in _SKIP_B_MODULES:
+            continue
         try:
             # 创建适配器并注册
             adapter = BModuleAdapter(mod_name, mod)

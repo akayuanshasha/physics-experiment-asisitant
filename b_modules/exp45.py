@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "空气阻尼"
@@ -80,14 +82,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[0.0, 10.0], [2.5, 7.8], [5.0, 6.08], [7.5, 4.74], [10.0, 3.7],
-              [12.5, 2.89], [15.0, 2.25], [17.5, 1.76], [20.0, 1.37], [22.5, 1.07], [25.0, 0.83]]
+    sample=load_sample_data_numeric("exp45", "exp45_example")
     table = make_table(
         "table1", "空气阻尼振幅衰减数据表", ["t", "A"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "时间 t", "y_label": "振幅 A",
                "title": "空气阻尼振幅衰减曲线", "fit": "auto"},
     )
-    return make_schema("通过振幅随时间的衰减研究空气阻尼。", [table], analysis_hints="检查振幅是否按指数规律衰减以及是否存在突变点。")
+    return make_schema("通过振幅随时间的衰减研究空气阻尼。", [table], analysis_hints="检查振幅是否按指数规律衰减以及是否存在突变点。",
+        table_theory=get_table_theory("exp45"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

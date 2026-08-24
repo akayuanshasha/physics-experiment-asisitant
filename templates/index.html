@@ -10,71 +10,132 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; color: #333; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 36px 20px; text-align: center; }
-        .header h1 { font-size: 2em; margin-bottom: 8px; }
-        .header p { opacity: 0.9; font-size: 1.05em; }
-        .container { max-width: 1100px; margin: 24px auto; padding: 0 20px 40px; }
-        .section-title { font-size: 1.4em; margin: 20px 0 16px; padding-left: 12px; border-left: 4px solid #667eea; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px 50px; text-align: center; }
+        .header h1 { font-size: 2.4em; margin-bottom: 10px; letter-spacing: 2px; }
+        .header p { font-size: 1.1em; opacity: 0.9; margin-top: 8px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .module-cards { display: flex; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
+        .module-card { background: white; border-radius: 12px; padding: 36px 28px; flex: 1; min-width: 300px; max-width: 500px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-align: center; text-decoration: none; color: inherit; display: block; }
+        .module-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .module-card .icon { font-size: 48px; margin-bottom: 16px; }
+        .module-card h2 { font-size: 1.4em; margin-bottom: 10px; color: #333; }
+        .module-card p { color: #666; font-size: 0.95em; line-height: 1.6; }
+        .section-title { font-size: 1.5em; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; display: inline-block; }
         .category-group { margin-bottom: 24px; }
-        .category-header { font-size: 1.15em; font-weight: bold; margin-bottom: 10px; padding: 10px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
-        .category-header.level-1 { background: #e8f5e9; color: #2e7d32; }
-        .category-header.level-2 { background: #fff3e0; color: #e65100; }
-        .category-header.other { background: #eef1ff; color: #5367cc; }
-        .category-header .arrow, .subcategory-header .arrow { transition: transform 0.25s; }
-        .category-header.collapsed .arrow, .subcategory-header.collapsed .arrow { transform: rotate(-90deg); }
+        .category-header { font-size: 1.15em; font-weight: bold; color: #667eea; margin-bottom: 10px; padding: 8px 16px; background: #f0f2ff; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .category-header.level-1 { background: #e8f5e9; color: #2e7d32; font-size: 1.2em; }
+        .category-header.level-2 { background: #fff3e0; color: #e65100; font-size: 1.2em; }
+        .category-header.level-1 .arrow { color: #2e7d32; }
+        .category-header.level-2 .arrow { color: #e65100; }
+        .category-header .arrow { transition: transform 0.3s; }
+        .category-header.collapsed .arrow { transform: rotate(-90deg); }
         .subcategory-group { margin-left: 16px; margin-bottom: 12px; }
-        .subcategory-header { font-size: 1em; font-weight: bold; color: #555; margin-bottom: 8px; padding: 7px 12px; background: #fafbfc; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-left: 3px solid #667eea; }
-        .experiment-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-        .experiment-card { display: block; background: white; border-radius: 10px; padding: 17px 18px; text-decoration: none; color: #333; box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: transform 0.18s, box-shadow 0.18s; border: 1px solid transparent; }
-        .experiment-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(102,126,234,0.16); border-color: #cfd6ff; }
-        .experiment-card .name { font-size: 15px; line-height: 1.55; font-weight: 600; }
-        .empty { text-align: center; color: #999; padding: 56px; }
+        .subcategory-header { font-size: 1em; font-weight: bold; color: #555; margin-bottom: 6px; padding: 6px 12px; background: #f8f9fa; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-left: 3px solid #667eea; }
+        .subcategory-header .arrow { transition: transform 0.3s; font-size: 0.85em; }
+        .subcategory-header.collapsed .arrow { transform: rotate(-90deg); }
+        .exp-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+        .exp-list.hidden { display: none; }
+        .exp-tag { display: inline-block; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 0.88em; cursor: pointer; transition: all 0.2s; text-decoration: none; color: #555; }
+        .exp-tag:hover { background: #667eea; color: white; border-color: #667eea; }
         .footer-note { margin-top: 28px; padding: 16px 18px; color: #667085; background: #fff; border-radius: 8px; line-height: 1.7; font-size: 13px; }
-        @media (max-width: 640px) { .header h1 { font-size: 1.55em; } .container { padding: 0 12px 30px; } .subcategory-group { margin-left: 6px; } }
+        .footer { text-align: center; padding: 30px; color: #999; font-size: 0.85em; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6em; }
+            .module-cards { flex-direction: column; align-items: center; }
+            .module-card { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>🔬 AI物理实验助教系统</h1>
-        <p>统一支持一级、二级大学物理实验的数据录入、计算、绘图、异常分析与报告生成</p>
+        <h1>AI 物理实验助教系统</h1>
+        <p>智能数据处理 · 自动报告生成 · AI助教问答 · 知识库检索</p>
     </header>
     {% with active_page='experiments' %}
         {% include '_primary_navigation.html' %}
     {% endwith %}
-    <main class="container">
-        <h2 class="section-title">实验项目</h2>
-        {% for level_name, subcats in nested.items() %}
-        {% set level_class = 'level-1' if level_name == '一级大物' else ('level-2' if level_name == '二级大物' else 'other') %}
-        <section class="category-group">
-            <div class="category-header {{ level_class }}" onclick="toggleSection(this)">
-                <span>{{ level_name }}</span><span class="arrow">▼</span>
-            </div>
-            <div class="category-content">
-                {% for subject_name, exps in subcats.items() %}
-                <div class="subcategory-group">
-                    <div class="subcategory-header" onclick="toggleSection(this)">
-                        <span>{{ subject_name }}</span><span class="arrow">▼</span>
-                    </div>
-                    <div class="category-content experiment-grid">
-                        {% for exp in exps %}
-                        <a class="experiment-card" href="/experiment/{{ exp.mod_name }}">
-                            <div class="name">{{ exp.name }}</div>
-                        </a>
-                        {% endfor %}
-                    </div>
+    <div class="container">
+        <!-- 两大功能模块入口 -->
+        <div class="module-cards">
+            <a href="#experiment-section" class="module-card">
+                <div class="icon">🔬</div>
+                <h2>实验数据计算与报告生成</h2>
+                <p>选择实验 → 输入数据 → 自动计算 → AI生成实验报告<br>支持 50+ 物理实验的数据处理与分析</p>
+            </a>
+            <a href="/chat" class="module-card">
+                <div class="icon">🤖</div>
+                <h2>AI 智能助教问答</h2>
+                <p>向AI助教提问实验相关问题<br>支持知识库检索，精准回答实验原理、操作等问题</p>
+            </a>
+        </div>
+
+        <!-- 实验列表区域 -->
+        <div id="experiment-section">
+            <div class="section-title">📋 可用实验列表</div>
+
+            {% for level_name, subcats in nested.items() %}
+            {% set is_level1 = level_name == '一级大物' %}
+            {% set is_level2 = level_name == '二级大物' %}
+            {% set level_class = 'level-1' if is_level1 else ('level-2' if is_level2 else '') %}
+            {% set total_exps = [] %}
+            {% for sub_name, exps in subcats.items() %}{% for e in exps %}{% set _ = total_exps.append(1) %}{% endfor %}{% endfor %}
+            <div class="category-group">
+                <div class="category-header {{ level_class }}" onclick="toggleCategory(this)">
+                    <span>{{ level_name }} ({{ total_exps|length }}个实验)</span>
+                    <span class="arrow">▼</span>
                 </div>
-                {% endfor %}
+                <div class="exp-list level-content">
+                    {% if subcats|length == 1 and '' in subcats %}
+                        {# 基础工具：无子分类，直接显示实验 #}
+                        {% for exp in subcats[''] %}
+                        {% if exp.mod_name %}
+                        <a href="/experiment/{{ exp.mod_name }}" class="exp-tag">{{ exp.name }}</a>
+                        {% else %}
+                        <span class="exp-tag" title="{{ exp.description }}">{{ exp.name }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {# 一级大物/二级大物：显示子分类 #}
+                        {% for sub_name, exps in subcats.items() %}
+                        <div class="subcategory-group">
+                            <div class="subcategory-header" onclick="toggleCategory(this)">
+                                <span>{{ sub_name }} ({{ exps|length }}个实验)</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="exp-list">
+                                {% for exp in exps %}
+                                {% if exp.mod_name %}
+                                <a href="/experiment/{{ exp.mod_name }}" class="exp-tag">{{ exp.name }}</a>
+                                {% else %}
+                                <span class="exp-tag" title="{{ exp.description }}">{{ exp.name }}</span>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
-        </section>
-        {% endfor %}
-        {% if not nested %}<div class="empty">暂无可用实验模块</div>{% endif %}
+            {% endfor %}
+
+            {% if not nested %}
+            <p style="color:#999; margin-top:20px;">暂无可用实验模块，请检查插件加载。</p>
+            {% endif %}
+        </div>
         <div class="footer-note">提示：实验页会自动保存当前浏览器中的输入草稿；清空浏览器站点数据后草稿也会被删除。敏感信息（例如 API Key）不会保存在实验草稿中。</div>
-    </main>
+    </div>
+
+    <div class="footer">
+        <p>AI物理实验助教系统 · 数据处理与智能问答</p>
+    </div>
+
     <script>
-        function toggleSection(header) {
-            header.classList.toggle('collapsed');
-            var content = header.nextElementSibling;
-            if (content) content.style.display = content.style.display === 'none' ? '' : 'none';
+        function toggleCategory(header) {
+            var list = header.nextElementSibling;
+            if (list) {
+                list.classList.toggle('hidden');
+                header.classList.toggle('collapsed');
+            }
         }
     </script>
     <script src="/static/js/primary-navigation.js"></script>

@@ -17,6 +17,11 @@ import time
 import shutil
 import tempfile
 
+# 加载 .env 文件中的环境变量（使用脚本所在目录）
+from dotenv import load_dotenv
+_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+load_dotenv(_env_path)
+
 # 确保当前目录在模块搜索路径中
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -97,8 +102,48 @@ def index():
         name_count[normalized] = name_count.get(normalized, 0) + 1
 
     # 两级导航：基础工具 / 一级大物 / 二级大物 → 学科。
+    # 学科顺序与《一级大物实验指导》文件夹顺序一致。
     nested = {}
-    subject_order = ['光学', '力学', '声学', '热学', '电磁学', '综合', '近代物理']
+    subject_order = ['光学', '力学', '热学', '电磁学', '综合', '近代物理']
+    
+    # 按照 b_static/experiment 目录顺序排序实验
+    import os
+    _b_static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'b_static', 'experiment')
+    _static_order = []
+    if os.path.isdir(_b_static_dir):
+        _static_order = [d for d in os.listdir(_b_static_dir) if os.path.isdir(os.path.join(_b_static_dir, d))]
+    
+    def _mod_sort_key(mod_name):
+        """按照 b_static 目录顺序排序，不在目录中的排到最后"""
+        if mod_name in _static_order:
+            return _static_order.index(mod_name)
+        return 9999
+
+    # 一级实验的指导书顺序：按《一级大物实验指导》各文件夹内的文件顺序排列，
+    # 指导书未收录的实验（干涉法、透镜、切变模量、固体比热）接在对应学科末尾。
+    _first_level_guide_order = [
+        # 光学（含外壳实验）
+        '分光计的调节和使用', '显微镜', '用分光计测三棱镜折射率', '衍射实验', '配色实验',
+        '干涉法测微小量', '透镜参数测量',
+        # 力学
+        '匀加速运动', '单摆法测重力加速度', '声速测量', '密度的测量',
+        '杨氏模量', '粘滞系数', '表面张力', '切变模量',
+        # 热学
+        '半导体温度计', '数字体温计', '固体比热',
+        # 电磁学
+        '整流滤波', '直流电源特性', '硅光电池', '磁力摆', '示波器的使用',
+        # 综合
+        '生活中的物理实验',
+        # 近代物理
+        '光电效应', '密立根油滴实验',
+    ]
+
+    def _sort_key(level, display_name, mod_name):
+        """一级实验按指导书文件顺序，其余按 b_static 目录顺序。"""
+        if level == '一级大物' and display_name in _first_level_guide_order:
+            return (0, _first_level_guide_order.index(display_name))
+        return (1, _mod_sort_key(mod_name))
+
     for name in experiments:
         plugin = PluginRegistry.get(name)
         cat = getattr(plugin, 'category', '其他')
@@ -111,10 +156,12 @@ def index():
         else:
             level, subject = '其他', cat
 
+        display_name = name if name_count[_base_name(name)] > 1 else _base_name(name)
         nested.setdefault(level, {}).setdefault(subject, []).append({
-            'name': name if name_count[_base_name(name)] > 1 else _base_name(name),
+            'name': display_name,
             'mod_name': getattr(plugin, '_mod_name', ''),
-            'description': getattr(plugin, 'description', name)
+            'description': getattr(plugin, 'description', name),
+            '_sort_key': _sort_key(level, display_name, getattr(plugin, '_mod_name', ''))
         })
 
     def _subject_key(item):
@@ -123,6 +170,10 @@ def index():
 
     for level in nested:
         nested[level] = dict(sorted(nested[level].items(), key=_subject_key))
+        # 在每个学科内，按照 b_static 目录顺序排序实验
+        for subject in nested[level]:
+            nested[level][subject].sort(key=lambda x: x.get('_sort_key', 9999))
+    
     level_order = {'基础工具': 0, '一级大物': 1, '二级大物': 2, '其他': 3}
     nested = dict(sorted(nested.items(), key=lambda item: level_order.get(item[0], 99)))
     return render_template("index.html", nested=nested)
@@ -379,36 +430,42 @@ def result_file(num, fileid, filename):
 
 @app.route('/api/chat', methods=['POST'])
 def api_chat():
-    """AI助教对话接口"""
-    from assistant import Assistant
-    from experiment_state import ExperimentState
-
+    """AI助教问答接口（纯知识库 Q&A，不涉及实验数据处理）"""
     data = request.get_json()
     user_message = data.get('message', '').strip()
-    session_id = data.get('session_id', 'default')
 
     if not user_message:
         return jsonify({"error": "消息不能为空"}), 400
 
-    # 获取或创建会话状态
-    if session_id not in _sessions:
-        _sessions[session_id] = ExperimentState()
+    # 检索知识库
+    kb_context = _search_knowledge_base(user_message)
 
-    state = _sessions[session_id]
-
-    # 获取或创建助手实例
+    # 获取 LLM 客户端
     if _assistant_instance is None:
         _create_assistant()
 
-    if _assistant_instance is None:
+    if _assistant_instance is None or _assistant_instance.client is None:
         return jsonify({"reply": "⚠️ LLM API 未配置，请设置 .env 文件中的 LLM_API_KEY 和 LLM_BASE_URL。"})
 
-    response = _assistant_instance.chat(user_message, state)
-    return jsonify({
-        "reply": response,
-        "session_id": session_id,
-        "state": state.to_dict()
-    })
+    try:
+        # 构建消息：有知识库上下文时注入参考资料，否则直接提问
+        if kb_context and not kb_context.startswith("知识库为空"):
+            user_content = f"参考资料：\n{kb_context}\n\n用户问题：{user_message}"
+        else:
+            user_content = user_message
+
+        response = _assistant_instance.client.chat.completions.create(
+            model=_assistant_instance.model,
+            messages=[
+                {"role": "system", "content": KNOWLEDGE_SYSTEM_PROMPT},
+                {"role": "user", "content": user_content}
+            ],
+            temperature=0.3,
+        )
+        answer = response.choices[0].message.content
+        return jsonify({"reply": answer})
+    except Exception as e:
+        return jsonify({"reply": f"问答失败: {str(e)}"})
 
 
 @app.route('/api/chat/reset', methods=['POST'])
@@ -583,7 +640,10 @@ def _safe_report_chart_path(candidate):
 def _collect_report_charts(chart_info, mod_name, calc_results):
     """把旧单图、新多图和结构化结果统一为图表列表。"""
     if not isinstance(chart_info, dict):
+        print(f"[报告] chart_info 不是 dict: {type(chart_info)}")
         return []
+
+    print(f"[报告] chart_info 内容: {json.dumps(chart_info, ensure_ascii=False)[:500]}")
 
     raw_items = []
     if chart_info.get('chart_path'):
@@ -596,6 +656,8 @@ def _collect_report_charts(chart_info, mod_name, calc_results):
         if isinstance(item, dict):
             raw_items.append(item)
 
+    print(f"[报告] 收集到 {len(raw_items)} 个原始图表项")
+
     fileid = str((calc_results or {}).get('fileid') or (calc_results or {}).get('data') or '')
     result = []
     for index, item in enumerate(raw_items, 1):
@@ -603,7 +665,9 @@ def _collect_report_charts(chart_info, mod_name, calc_results):
         filename = os.path.basename(item.get('filename', ''))
         if not candidate and filename and mod_name and fileid.isdigit():
             candidate = os.path.join(basepath, 'output', mod_name, fileid, filename)
+        print(f"[报告] 图表{index}: candidate={candidate}")
         safe_path = _safe_report_chart_path(candidate)
+        print(f"[报告] 图表{index}: safe_path={safe_path}")
         if safe_path:
             result.append({
                 'name': f'chart_{index}',
@@ -613,6 +677,7 @@ def _collect_report_charts(chart_info, mod_name, calc_results):
                 'y_label': item.get('y_label', ''),
                 'fit_result': item.get('fit_result'),
             })
+    print(f"[报告] 最终收集到 {len(result)} 张有效图表")
     return result
 
 
@@ -620,6 +685,8 @@ def _collect_report_charts(chart_info, mod_name, calc_results):
 def api_generate_report():
     """AI生成实验报告，并在本机可用时编译为PDF。"""
     from report_generator import LATEX_REPORT_SYSTEM_PROMPT, build_latex_document, compile_latex_to_pdf
+    import time as _time
+    _t0 = _time.time()
 
     data = request.get_json() or {}
     experiment_name = data.get('experiment_name', '物理实验')
@@ -628,7 +695,10 @@ def api_generate_report():
     user_data = data.get('user_data', {})
     abnormal_report = data.get('abnormal_report', '')
     chart_info = data.get('chart_info')
+    print(f"[报告] 后端收到的 chart_info 类型: {type(chart_info)}, 值: {chart_info}")
+    print(f"[报告] 后端收到的 data keys: {list(data.keys())}")
     pdf_text = _load_experiment_pdf_text(mod_name) if mod_name else ''
+    print(f"[报告] PDF文本加载完成 ({_time.time()-_t0:.1f}s), 长度={len(pdf_text)}字符")
 
     if _assistant_instance is None:
         _create_assistant()
@@ -639,8 +709,10 @@ def api_generate_report():
         experiment_name, calc_results, user_data, abnormal_report,
         chart_info, pdf_text=pdf_text,
     )
+    print(f"[报告] 开始调用LLM API生成报告... prompt长度={len(prompt)}字符")
 
     try:
+        _t1 = _time.time()
         response = _assistant_instance.client.chat.completions.create(
             model=_assistant_instance.model,
             messages=[
@@ -648,9 +720,17 @@ def api_generate_report():
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,
-            max_tokens=8192,
+            max_tokens=16384,
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
         )
+        print(f"[报告] LLM API 返回 ({_time.time()-_t1:.1f}s)")
         latex_body = response.choices[0].message.content
+        print(f"[报告] LLM 返回内容长度: {len(latex_body) if latex_body else 0} 字符")
+        if latex_body:
+            # 检查是否包含 includegraphics
+            import re as _re
+            img_count = len(_re.findall(r'includegraphics', latex_body))
+            print(f"[报告] LLM 返回中包含 {img_count} 个 \\includegraphics 命令")
         if not latex_body:
             return jsonify({"error": "模型未生成有效报告内容，请重试"}), 502
 
@@ -663,14 +743,21 @@ def api_generate_report():
             file.write(tex_content)
 
         charts = _collect_report_charts(chart_info, mod_name, calc_results)
+        print(f"[报告] 收集到 {len(charts)} 张图表")
         for chart in charts:
             shutil.copy2(chart['path'], os.path.join(temp_dir, chart['name'] + '.png'))
 
+        _t2 = _time.time()
+        print(f"[报告] 开始编译PDF...")
         compile_result = compile_latex_to_pdf(tex_content, temp_dir)
+        print(f"[报告] PDF编译完成 ({_time.time()-_t2:.1f}s), success={compile_result.get('success')}")
+        if compile_result.get('error'):
+            print(f"[报告] PDF编译错误: {compile_result['error']}")
         pdf_url = f"/api/report-pdf/{report_id}" if compile_result.get('success') else None
         pdf_error = None if pdf_url else compile_result.get('error', 'PDF编译失败')
         _schedule_report_cleanup(report_id)
 
+        print(f"[报告] 总耗时 {_time.time()-_t0:.1f}s")
         return jsonify({
             "report": tex_content,
             "report_id": report_id,
@@ -681,7 +768,11 @@ def api_generate_report():
             "chart_count": len(charts),
         })
     except Exception as e:
-        return jsonify({"error": f"报告生成失败: {str(e)}"}), 500
+        print(f"[报告] 异常: {e}")
+        err_msg = str(e)
+        if 'timed out' in err_msg.lower() or 'timeout' in err_msg.lower():
+            return jsonify({"error": "LLM API 请求超时（180秒），API 服务响应缓慢，请稍后重试或检查网络连接。"}), 504
+        return jsonify({"error": f"报告生成失败: {err_msg}"}), 500
 
 
 @app.route('/api/report-tex/<string:report_id>')
@@ -908,20 +999,25 @@ def _build_report_prompt(
     data_str = json.dumps(user_data, ensure_ascii=False, indent=2) if user_data else "无"
     results_str = json.dumps(calc_results, ensure_ascii=False, indent=2) if calc_results else "无"
 
+    # 实验指导书（截取前 3000 字符）
     guide_section = ""
     if pdf_text and pdf_text.strip():
         guide_section = f"""
-实验指导书摘录（仅用于核对实验原理、仪器和步骤，不得从中虚构测量数据）：
-{pdf_text[:4000]}
+实验指导书内容（请从中提取实验目的、实验原理、实验器材等信息）：
+---
+{pdf_text[:3000]}
+---
 """
 
+    # 异常检测报告
     abnormal_section = ""
     if abnormal_report and abnormal_report.strip():
         abnormal_section = f"""
-数据异常检测报告（由异常检测模块得出，请在“数据异常检测分析”章节中引用）：
+数据异常检测报告（由异常检测模块得出，请在"数据异常检测分析"章节中完整引用）：
 {abnormal_report}
 """
 
+    # 图表信息
     chart_section = ""
     if isinstance(chart_info, dict):
         chart_items = []
@@ -936,31 +1032,159 @@ def _build_report_prompt(
             if isinstance(chart_info.get(key), dict)
         )
         if chart_items:
-            chart_section = '\n实验数据图表已经生成，请在“数据处理与计算”章节中插入：\n'
+            chart_section = '\n实验数据图表已生成，请根据图表内容将其放置在报告中最合适的位置（通常在「数据处理与计算」或「实验结果表达」章节）。\n'
+            chart_section += '每个图表下方必须添加一段文字说明，解释该图表展示的物理关系、拟合效果和数据趋势。\n'
             for index, item in enumerate(chart_items, 1):
-                chart_section += (
-                    f"\\includegraphics[width=0.82\\textwidth]{{chart_{index}.png}} "
-                    f"（{item.get('title', f'图表{index}')}）\n"
-                )
+                title = item.get('title', f'图表{index}')
+                x_label = item.get('x_label', '')
+                y_label = item.get('y_label', '')
+                chart_section += f"\n【图表{index}】{title}\n"
+                chart_section += f"\\includegraphics[width=0.85\\textwidth]{{chart_{index}.png}}\n"
+                chart_section += f"图{index}：{title}（X轴：{x_label}，Y轴：{y_label}）\n"
                 fit_result = item.get('fit_result')
                 if isinstance(fit_result, dict):
-                    chart_section += (
-                        f"拟合结果：{fit_result.get('equation', '')}，"
-                        f"R²={fit_result.get('R2', '')}\n"
-                    )
+                    equation = fit_result.get('equation', '')
+                    r2 = fit_result.get('R2', '')
+                    chart_section += f"拟合结果：{equation}，R²={r2}\n"
+                    chart_section += f"说明：请分析该拟合方程的物理意义，R²值反映的拟合优度，以及数据点与拟合线的吻合程度。\n"
 
-    return f"""请为以下实验生成完整的实验报告：
+    return f"""请为以下实验生成完整的实验报告，严格按照以下 11 个部分组织内容：
 
 实验名称：{experiment_name}
-
+{guide_section}
 用户输入的原始数据：
 {data_str}
 
 数据计算结果（由数学计算模块得出，请严格使用这些数据）：
 {results_str}
-{guide_section}{abnormal_section}{chart_section}
-请生成完整的实验报告，包含：一、实验目的；二、实验原理；三、实验器材；四、实验步骤；五、实验数据记录；六、数据处理与计算；七、数据异常检测分析（如有）；八、误差分析；九、实验结论。
-注意：所有测量数据必须来自上面提供的内容，不要编造任何数据。"""
+{abnormal_section}{chart_section}
+## 报告结构要求
+
+### 一、实验基本信息
+包括：
+- 实验名称
+- 实验目的（从实验指导书中提取，若未提供则根据实验名称推断）
+- 实验对象
+- 实验测量目标
+
+### 二、实验原理
+要求：
+1. 介绍实验涉及的物理规律和理论基础；
+2. 给出核心公式；
+3. 解释公式中各物理量的含义；
+4. 说明实验如何通过测量量间接得到目标物理量；
+5. 给出必要的近似条件和实验成立条件。
+
+### 三、实验仪器与装置
+简要说明：
+- 实验所使用的主要仪器；
+- 仪器作用；
+- 测量对象；
+- 关键参数或精度要求。
+
+### 四、实验方案设计
+要求说明：
+1. 实验测量方法的选择依据；
+2. 为什么采用这种测量方式；
+3. 如何降低实验误差；
+4. 实验变量设计：
+   - 自变量
+   - 测量量
+   - 输出结果；
+5. 如果涉及多组数据，说明数据采集方案。
+
+### 五、实验步骤
+按照实际实验流程描述：
+1. 实验装置搭建；
+2. 仪器调节；
+3. 数据测量过程；
+4. 重复测量方案；
+5. 数据记录方法。
+
+### 六、实验数据记录
+生成规范的数据记录表格，包括：
+- 测量次数；
+- 原始测量数据；
+- 中间计算量；
+- 最终计算结果。
+
+**重要**：禁止直接编造实验数据！如果用户没有提供数据，需要保留空白位置或用「待填写」标注。
+
+### 七、数据处理与计算
+要求：
+1. 根据实验原理建立计算公式；
+2. 展示数据处理过程；
+3. 计算平均值；
+4. 根据实验要求进行拟合、作图或统计分析；
+5. 得到最终实验结果。
+
+如果实验涉及线性关系，需要：
+- 建立线性模型；
+- 说明横纵坐标选择；
+- 给出拟合方法；
+- 根据拟合参数计算物理量。
+
+**图表放置要求**：
+- 每个图表应紧跟在相关的数据处理步骤之后
+- 图表下方必须有文字说明，解释：
+  1. 该图表展示的物理关系
+  2. 拟合方程的含义和物理意义
+  3. R²值反映的拟合优度
+  4. 数据点与拟合线的吻合程度
+  5. 数据趋势是否符合理论预期
+
+**必须使用上面提供的计算结果，不要编造任何数据！**
+
+### 八、不确定度分析
+必须包含：
+
+1. **A类不确定度**：
+   - 来源于重复测量数据；
+   - 根据实验数据计算统计误差。
+
+2. **B类不确定度**：
+   - 来源于仪器精度；
+   - 来源于实验条件限制。
+
+3. **合成不确定度**：
+   根据误差传播公式计算最终不确定度。
+
+说明：
+- 哪些因素对最终结果影响最大；
+- 哪个测量环节需要重点优化。
+
+### 九、实验结果表达
+按照大学物理实验规范：
+
+结果表示为：**物理量 = 测量值 ± 不确定度 单位**
+
+并说明：
+- 有效数字处理；
+- 与理论值比较（如果提供理论值）。
+
+### 十、误差来源分析
+结合具体实验分析：
+- 仪器误差；
+- 操作误差；
+- 环境因素；
+- 理论模型近似造成的误差。
+
+**不要只罗列误差，要解释**：误差如何影响实验结果（偏大、偏小或增加随机性）。
+
+### 十一、实验总结与思考
+总结：
+- 实验是否达到目的；
+- 实验方法优缺点；
+- 如何提高实验精度；
+- 对实验现象的理解。
+
+## 重要要求
+1. **所有数据必须使用上面提供的计算结果，严禁编造任何数据**
+2. 如果用户未提供数据，在数据记录部分保留空白或用「待填写」标注
+3. 实验结论必须明确说明实验数据是否支持/验证了实验目的
+4. 如果实验指导书提供了实验目的，请在结论中回应该目的
+5. 图表应放置在相关数据处理步骤之后，每个图表下方必须有文字说明
+6. 如有异常检测报告，在相应章节中完整引用"""
 
 
 def _search_knowledge_base(query):

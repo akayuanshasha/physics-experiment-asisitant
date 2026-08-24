@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "F-H实验"
@@ -88,21 +90,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [
-        [0.0, 0.0], [2.0, 0.1], [4.0, 0.2], [6.0, 0.3], [8.0, 0.5], [10.0, 0.8],
-        [11.5, 3.2], [12.0, 2.0], [13.0, 1.2], [14.0, 1.0], [15.0, 1.5], [16.0, 2.8],
-        [16.5, 1.5], [17.0, 1.0], [18.0, 1.2], [19.0, 2.5], [19.5, 1.3], [20.0, 0.8],
-        [22.0, 1.0], [23.5, 4.5], [24.0, 2.8], [25.0, 1.5], [26.0, 1.2], [27.0, 2.2],
-        [28.0, 5.8], [28.5, 3.2], [29.0, 1.8], [30.0, 1.5], [31.0, 2.0], [32.0, 3.5],
-        [33.5, 7.2], [34.0, 4.5], [35.0, 2.5], [36.0, 2.0], [37.0, 2.8], [38.0, 4.2],
-        [39.0, 8.8], [39.5, 5.5], [40.0, 3.2],
-    ]
+    sample=load_sample_data_numeric("exp39", "exp39_example")
     table = make_table(
         "table1", "F-H 实验伏安特性数据表", ["U", "I"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "加速电压 U", "y_label": "板极电流 I",
                "title": "F-H 实验伏安特性曲线", "fit": "auto"},
     )
-    return make_schema("F-H实验伏安特性与激发电位分析。", [table], analysis_hints="重点识别相邻电流峰的电压间隔。")
+    return make_schema("F-H实验伏安特性与激发电位分析。", [table], analysis_hints="重点识别相邻电流峰的电压间隔。",
+        table_theory=get_table_theory("exp39"),)
 
 
 def handle_structured(workpath, payload):

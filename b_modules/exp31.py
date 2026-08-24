@@ -1,7 +1,27 @@
+"""数字表改装实验模块
+=================
+二级大物电磁学实验 —— 数字表改装
+
+实验内容：
+本实验包含两组数据表：
+1. 多量程直流数字电压表电路参数表（5个量程）
+2. 20V量程电压表内阻影响测试表（3组测试）
+
+每组数据独立进行异常检验。
+
+物理背景：
+数字电压表由表头与分压电阻串联组成。
+量程扩展公式：R_s = U/Ig - Rg
+其中 Ig 为满偏电流，Rg 为表头内阻，U 为量程电压。
+电压表内阻会引起测量误差，内阻越大误差越小。
+"""
+
 from head import * # 导入万能头
 from structured_support import (
     as_number, copied_tables, formatted, make_schema, make_table, structured_result,
 )
+from theory_content import get_formulas, get_variables, get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "数字表改装"
@@ -79,6 +99,9 @@ def handle(workpath,extension):
 
 
 def schema():
+    _all = load_sample_data_numeric("exp31", "exp31_example")
+    _s0 = _all
+    _s1 = _all
     parameters = [
         {"id": "meter_resistance", "label": "表头内阻 Rg", "unit": "kΩ", "type": "number", "default": 1.0},
         {"id": "full_scale_current", "label": "满偏电流 Ig", "unit": "μA", "type": "number", "default": 100},
@@ -90,20 +113,20 @@ def schema():
             make_table(
                 "table1", "多量程直流数字电压表电路参数表",
                 ["电压量程(mV/V)", "分压电阻阻值(kΩ/MΩ)", "组装表内阻Rg(kΩ/MΩ)"],
-                sample=[[200, "", ""], [2000, "", ""], [20000, "", ""], [200000, "", ""], [2000000, "", ""]],
+                sample=_s0,
                 readonly=(1, 2), initial_rows=5,
             ),
             make_table(
                 "table2", "20V量程电压表内阻影响测试表",
                 ["Rs(kΩ/MΩ)", "Us1(V)", "Uo1(V)", "相对误差(%)"],
-                sample=[[1, 10.00, 9.98, ""], [10, 10.00, 9.90, ""], [100, 10.00, 9.10, ""]],
+                sample=_s1,
                 readonly=(2, 3), initial_rows=3,
             ),
         ],
         parameters=parameters,
         analysis_hints="这些数据主要来自确定性电路计算，不宜机械使用3σ准则；应检查量程、单位、阻值正性和电压表内阻引起的系统误差。",
         preview_enabled=True,
-    )
+        table_theory=get_table_theory("exp31"), report_enabled=False,)
 
 
 def preview(payload):

@@ -1,7 +1,30 @@
+"""双臂电桥实验模块
+===============
+二级大物电磁学实验 —— 双臂电桥
+
+实验内容：
+本实验包含四组数据表：
+1. 铜棒与铝棒直径测量数据表（6次测量）
+2. 30cm铜棒与铝棒电阻及电阻率测量表（3组正反向电流）
+3. 不同长度铜棒电阻及均匀性数据表（7个长度）
+4. Rx-L关系曲线图（散点+线性拟合）
+
+每组数据独立进行自动计算，
+表格4含异常检验和图表生成，
+最终合并所有数据生成综合实验报告。
+
+物理背景：
+双臂电桥（开尔文电桥）适用于测量低电阻（10⁻⁶~10² Ω）。
+通过四端钮接线消除接触电阻和引线电阻的影响。
+电阻率公式：ρ = Rx·S/L = Rx·πD²/(4L)
+"""
+
 from head import * # 导入万能头
 from structured_support import (
     as_number, copied_tables, formatted, make_schema, make_table, structured_result,
 )
+from theory_content import get_formulas, get_variables, get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "双臂电桥"
@@ -86,13 +109,12 @@ def handle(workpath,extension):
 
 
 def schema():
+    _all = load_sample_data_numeric("exp32", "exp32_example")
+    _s0 = _all
+    _s1 = _all
+    _s2 = _all
     resistance_labels = ["L(cm)", "正向R+(Ω)", "反向R-(Ω)", "待测电阻Rx(mΩ)", "单点电阻率ρ(10⁻⁸Ω·m)"]
-    resistance_sample = [
-        [10, 0.0067, 0.0066, "", ""], [15, 0.0100, 0.0099, "", ""],
-        [20, 0.0134, 0.0132, "", ""], [25, 0.0167, 0.0165, "", ""],
-        [30, 0.0201, 0.0199, "", ""], [35, 0.0234, 0.0232, "", ""],
-        [40, 0.0268, 0.0266, "", ""],
-    ]
+    resistance_sample=_s0
     chart = {"x_column": "c0", "y_column": "c3", "x_label": "电压头间距 L (cm)",
              "y_label": "待测电阻 Rx (mΩ)", "title": "Rx-L 线性关系", "fit": "linear"}
     return make_schema(
@@ -101,15 +123,13 @@ def schema():
             make_table(
                 "table1", "铜棒与铝棒直径测量数据表",
                 ["测量次数", "铜棒直径DCu(mm)", "铝棒直径DAl(mm)"],
-                sample=[[1, 4.002, 5.001], [2, 4.004, 5.003], [3, 4.001, 5.000],
-                        [4, 4.003, 5.002], [5, 4.002, 5.004], [6, 4.004, 5.001]],
+                sample=_s1,
                 readonly=(0,), initial_rows=6,
             ),
             make_table(
                 "table2", "30cm铜棒与铝棒电阻及电阻率测量表",
                 ["测量组别", "铜棒正向RCu+(Ω)", "铜棒反向RCu-(Ω)", "铝棒正向RAl+(Ω)", "铝棒反向RAl-(Ω)"],
-                sample=[[1, 0.0201, 0.0199, 0.0310, 0.0308], [2, 0.0200, 0.0201, 0.0309, 0.0311],
-                        [3, 0.0199, 0.0200, 0.0311, 0.0309]],
+                sample=_s2,
                 readonly=(0,), initial_rows=3,
             ),
             make_table("table3", "不同长度铜棒电阻及均匀性数据表", resistance_labels,
@@ -119,7 +139,7 @@ def schema():
         ],
         analysis_hints="检查直径重复性、正反向电阻的一致性、电阻率合理性及 Rx-L 线性关系。",
         preview_enabled=True,
-    )
+        table_theory=get_table_theory("exp32"),)
 
 
 def preview(payload):

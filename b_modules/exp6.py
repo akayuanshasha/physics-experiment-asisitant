@@ -3,6 +3,19 @@ from head import * # 导入万能头
 def name(): # 返回实验名称
     return "切变模量"
 
+def schema():
+    from theory_content import get_formulas, get_variables, get_table_theory
+    return {
+        "schema_version": 2,
+        "description": "扭转法测定切变模量",
+        "parameters": [],
+        "tables": [],
+        "formulas": get_formulas("exp6"),
+        "variables": get_variables("exp6"),
+        "table_theory": get_table_theory("exp6"),
+    }
+
+
 def handle(workpath,extension):
     # 处理数据并生成文档，workpath为工作文件夹路径（本程序涉及到的所有文件只能保存在此文件夹内），extension为扩展名（csv/xls/xlsx）
     try:
@@ -98,19 +111,3 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
-
-from structured_support import handle_legacy_single_table, make_schema, make_table
-
-
-def schema():
-    """本实验唯一的前端输入结构与示例数据来源。"""
-    return make_schema(
-        "切变模量的数据输入与处理。",
-        [make_table("table1", "切变模量数据", ["钢丝直径/mm","D内/mm","D外/mm","L/cm","m/g","n0T0/s","n0","n1T1/s","n1"],
-                    sample=[["0.78","84.08","103.94","44.2","564.5","49.29","20","78.45","20"],["0.781","","","","","","","",""],["0.781","","","","","","","",""],["0.781","","","","","","","",""],["0.78","","","","","","","",""],["0.781","","","","","","","",""],["0.778","","","","","","","",""],["0.779","","","","","","","",""],["0.778","","","","","","","",""]])],
-        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
-    )
-
-
-def handle_structured(workpath, payload):
-    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

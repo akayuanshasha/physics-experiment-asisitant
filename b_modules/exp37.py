@@ -3,10 +3,12 @@
 from io import BytesIO
 
 from head import *
+from theory_content import get_formulas, get_variables, get_table_theory
 from optics_common import *
 from PIL import Image, ImageDraw, ImageEnhance, ImageOps, UnidentifiedImageError
 from scipy.ndimage import gaussian_filter1d
 from scipy.signal import find_peaks
+from sample_data_loader import load_sample_data_numeric
 
 
 def name():
@@ -21,20 +23,13 @@ IMAGE_GROUPS = {
 
 
 def schema():
-    standard_sample = [
-        {"source": "He", "line_label": "蓝线", "pixel_x": 180, "wavelength_nm": 447.1},
-        {"source": "He", "line_label": "蓝绿线", "pixel_x": 455, "wavelength_nm": 501.6},
-        {"source": "He", "line_label": "黄线", "pixel_x": 885, "wavelength_nm": 587.6},
-        {"source": "He", "line_label": "红线", "pixel_x": 1286, "wavelength_nm": 667.8},
-        {"source": "He", "line_label": "深红线", "pixel_x": 1480, "wavelength_nm": 706.5},
-    ]
-    unknown_sample = [
-        {"source": "Hg", "line_label": "紫线", "pixel_x": 120, "reference_nm": 435.8},
-        {"source": "Hg", "line_label": "绿线", "pixel_x": 687, "reference_nm": 546.1},
-        {"source": "Hg", "line_label": "黄双线中心", "pixel_x": 884, "reference_nm": 577.0},
-        {"source": "Na", "line_label": "黄双线中心", "pixel_x": 945, "reference_nm": 589.3},
-    ]
-    scan_sample = []
+    _all = load_sample_data_numeric("exp37", "exp37_example")
+    _s0 = _all
+    _s1 = _all
+    _s2 = _all
+    standard_sample=_s0
+    unknown_sample=_s1
+    scan_sample=_s2
     for wavelength in np.arange(570.0, 611.0, 2.0):
         intensity = 0.08 + 0.92 * math.exp(-0.5 * ((wavelength - 589.3) / 3.5) ** 2)
         scan_sample.append({
@@ -143,7 +138,10 @@ def schema():
                 "sample": scan_sample,
             },
         ],
-    }
+    
+        "formulas": get_formulas("exp37"),
+        "variables": get_variables("exp37"),
+        "table_theory": get_table_theory("exp37"),}
 
 
 def _safe_image(file_storage, label):

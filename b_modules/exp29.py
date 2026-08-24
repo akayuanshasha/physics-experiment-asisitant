@@ -1,7 +1,26 @@
+"""交流谐振电路实验模块
+=====================
+二级大物电磁学实验 —— 交流谐振电路
+
+实验内容：
+本实验包含三组数据表：
+1. RLC串联电路幅频特性 (R=400Ω) —— 三点法测通频带宽
+2. RLC串联电路幅频特性 (R=600Ω) —— 研究电阻对谐振特性的影响
+3. 品质因数 Q 的不同方法计算与对比
+
+每组数据独立进行异常检验和图表生成。
+
+物理背景：
+RLC串联谐振电路的谐振频率 f₀ = 1/(2π√LC)，
+品质因数 Q = f₀/Δf = ω₀L/R = 1/(ω₀CR)。
+"""
+
 from head import * # 导入万能头
 from structured_support import (
     as_number, copied_tables, formatted, make_schema, make_table, structured_result,
 )
+from theory_content import get_formulas, get_variables, get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "交流谐振电路"
@@ -96,20 +115,24 @@ def handle(workpath,extension):
 
 
 def schema():
+    _all = load_sample_data_numeric("exp29", "exp29_example")
+    _s0 = _all
+    _s1 = _all
+    _s2 = _all
     common_labels = ["测量点", "f(kHz)", "Vi,pp(V)", "VR,pp(V)", "Ipp(mA)"]
     return make_schema(
         "RLC串联谐振电路幅频特性与品质因数测量（三数据表）",
         [
             make_table(
                 "table1", "RLC串联电路幅频特性数据表 (R = 400.0 Ω)", common_labels,
-                sample=[["低频点", 4.1, 2.0, 1.40, ""], ["谐振点", 5.0, 2.0, 1.95, ""], ["高频点", 6.2, 2.0, 1.38, ""]],
+                sample=_s0,
                 readonly=(0, 4), text_columns=(0,), initial_rows=3,
                 chart={"x_column": "c1", "y_column": "c4", "x_label": "频率 f (kHz)",
                        "y_label": "回路电流 Ipp (mA)", "title": "R=400Ω 幅频特性", "fit": "auto"},
             ),
             make_table(
                 "table2", "RLC串联电路幅频特性数据表 (R = 600.0 Ω)", common_labels,
-                sample=[["低频点", 3.8, 2.0, 1.25, ""], ["谐振点", 5.0, 2.0, 1.88, ""], ["高频点", 6.8, 2.0, 1.22, ""]],
+                sample=_s1,
                 readonly=(0, 4), text_columns=(0,), initial_rows=3,
                 chart={"x_column": "c1", "y_column": "c4", "x_label": "频率 f (kHz)",
                        "y_label": "回路电流 Ipp (mA)", "title": "R=600Ω 幅频特性", "fit": "auto"},
@@ -117,13 +140,13 @@ def schema():
             make_table(
                 "table3", "品质因数 Q 的不同方法计算与对比表",
                 ["测定条件/参数类型", "R=400.0Ω 测量与计算值", "R=600.0Ω 测量与计算值"],
-                sample=[["三点法", "", ""], ["电压法", "", ""], ["理论值", "", ""]],
+                sample=_s2,
                 readonly=(0,), text_columns=(0,), initial_rows=3,
             ),
         ],
         analysis_hints="检查两条幅频曲线的谐振峰、带宽和不同方法得到的品质因数是否一致。",
         preview_enabled=True,
-    )
+        table_theory=get_table_theory("exp29"), report_enabled=False,)
 
 
 def preview(payload):
@@ -131,7 +154,7 @@ def preview(payload):
     labels = ["低频点", "谐振点", "高频点"]
     for table_id, resistance in (("table1", 400.0), ("table2", 600.0)):
         for index, row in enumerate(tables.get(table_id, [])):
-            voltage = as_number(row.get("c3"))
+            voltage = as_number(row.get("c2"))  # V_R,pp(V)
             row["c0"] = labels[index] if index < len(labels) else f"测量点{index + 1}"
             row["c4"] = formatted(voltage * 1000 / resistance if voltage is not None else None, 5)
     methods = ["三点法", "电压法", "理论值"]

@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "医学物理实验"
@@ -101,14 +103,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[0, 1000], [30, 856], [60, 732], [90, 626], [120, 536], [150, 459],
-              [180, 393], [210, 336], [240, 288], [270, 246], [300, 211]]
+    sample=load_sample_data_numeric("exp50", "exp50_example")
     table = make_table(
         "table1", "医学物理计数衰减数据表", ["t", "N"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "时间 t", "y_label": "计数 N",
                "title": "计数随时间衰减曲线", "fit": "auto"},
     )
-    return make_schema("根据计数随时间的变化分析医学物理衰减过程。", [table], analysis_hints="检查本底、计数统计涨落和指数衰减规律。")
+    return make_schema("根据计数随时间的变化分析医学物理衰减过程。", [table], analysis_hints="检查本底、计数统计涨落和指数衰减规律。",
+        table_theory=get_table_theory("exp50"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

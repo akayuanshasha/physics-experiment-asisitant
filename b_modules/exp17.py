@@ -3,6 +3,20 @@ from head import * # 导入万能头
 def name(): # 返回实验名称
     return "数字体温计"
 
+def schema():
+    from theory_content import get_formulas, get_variables, get_table_theory
+    return {
+        "schema_version": 2,
+        "report_enabled": False,
+        "description": "数字体温计（PN结温度传感器）",
+        "parameters": [],
+        "tables": [],
+        "formulas": get_formulas("exp17"),
+        "variables": get_variables("exp17"),
+        "table_theory": get_table_theory("exp17"),
+    }
+
+
 def handle(workpath,extension):
     # 处理数据并生成文档，workpath为工作文件夹路径（本程序涉及到的所有文件只能保存在此文件夹内），extension为扩展名（csv/xls/xlsx）
     try:
@@ -84,24 +98,3 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
-
-from structured_support import handle_legacy_single_table, make_schema, make_table
-
-
-def schema():
-    """本实验唯一的前端输入结构与示例数据来源。"""
-    return make_schema(
-        "数字体温计的数据输入与处理。",
-        [make_table(
-            "table1",
-            "数字体温计数据",
-            ["T/℃","U/mV","R1/Ω","R2(=R3)/Ω","E/V"],
-            sample=[["30","0","1021","1000","2"],["31","0.99","","",""],["32","1.77","","",""],["33","2.44","","",""],["34","3.37","","",""],["35","4.17","","",""],["36","5.1","","",""],["37","6.26","","",""],["38","7.65","","",""],["39","8.39","","",""],["40","9.77","","",""],["41","11.11","","",""],["42","12.49","","",""],["43","14.06","","",""],["44","15.61","","",""],["45","17.24","","",""]],
-            text_columns=[],
-        )],
-        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
-    )
-
-
-def handle_structured(workpath, payload):
-    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

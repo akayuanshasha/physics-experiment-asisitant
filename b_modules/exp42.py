@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "超声定位与形貌成像"
@@ -75,13 +77,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[2.0, 30.2, 2], [3.0, 20.1, 2], [4.0, 15.1, 2], [5.0, 12.1, 2]]
+    sample=load_sample_data_numeric("exp42", "exp42_example")
     table = make_table(
         "table1", "超声定位与形貌成像数据表", ["f", "delta_x", "k"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "超声频率 f", "y_label": "测量间距 Δx",
                "title": "超声定位测量曲线", "fit": "auto"},
     )
-    return make_schema("利用超声传播参数进行定位与形貌测量。", [table], analysis_hints="检查级次、频率和测量间距的一致性。")
+    return make_schema("利用超声传播参数进行定位与形貌测量。", [table], analysis_hints="检查级次、频率和测量间距的一致性。",
+        table_theory=get_table_theory("exp42"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

@@ -68,7 +68,7 @@
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .result-area { margin-top: 20px; padding: 16px; background: #f9f9f9; border-radius: 8px; display: none; }
         .result-area h3 { margin-bottom: 10px; color: #667eea; }
-        .result-area pre { white-space: pre-wrap; word-break: break-all; font-size: 13px; line-height: 1.6; }
+        .result-area pre { white-space: pre-wrap; word-break: break-all; font-size: 14px; line-height: 1.7; }
         .chart-area { margin-top: 20px; padding: 20px; background: #f0f7ff; border: 1px solid #b3d4fc; border-radius: 8px; display: none; }
         .chart-area h3 { color: #2980b9; margin-bottom: 12px; }
         .chart-area img { max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -98,6 +98,30 @@
         .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 24px; border-radius: 6px; z-index: 9999; display: none; }
+        /* ── 公式展示块 ── */
+        .formula-box { background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%); border: 1px solid #e0e7ff; border-radius: 10px; padding: 24px 20px; margin: 16px 0; overflow-x: auto; box-shadow: 0 2px 8px rgba(102,126,234,0.08); }
+        .formula-box .formula-title { font-weight: 600; color: #3f51b5; margin-bottom: 12px; font-size: 14px; padding-bottom: 8px; border-bottom: 1px dashed #d0d5e8; }
+        .formula-box .formula-step { margin: 12px 0; text-align: center; }
+        .formula-box .formula-note { color: #555; font-size: 13px; line-height: 1.7; margin: 8px 0 4px; text-align: left; }
+        .formula-box .formula-note + .formula-note { margin-top: 2px; }
+        /* ── 物理量说明表 ── */
+        .var-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .var-table th { background: #f5f7ff; border: 1px solid #e0e4f0; padding: 10px 12px; text-align: center; font-weight: 600; color: #3f51b5; font-size: 14px; }
+        .var-table td { border: 1px solid #e8ecf4; padding: 9px 12px; vertical-align: middle; }
+        .var-table td:first-child { text-align: center; font-weight: 500; white-space: nowrap; min-width: 70px; color: #5c6bc0; font-style: italic; }
+        .var-table td:last-child { text-align: center; white-space: nowrap; min-width: 80px; color: #666; font-size: 12px; }
+        .var-table tr:nth-child(even) { background: #fafbff; }
+        .var-table tr:hover { background: #f0f4ff; }
+        /* ── 每表公式/物理量块 ── */
+        .table-theory-block { background: #fafbff; border: 1px solid #e8ecf4; border-radius: 8px; padding: 16px; margin: 12px 0 8px; }
+        .table-theory-block .formula-box { margin: 8px 0; padding: 16px 14px; background: white; }
+        .table-theory-block .formula-box .formula-title { font-size: 13px; margin-bottom: 8px; padding-bottom: 6px; }
+        .table-theory-block .formula-box .formula-step { margin: 8px 0; font-size: 14px; }
+        .table-theory-block .formula-box .formula-note { font-size: 12px; margin: 4px 0 2px; }
+        .var-heading { font-size: 13px; font-weight: 600; color: #3f51b5; margin: 12px 0 8px; padding-bottom: 6px; border-bottom: 1px dashed #d0d5e8; display: flex; align-items: center; gap: 4px; }
+        .table-theory-block .var-table { margin: 0; font-size: 12px; box-shadow: none; }
+        .table-theory-block .var-table th { padding: 6px 10px; font-size: 12px; }
+        .table-theory-block .var-table td { padding: 5px 10px; }
         .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.7); z-index: 9998; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .loading-overlay.active { display: flex; }
         .loading-overlay .spinner { width: 40px; height: 40px; border: 4px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -272,6 +296,11 @@
             if (experimentSchema.description) {
                 var description = document.createElement('div');
                 description.className = 'schema-description';
+                if (experimentSchema.shell) {
+                    // 外壳实验：尚未开发的实验用醒目提示展示，并隐藏提交按钮
+                    description.style.cssText = 'background:#fff8e6;border-left-color:#f39c12;font-size:16px;font-weight:bold;padding:22px 20px;';
+                    document.getElementById('submitBtn').style.display = 'none';
+                }
                 description.textContent = experimentSchema.description;
                 wrapper.appendChild(description);
             }
@@ -329,8 +358,15 @@
             }
 
             (experimentSchema.tables || []).forEach(function(tableSchema) {
-                wrapper.appendChild(createStructuredTable(tableSchema));
+                var tableCard = createStructuredTable(tableSchema);
+                wrapper.appendChild(tableCard);
             });
+
+            // MathJax 渲染所有公式节点
+            if (window.MathJax && MathJax.typesetPromise) {
+                var mathNodes = wrapper.querySelectorAll('.formula-step, .var-table td:first-child');
+                if (mathNodes.length) { MathJax.typesetPromise(Array.from(mathNodes)).catch(function(err) { console.warn('MathJax typeset error:', err); }); }
+            }
 
             if (experimentSchema.image_upload) {
                 wrapper.appendChild(createStructuredImageUpload(experimentSchema.image_upload));
@@ -452,6 +488,52 @@
                 description.className = 'table-help';
                 description.textContent = tableSchema.description;
                 card.appendChild(description);
+            }
+
+            // ── 渲染本表的公式和物理量说明（来自 schema.table_theory） ──
+            var tt = experimentSchema.table_theory || {};
+            var tableTheory = tt[tableSchema.id] || tt["_global"] || null;
+            if (tableTheory) {
+                var tableFormulas = tableTheory.formulas || [];
+                var tableVariables = tableTheory.variables || [];
+                if (tableFormulas.length || tableVariables.length) {
+                    var theoryBlock = document.createElement('div');
+                    theoryBlock.className = 'table-theory-block';
+                    if (tableFormulas.length) {
+                        tableFormulas.forEach(function(fb) {
+                            var box = document.createElement('div');
+                            box.className = 'formula-box';
+                            if (fb.title) { var ft = document.createElement('div'); ft.className = 'formula-title'; ft.textContent = fb.title; box.appendChild(ft); }
+                            (fb.steps || []).forEach(function(step) {
+                                if (step.note) { var note = document.createElement('div'); note.className = 'formula-note'; note.innerHTML = step.note; box.appendChild(note); }
+                                if (step.formula) { var fd = document.createElement('div'); fd.className = 'formula-step'; fd.textContent = '$$' + step.formula + '$$'; box.appendChild(fd); }
+                            });
+                            theoryBlock.appendChild(box);
+                        });
+                    }
+                    if (tableVariables.length) {
+                        var varHeading = document.createElement('div');
+                        varHeading.className = 'var-heading';
+                        varHeading.innerHTML = '<span>📖</span> 本表物理量说明';
+                        theoryBlock.appendChild(varHeading);
+                        var vTable = document.createElement('table');
+                        vTable.className = 'var-table';
+                        var vHead = document.createElement('thead');
+                        vHead.innerHTML = '<tr><th>符号</th><th>名称与含义</th><th>单位</th></tr>';
+                        vTable.appendChild(vHead);
+                        var vBody = document.createElement('tbody');
+                        tableVariables.forEach(function(v) {
+                            var tr = document.createElement('tr');
+                            var tdSym = document.createElement('td'); tdSym.innerHTML = '$' + v.symbol + '$'; tr.appendChild(tdSym);
+                            var tdDesc = document.createElement('td'); tdDesc.innerHTML = v.description; tr.appendChild(tdDesc);
+                            var tdUnit = document.createElement('td'); tdUnit.textContent = v.unit || '无单位'; tr.appendChild(tdUnit);
+                            vBody.appendChild(tr);
+                        });
+                        vTable.appendChild(vBody);
+                        theoryBlock.appendChild(vTable);
+                    }
+                    card.appendChild(theoryBlock);
+                }
             }
 
             var toolbar = document.createElement('div');
@@ -912,21 +994,33 @@
                 }
                 var resultArea = document.getElementById('resultArea');
                 resultArea.style.display = 'block';
-                var lines = ['文档生成成功！', '', '实验名称：{{name}}', '文件ID：' + res.data];
+                var escapeHtml = function (text) {
+                    return String(text).replace(/[&<>"']/g, function (ch) {
+                        return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[ch];
+                    });
+                };
+                var resultHtml = '<div style="font-weight:bold;color:#2c3e50;font-size:15px;">✅ 文档生成成功！</div>'
+                    + '<div style="margin-top:4px;color:#555;">实验名称：{{name}}　　文件ID：' + escapeHtml(res.data) + '</div>';
                 if (res.summary && res.summary.length) {
-                    lines.push('', '主要计算结果：');
-                    res.summary.forEach(function(item) { lines.push('• ' + item); });
+                    resultHtml += '<div style="margin-top:14px;font-weight:bold;color:#667eea;font-size:16px;border-bottom:2px solid #667eea;padding-bottom:6px;">📌 主要计算结果</div>';
+                    res.summary.forEach(function(item) {
+                        resultHtml += '<div style="margin-top:8px;font-weight:bold;font-size:17px;color:#111;line-height:1.7;">• ' + escapeHtml(item) + '</div>';
+                    });
                 }
                 if (res.warnings && res.warnings.length) {
-                    lines.push('', '数据检查提示：');
-                    res.warnings.forEach(function(item) { lines.push('⚠ ' + item); });
+                    resultHtml += '<div style="margin-top:14px;font-weight:bold;color:#d35400;">数据检查提示：</div>';
+                    res.warnings.forEach(function(item) {
+                        resultHtml += '<div style="margin-top:4px;color:#d35400;line-height:1.6;">⚠ ' + escapeHtml(item) + '</div>';
+                    });
                 }
-                document.getElementById('resultContent').innerText = lines.join('\n');
+                document.getElementById('resultContent').innerHTML = resultHtml;
                 document.getElementById('downloadbtn').href = '/api/download/{{num}}/' + res.data + '.docx';
                 document.getElementById('downloadbtn').style.display = 'inline-block';
                 document.getElementById('chartBtn').style.display = 'none';
                 document.getElementById('abnormalBtn').style.display = 'inline-block';
-                document.getElementById('aiReportBtn').style.display = 'inline-block';
+                if (!window.experimentSchema || window.experimentSchema.report_enabled !== false) {
+                    document.getElementById('aiReportBtn').style.display = 'inline-block';
+                }
                 lastUserData = payload;
                 lastCalcResult = { fileid: res.data, exp_name: res.exp_name, summary: res.summary || [], warnings: res.warnings || [] };
                 renderStructuredCharts(res.charts || []);
@@ -1177,6 +1271,6 @@
             setTimeout(function() { t.style.display = 'none'; }, duration || 2000);
         }
     </script>
-    <script src="/static/js/unified-experiment.js"></script>
+    <script src="/static/js/unified-experiment.js?v=6"></script>
 </body>
 </html>

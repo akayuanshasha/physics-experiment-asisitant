@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "杨氏模量及泊松比"
@@ -115,18 +117,15 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [
-        [100, 0.025, -0.003], [200, 0.051, -0.005], [300, 0.076, -0.008],
-        [400, 0.102, -0.011], [500, 0.127, -0.014], [600, 0.153, -0.017],
-        [700, 0.178, -0.020], [800, 0.203, -0.023], [900, 0.229, -0.026], [1000, 0.254, -0.029],
-    ]
+    sample=load_sample_data_numeric("exp40", "exp40_example")
     table = make_table(
         "table1", "杨氏模量及泊松比测量数据表", ["F", "delta_L", "delta_D"],
         sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "载荷 F", "y_label": "轴向伸长量 ΔL",
                "title": "轴向形变-载荷关系", "fit": "linear"},
     )
-    return make_schema("由轴向和横向形变计算杨氏模量及泊松比。", [table], analysis_hints="检查形变与载荷的线性及横向形变符号。")
+    return make_schema("由轴向和横向形变计算杨氏模量及泊松比。", [table], analysis_hints="检查形变与载荷的线性及横向形变符号。",
+        table_theory=get_table_theory("exp40"),)
 
 
 def handle_structured(workpath, payload):

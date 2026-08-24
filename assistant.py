@@ -22,7 +22,8 @@ from tool_executor import (
 )
 
 # 加载项目根目录下的 .env 文件（如果存在），自动注入环境变量
-load_dotenv()
+_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+load_dotenv(_env_path)
 
 # 防止无限工具调用循环的上限
 MAX_TOOL_ROUNDS = 5
@@ -298,7 +299,12 @@ class Assistant:
             print("    set LLM_MODEL=模型名               (可选，默认 glm-5.2)")
             self.client = None
         else:
-            self.client = OpenAI(api_key=api_key, base_url=base_url)
+            import httpx
+            self.client = OpenAI(
+                api_key=api_key,
+                base_url=base_url,
+                timeout=httpx.Timeout(180.0, connect=15.0),  # 总超时180s，连接超时15s
+            )
             print(f"[AI助教] LLM API 客户端初始化成功 (model={self.model})")
             print(f"         base_url={base_url}")
 

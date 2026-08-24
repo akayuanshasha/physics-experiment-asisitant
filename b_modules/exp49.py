@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "电子小制作"
@@ -90,14 +92,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[1.0, 2.0], [2.0, 4.1], [3.0, 6.0], [4.0, 8.1], [5.0, 10.0],
-              [6.0, 12.1], [7.0, 14.0], [8.0, 16.0], [9.0, 18.1], [10.0, 20.0]]
+    sample=load_sample_data_numeric("exp49", "exp49_example")
     table = make_table(
         "table1", "电子小制作伏安特性数据表", ["U", "I"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "电压 U", "y_label": "电流 I",
                "title": "伏安特性曲线", "fit": "linear"},
     )
-    return make_schema("根据电压、电流数据分析电子制作电路的特性。", [table], analysis_hints="检查伏安关系、等效电阻及异常测量点。")
+    return make_schema("根据电压、电流数据分析电子制作电路的特性。", [table], analysis_hints="检查伏安关系、等效电阻及异常测量点。",
+        table_theory=get_table_theory("exp49"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

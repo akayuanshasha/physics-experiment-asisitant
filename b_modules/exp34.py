@@ -1,4 +1,5 @@
 from head import *
+from theory_content import get_formulas, get_variables, get_table_theory
 from optics_common import *
 
 
@@ -95,7 +96,10 @@ def schema():
                 "sample": [{"temperature_c": value, "fringe_count": round((value - 20) * 0.42, 2)} for value in range(20, 61, 5)],
             },
         ],
-    }
+    
+        "formulas": get_formulas("exp34"),
+        "variables": get_variables("exp34"),
+        "table_theory": get_table_theory("exp34"),}
 
 
 def _read_curve(payload, table_id, required=True, min_rows=0, x_key="position_mm", x_label="位置"):

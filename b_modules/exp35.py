@@ -1,4 +1,5 @@
 from head import *
+from theory_content import get_formulas, get_variables, get_table_theory
 from optics_common import *
 
 
@@ -9,6 +10,7 @@ def name():
 def schema():
     return {
         "schema_version": 2,
+        "report_enabled": False,
         "description": "基础内容用累计条纹数与M₁镜位置进行最小二乘拟合；提高内容另用三次位置和厚度读数计算透明薄片折射率。",
         "parameters": [
             {
@@ -52,7 +54,10 @@ def schema():
                 ],
             },
         ],
-    }
+    
+        "formulas": get_formulas("exp35"),
+        "variables": get_variables("exp35"),
+        "table_theory": get_table_theory("exp35"),}
 
 
 def handle_structured(workpath, payload):

@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "超声光栅"
@@ -85,13 +87,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[2.0, 15.8, 1], [3.0, 10.5, 1], [4.0, 7.9, 1], [5.0, 6.3, 1]]
+    sample=load_sample_data_numeric("exp41", "exp41_example")
     table = make_table(
         "table1", "超声光栅测量数据表", ["f", "delta_x", "k"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "超声频率 f", "y_label": "衍射条纹间距 Δx",
                "title": "超声光栅测量曲线", "fit": "auto"},
     )
-    return make_schema("利用超声光栅衍射数据分析声速或相关参数。", [table], analysis_hints="检查衍射级次、频率与条纹间距的物理关系。")
+    return make_schema("利用超声光栅衍射数据分析声速或相关参数。", [table], analysis_hints="检查衍射级次、频率与条纹间距的物理关系。",
+        table_theory=get_table_theory("exp41"),)
 
 
 def handle_structured(workpath, payload):

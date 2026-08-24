@@ -1,5 +1,27 @@
+"""非平衡电桥实验模块
+=================
+二级大物电磁学实验 —— 非平衡电桥
+
+实验内容：
+测量非平衡电桥输出电压 Ug 与电阻相对变化 δ=ΔR/R₀ 的关系。
+本实验包含两组独立测量（不同桥臂电阻条件），
+每组数据独立进行异常检验和图表生成，
+最终合并两组数据生成完整实验报告。
+
+物理背景：
+非平衡电桥是一种常用的测量电路，当桥臂电阻发生变化时，
+电桥失去平衡，输出端产生电压差 Ug。
+在小变化条件下，Ug 与 δ=ΔR/R₀ 近似成线性关系：
+    Ug ≈ (E/4) · δ
+其中 E 为激励电压。不同桥臂电阻 R₀ 会影响灵敏度和线性范围。
+"""
+
 from head import * # 导入万能头
-from structured_support import make_schema, make_table, structured_result
+from structured_support import (
+    as_number, copied_tables, formatted, make_schema, make_table, structured_result,
+)
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name(): # 返回实验名称
     return "非平衡电桥"
@@ -95,27 +117,75 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample1 = [[-0.04, -40.1], [-0.02, -20.0], [0, 0.1], [0.02, 20.2], [0.04, 39.9]]
-    sample2 = [[-0.04, -31.8], [-0.02, -16.0], [0, 0], [0.02, 16.1], [0.04, 32.0]]
+    _all = load_sample_data_numeric("exp27", "exp27_example")
+    _mid = len(_all) // 2
+    sample1 = _all[:_mid] or _all
+    sample2 = _all[_mid:] or _all
     chart = {
         "x_column": "c0", "y_column": "c1",
-        "x_label": "ΔR/R0", "y_label": "Ug (mV)",
+        "x_label": "R4 (Ω)", "y_label": "Ug (mV)",
         "title": "非平衡电桥输出特性", "fit": "linear",
     }
     return make_schema(
         "测量非平衡电桥输出特性曲线（双数据表）",
         [
             make_table("table1", "非平衡电桥输出电压与电阻相对变化关系数据表",
-                       ["δ=ΔR/R0", "Ug(mV)"], sample=sample1, initial_rows=3, chart=chart),
+                       ["R4(Ω)", "Ug(mV)", "δ=ΔR/R₀", "Ug_线性(mV)", "相对偏差(%)"],
+                       sample=sample1, readonly=(2, 3, 4), initial_rows=3, chart=chart),
             make_table("table2", "不同桥臂电阻下非平衡电桥输出特性数据表",
-                       ["δ=ΔR/R0", "Ug(mV)"], sample=sample2, initial_rows=3, chart=chart),
+                       ["R4(Ω)", "Ug(mV)", "δ=ΔR/R₀", "Ug_线性(mV)", "相对偏差(%)"],
+                       sample=sample2, readonly=(2, 3, 4), initial_rows=3, chart=chart),
         ],
         analysis_hints="分别检查两组输出曲线的线性、零点偏移、灵敏度及线性范围。",
-    )
+        preview_enabled=True,
+        table_theory=get_table_theory("exp27"),)
+
+
+def preview(payload):
+    """实时计算 δ=ΔR/R₀、Ug_线性和相对偏差。
+
+    取 Ug 最接近 0 时的 R4 作为 R₀，默认电源电压 Us=5V。
+    """
+    Us = 5.0  # 默认电源电压
+    tables = copied_tables(payload)
+    for table_id in ("table1", "table2"):
+        rows = tables.get(table_id, [])
+        # 第一遍：找 R0（Ug 最接近 0 时的 R4）
+        r0, min_ug = None, float('inf')
+        for row in rows:
+            r4 = as_number(row.get("c0"))
+            ug = as_number(row.get("c1"))
+            if r4 is not None and ug is not None and abs(ug) < min_ug:
+                min_ug = abs(ug)
+                r0 = r4
+        # 第二遍：计算派生值
+        for row in rows:
+            r4 = as_number(row.get("c0"))
+            ug = as_number(row.get("c1"))
+            if r4 is not None and r0 not in (None, 0):
+                delta = (r4 - r0) / r0
+                row["c2"] = formatted(delta, 5)
+                if ug is not None:
+                    ug_linear = (Us / 4.0) * delta
+                    row["c3"] = formatted(ug_linear, 4)
+                    if abs(ug_linear) > 1e-10:
+                        row["c4"] = formatted(abs(ug - ug_linear) / abs(ug_linear) * 100, 2)
+                    else:
+                        row["c4"] = ""
+                else:
+                    row["c3"] = ""
+                    row["c4"] = ""
+            else:
+                row["c2"] = ""
+                row["c3"] = ""
+                row["c4"] = ""
+    return {"tables": tables}
 
 
 def handle_structured(workpath, payload):
+    enriched = dict(payload)
+    enriched["tables"] = preview(payload)["tables"]
     return structured_result(
-        workpath, name(), schema(), payload,
+        workpath, name(), schema(), enriched,
         summary=["两组非平衡电桥数据已接收，可分别拟合输出电压与相对电阻变化的关系。"],
     )

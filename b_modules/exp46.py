@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "导热系数"
@@ -96,14 +98,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[80.0, 35.0], [78.0, 36.0], [76.0, 37.0], [74.0, 38.0], [72.0, 39.0],
-              [70.0, 40.0], [68.0, 41.0], [66.0, 42.0], [64.0, 43.0], [62.0, 44.0]]
+    sample=load_sample_data_numeric("exp46", "exp46_example")
     table = make_table(
         "table1", "导热系数温度测量数据表", ["T1", "T2"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "热端温度 T1", "y_label": "冷端温度 T2",
                "title": "冷热端温度关系", "fit": "linear"},
     )
-    return make_schema("根据稳态温度数据计算材料导热系数。", [table], analysis_hints="检查稳态温差、温度变化趋势和测量单位。")
+    return make_schema("根据稳态温度数据计算材料导热系数。", [table], analysis_hints="检查稳态温差、温度变化趋势和测量单位。",
+        table_theory=get_table_theory("exp46"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

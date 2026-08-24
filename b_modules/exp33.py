@@ -1,4 +1,5 @@
 from head import *
+from theory_content import get_formulas, get_variables, get_table_theory
 from optics_common import *
 
 
@@ -79,7 +80,10 @@ def schema():
                 ],
             },
         ],
-    }
+    
+        "formulas": get_formulas("exp33"),
+        "variables": get_variables("exp33"),
+        "table_theory": get_table_theory("exp33"),}
 
 
 def _handle_billet(workpath, payload, part):

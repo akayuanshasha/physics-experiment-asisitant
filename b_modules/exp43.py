@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "刚体转动惯量"
@@ -94,14 +96,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[1.25, 500.0, 50.0, 60.0], [1.248, 500.0, 50.0, 60.0],
-              [1.251, 500.0, 50.0, 60.0], [1.249, 500.0, 50.0, 60.0], [1.252, 500.0, 50.0, 60.0]]
+    sample=load_sample_data_numeric("exp43", "exp43_example")
     table = make_table(
         "table1", "刚体转动惯量测量数据表", ["T", "m", "h", "R"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "周期 T", "y_label": "质量 m",
                "title": "转动惯量测量数据检查", "fit": "auto"},
     )
-    return make_schema("利用周期、质量和几何参数测量刚体转动惯量。", [table], analysis_hints="重点检查周期重复测量的离散性和单位一致性。")
+    return make_schema("利用周期、质量和几何参数测量刚体转动惯量。", [table], analysis_hints="重点检查周期重复测量的离散性和单位一致性。",
+        table_theory=get_table_theory("exp43"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

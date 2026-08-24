@@ -1,4 +1,5 @@
 from head import *
+from theory_content import get_formulas, get_variables, get_table_theory
 from optics_common import *
 
 
@@ -9,6 +10,7 @@ def name():
 def schema():
     return {
         "schema_version": 2,
+        "report_enabled": False,
         "description": "本模块对应“光栅衍射和双光栅Lau效应”，不再使用速度—拍频模型。基础内容测光栅常数，提升内容用标准样品比较法测折射率。",
         "parameters": [
             {"id": "wavelength_nm", "label": "钠光波长", "unit": "nm", "type": "number", "default": 589.3, "required": True, "step": "0.1"},
@@ -72,7 +74,10 @@ def schema():
                 "sample": [{"z0_mm": 50.0, "fringe_spacing_mm": 0.50}],
             },
         ],
-    }
+    
+        "formulas": get_formulas("exp38"),
+        "variables": get_variables("exp38"),
+        "table_theory": get_table_theory("exp38"),}
 
 
 def _row_angle(row, key, row_index):

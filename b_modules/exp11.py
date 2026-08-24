@@ -4,6 +4,20 @@ from scipy.signal import savgol_filter # 使用 Savitzky-Golay 平滑去噪
 def name(): # 返回实验名称
     return "半导体温度计"
 
+def schema():
+    from theory_content import get_formulas, get_variables, get_table_theory
+    return {
+        "schema_version": 2,
+        "report_enabled": False,
+        "description": "半导体温度计的设计与定标",
+        "parameters": [],
+        "tables": [],
+        "formulas": get_formulas("exp11"),
+        "variables": get_variables("exp11"),
+        "table_theory": get_table_theory("exp11"),
+    }
+
+
 def handle(workpath,extension):
     # 处理数据并生成文档，workpath为工作文件夹路径（本程序涉及到的所有文件只能保存在此文件夹内），extension为扩展名（csv/xls/xlsx）
     try:
@@ -54,24 +68,3 @@ def handle(workpath,extension):
     except:
         traceback.print_exc() # 打印错误
         return 1 # 若失败，返回1
-
-from structured_support import handle_legacy_single_table, make_schema, make_table
-
-
-def schema():
-    """本实验唯一的前端输入结构与示例数据来源。"""
-    return make_schema(
-        "半导体温度计的数据输入与处理。",
-        [make_table(
-            "table1",
-            "半导体温度计数据",
-            ["电流 I/µA"],
-            sample=[["0.0"],["6.0"],["12.0"],["18.0"],["23.7"],["29.0"],["34.0"],["38.7"],["43.0"],["46.4"],["50.0"]],
-            text_columns=[],
-        )],
-        analysis_hints="按实验指导检查数据完整性，并调用本模块原有计算流程生成结果。",
-    )
-
-
-def handle_structured(workpath, payload):
-    return handle_legacy_single_table(workpath, payload, schema(), name(), handle)

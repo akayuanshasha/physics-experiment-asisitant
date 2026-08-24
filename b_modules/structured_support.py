@@ -74,18 +74,25 @@ def make_schema(
     parameters: list[dict[str, Any]] | None = None,
     analysis_hints: str = "",
     preview_enabled: bool = False,
+    report_enabled: bool = True,
     revision: int = 3,
+    formulas: list[dict[str, Any]] | None = None,
+    variables: list[dict[str, Any]] | None = None,
+    table_theory: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     return {
         "schema_version": 2,
         "schema_revision": revision,
         "draft_enabled": True,
-        "report_enabled": True,
+        "report_enabled": report_enabled,
         "preview_enabled": preview_enabled,
         "description": description,
         "parameters": deepcopy(parameters or []),
         "analysis_hints": analysis_hints,
         "tables": deepcopy(tables),
+        "formulas": deepcopy(formulas or []),
+        "variables": deepcopy(variables or []),
+        "table_theory": deepcopy(table_theory or {}),
     }
 
 
@@ -257,4 +264,64 @@ def handle_legacy_single_table(
         "warnings": [],
         "charts": [],
         "document": f"{experiment_name}.docx",
+    }
+
+
+def make_chart_from_table(
+    table_schema: dict[str, Any],
+    rows: list[dict[str, Any]],
+    chart_config: dict[str, Any],
+    workpath: str,
+    chart_filename: str = "chart_0.png",
+) -> dict[str, Any]:
+    """利用 chart_generator 的多模型拟合能力，从结构化表格数据生成图表。
+
+    参数:
+        table_schema: make_table 返回的表格描述（含 columns / labels）
+        rows: preview 计算后的行数据（dict 列表，key 为 c0, c1, …）
+        chart_config: 图表配置，至少包含 x_column / y_column；
+                      可选 fit: linear | quadratic | exponential | power | log | inverse | auto
+        workpath: 图表输出目录（通常为 handle_structured 的 workpath）
+        chart_filename: 输出文件名
+
+    返回:
+        dict  可直接放入 structured_result(charts=[...]) 的 chart 描述，
+        包含 filename / title / fit_result / url 等字段。
+    """
+    import shutil as _shutil
+    from chart_generator import generate_chart
+
+    schema_columns = table_schema.get("columns", [])
+    col_id_to_index = {col["id"]: idx for idx, col in enumerate(schema_columns)}
+    labels = [col["label"] for col in schema_columns]
+    data_rows = []
+    for row in rows:
+        data_row = [str(row.get(col["id"], "")) for col in schema_columns]
+        data_rows.append(data_row)
+
+    config = dict(chart_config)
+    # 将列 ID（如 c0、c2）转换为整数索引，以便 generate_chart 正确定位数据列
+    for key in ("x_column", "y_column"):
+        col_id = config.get(key)
+        if isinstance(col_id, str) and col_id in col_id_to_index:
+            config[key.replace("_column", "_col")] = col_id_to_index[col_id]
+            config.pop(key, None)
+    config.setdefault("x_label", labels[0] if labels else "x")
+    config.setdefault("y_label", labels[1] if len(labels) > 1 else "y")
+
+    result = generate_chart(labels, data_rows, config, save_name=chart_filename)
+
+    # generate_chart 保存到自身 OUTPUT_DIR，需要复制到 workpath 供前端访问
+    src_path = result.get("path")
+    dst_path = os.path.join(workpath, chart_filename)
+    if src_path and os.path.exists(src_path):
+        os.makedirs(workpath, exist_ok=True)
+        _shutil.copy2(src_path, dst_path)
+
+    return {
+        "filename": chart_filename,
+        "title": config.get("title", ""),
+        "fit_result": result.get("fit_result"),
+        "x_label": result.get("x_label", ""),
+        "y_label": result.get("y_label", ""),
     }

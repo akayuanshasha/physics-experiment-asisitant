@@ -1,5 +1,29 @@
+"""霍尔效应实验模块
+===============
+二级大物电磁学实验 —— 霍尔效应
+
+实验内容：
+本实验包含三组独立测量：
+1. 霍尔电压 VH 与控制电流 IS 的关系
+2. 霍尔电压 VH 与励磁电流 IM 的关系
+3. 霍尔系数 RH 随温度 T 的变化（变温霍尔效应）
+
+每组数据独立进行异常检验和图表生成，
+最终合并三组数据生成完整实验报告。
+
+物理背景：
+霍尔效应：在通有电流的导体或半导体上施加磁场，
+则会产生垂直于电流和磁场方向的霍尔电压。
+U_H = (R_H * I * B) / d
+其中 R_H 为霍尔系数，I 为工作电流，B 为磁感应强度，d 为样品厚度。
+"""
+
 from head import * # 导入万能头
-from structured_support import make_schema, make_table, structured_result
+from structured_support import (
+    as_number, copied_tables, formatted, make_schema, make_table, structured_result,
+)
+from theory_content import get_formulas, get_variables, get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "霍尔效应"
@@ -97,40 +121,57 @@ def handle(workpath,extension):
 
 
 def schema():
+    _all = load_sample_data_numeric("exp28", "exp28_example")
     return make_schema(
         "霍尔效应实验（三数据表：VH-IS、VH-IM、RH-T）",
         [
             make_table(
                 "table1", "霍尔电压与控制电流关系数据表",
-                ["IS(mA)", "VH(mV)"],
-                sample=[[1, 2.12], [2, 4.25], [3, 6.37], [4, 8.49], [5, 10.62]],
+                ["IS(mA)", "V1(mV)", "V2(mV)", "V3(mV)", "V4(mV)", "VH(mV)"],
+                sample=_all,
+                readonly=(5,),
                 initial_rows=3,
-                chart={"x_column": "c0", "y_column": "c1", "x_label": "控制电流 IS (mA)",
-                       "y_label": "霍尔电压 VH (mV)", "title": "霍尔电压与控制电流关系数据表", "fit": "linear"},
+                chart={"x_column": "c0", "y_column": "c5", "x_label": "控制电流 IS (mA)",
+                       "y_label": "霍尔电压 VH (mV)", "title": "VH-IS 关系", "fit": "linear"},
             ),
             make_table(
                 "table2", "霍尔电压与励磁电流关系数据表",
                 ["IM(A)", "VH(mV)"],
-                sample=[[0.10, 1.35], [0.20, 2.70], [0.30, 4.06], [0.40, 5.39], [0.50, 6.76]],
+                sample=(),
                 initial_rows=3,
                 chart={"x_column": "c0", "y_column": "c1", "x_label": "励磁电流 IM (A)",
-                       "y_label": "霍尔电压 VH (mV)", "title": "霍尔电压与励磁电流关系数据表", "fit": "linear"},
+                       "y_label": "霍尔电压 VH (mV)", "title": "VH-IM 关系", "fit": "linear"},
             ),
             make_table(
                 "table3", "霍尔效应参数随温度变化关系数据表",
                 ["T(℃)", "RH(m³/C)"],
-                sample=[[20, 3.80e-4], [30, 3.72e-4], [40, 3.64e-4], [50, 3.56e-4], [60, 3.49e-4]],
+                sample=(),
                 initial_rows=3,
                 chart={"x_column": "c0", "y_column": "c1", "x_label": "温度 T (℃)",
-                       "y_label": "霍尔系数 RH (m³/C)", "title": "霍尔效应参数随温度变化关系数据表", "fit": "auto"},
+                       "y_label": "霍尔系数 RH (m³/C)", "title": "RH-T 关系", "fit": "auto"},
             ),
         ],
         analysis_hints="检查两组霍尔电压关系的线性以及霍尔系数随温度变化的趋势。",
-    )
+        preview_enabled=True,
+        table_theory=get_table_theory("exp28"),)
+
+
+def preview(payload):
+    """从四组霍尔电压 V1-V4 计算 VH = (|V1|+|V2|+|V3|+|V4|)/4。"""
+    tables = copied_tables(payload)
+    for row in tables.get("table1", []):
+        vs = [abs(v) for v in (as_number(row.get(f"c{i}")) for i in range(1, 5)) if v is not None]
+        if vs:
+            row["c5"] = formatted(sum(vs) / len(vs), 4)
+        else:
+            row["c5"] = ""
+    return {"tables": tables}
 
 
 def handle_structured(workpath, payload):
+    enriched = dict(payload)
+    enriched["tables"] = preview(payload)["tables"]
     return structured_result(
-        workpath, name(), schema(), payload,
+        workpath, name(), schema(), enriched,
         summary=["三组霍尔效应数据已接收，可分别分析 VH-IS、VH-IM 和 RH-T 关系。"],
     )

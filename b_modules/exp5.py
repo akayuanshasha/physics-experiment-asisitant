@@ -1,16 +1,27 @@
+"""杨氏模量实验模块（光杠杆法）
+==========================================
+本实验包含三组数据表：
+
+  表格1：钢丝直径 d 的多次测量（5次，求平均）
+  表格2：光杠杆拉伸形变数据（7行，加减砝码读数）
+    → 计算 b̄ = (b₊+b₋)/2，Δb = b̄ - b̄₀
+  图表1：b - F 线性拟合图 → 由斜率 M 计算 E
+
+物理公式：
+  E = 8DL / (π d̄² l M)
+  其中 D 为镜尺距，L 为钢丝原长，l 为光杠杆臂长，
+  M 为 b-F 拟合斜率。
+"""
+
 from head import * # 导入万能头
-import numpy as np
 from structured_support import (
-    as_number, copied_tables, make_schema, make_table, ordered_rows,
-    parameter_values, result_lines, structured_result,
+    as_number, copied_tables, formatted, make_schema, make_table, structured_result,
 )
+from theory_content import get_formulas, get_variables, get_table_theory
+from sample_data_loader import load_sample_data
 
 def name(): # 返回实验名称
     return "用拉伸法测量钢丝的杨氏模量"
-
-
-def display_name():
-    return "杨氏模量B（实验指导）"
 
 def handle(workpath,extension):
     # 处理数据并生成文档，workpath为工作文件夹路径（本程序涉及到的所有文件只能保存在此文件夹内），extension为扩展名（csv/xls/xlsx）
@@ -137,155 +148,87 @@ def handle(workpath,extension):
 
 
 def schema():
-    parameters = [
-        {"id": "L", "label": "钢丝原长 L", "unit": "cm", "type": "number", "default": 50, "backend_key": "钢丝原长L(cm)"},
-        {"id": "D", "label": "镜尺距 D", "unit": "cm", "type": "number", "default": 100, "backend_key": "镜尺距D(cm)"},
-        {"id": "l", "label": "光杠杆臂长 l", "unit": "cm", "type": "number", "default": 4, "backend_key": "臂长l(cm)"},
-        {"id": "wavelength", "label": "激光波长 λ", "unit": "nm", "type": "number", "default": 632.8},
-        {"id": "screen_distance", "label": "衍射屏距 Ds", "unit": "cm", "type": "number", "default": 100},
-    ]
+    _raw = load_sample_data("exp5", "用拉伸法测量钢丝的杨氏模量")
+    # CSV 列: D/cm, l/cm, L/cm, d/mm, 砝码个数, b1, b2
+    # 提取参数和砝码数据
+    D_val, l_val, L_val = None, None, None
+    diameters = []
+    masses = []
+    b_readings = []
+    for row in _raw:
+        if len(row) >= 7:
+            try:
+                if row[0].strip():
+                    D_val = float(row[0])
+                if row[1].strip():
+                    l_val = float(row[1])
+                if row[2].strip():
+                    L_val = float(row[2])
+                if row[3].strip():
+                    diameters.append(float(row[3]))
+                mass_idx = int(float(row[4])) if row[4].strip() else None
+                b1 = float(row[5]) if row[5].strip() else None
+                b2 = float(row[6]) if row[6].strip() else None
+                if mass_idx is not None and b1 is not None and b2 is not None:
+                    masses.append(mass_idx)
+                    b_readings.append([b1, b2])
+            except (ValueError, IndexError):
+                pass
+    # 表格1：钢丝直径
+    sample1 = [[d] for d in diameters[:5]]
+    # 表格2：光杠杆数据
+    sample2 = []
+    for m, br in zip(masses[:7], b_readings[:7]):
+        sample2.append([br[0], br[1]])  # b₊, b₋
+    chart = {
+        "x_column": "c0", "y_column": "c2",
+        "x_label": "序号", "y_label": "标尺读数 b̄ (cm)",
+        "title": "b̄-序号 关系图", "fit": "linear",
+    }
     return make_schema(
-        "使用光杠杆法和单缝衍射法测量钢丝的杨氏模量。",
+        "杨氏模量（3数据表 + 1拟合图）",
         [
             make_table(
-                "table1", "钢丝直径测量表", ["dᵢ(mm)"],
-                sample=[[0.495], [0.497], [0.496], [0.498], [0.496]],
+                "table1", "钢丝直径测量表",
+                ["d_i(mm)"],
+                sample=sample1, initial_rows=5,
             ),
             make_table(
                 "table2", "光杠杆拉伸形变数据表",
-                ["砝码(kg)", "b₊(mm)", "b₋(mm)", "b̄(mm)", "b(mm)"],
-                readonly=(3, 4),
-                sample=[
-                    [0, 5.20, 5.18, "", ""], [1, 5.50, 5.52, "", ""], [2, 5.82, 5.80, "", ""],
-                    [3, 6.12, 6.14, "", ""], [4, 6.44, 6.42, "", ""], [5, 6.74, 6.76, "", ""],
-                    [6, 7.06, 7.04, "", ""],
-                ],
-                chart={
-                    "x_column": "c0", "y_column": "c4", "x_label": "砝码质量 (kg)",
-                    "y_label": "位移 b (mm)", "title": "光杠杆位移-载荷关系", "fit": "linear",
-                },
-            ),
-            make_table(
-                "table3", "单缝衍射伸长量计算表",
-                ["砝码(kg)", "条纹宽度 x(mm)", "伸长量 ΔL(μm)"],
-                readonly=(2,),
-                sample=[[0, 2.500, ""], [1, 2.480, ""], [2, 2.460, ""], [3, 2.440, ""], [4, 2.420, ""]],
-                chart={
-                    "x_column": "c0", "y_column": "c2", "x_label": "砝码质量 (kg)",
-                    "y_label": "伸长量 ΔL (μm)", "title": "单缝衍射伸长量-载荷关系", "fit": "linear",
-                },
+                ["b₊(cm)", "b₋(cm)",
+                 "b̄(cm)", "Δb(cm)"],
+                sample=sample2, readonly=(2, 3), initial_rows=7, chart=chart,
             ),
         ],
-        parameters=parameters,
-        analysis_hints="重点检查钢丝直径重复性、两种方法的线性拟合质量及杨氏模量是否处于钢材合理范围。",
+        parameters=[
+            {"id": "D", "label": "镜尺距 D", "unit": "cm", "type": "number", "default": D_val or 128.0},
+            {"id": "l", "label": "光杠杆臂长 l", "unit": "cm", "type": "number", "default": l_val or 7.2},
+            {"id": "L", "label": "钢丝原长 L", "unit": "cm", "type": "number", "default": L_val or 100.5},
+        ],
+        analysis_hints="检查钢丝直径的重复性、光杠杆数据的线性度，以及杨氏模量的合理性。",
         preview_enabled=True,
-        revision=4,
-    )
+        table_theory=get_table_theory("exp5"),)
 
 
 def preview(payload):
+    """补全光杠杆平均值 b̄ 和位移 Δb。"""
     tables = copied_tables(payload)
-    parameters = payload.get("parameters") or {}
     rows = tables.get("table2", [])
     first_average = None
-    for row in rows:
-        plus, minus = as_number(row.get("c1")), as_number(row.get("c2"))
+    for index, row in enumerate(rows):
+        plus, minus = as_number(row.get("c0")), as_number(row.get("c1"))
         average = (plus + minus) / 2 if plus is not None and minus is not None else None
-        if first_average is None and average is not None:
+        if index == 0:
             first_average = average
-        row["c3"] = f"{average:.3f}" if average is not None else ""
-        row["c4"] = f"{average - first_average:.3f}" if average is not None and first_average is not None else ""
-
-    wavelength = as_number(parameters.get("wavelength"))
-    screen_distance = as_number(parameters.get("screen_distance"))
-    wavelength = (632.8 if wavelength is None else wavelength) * 1e-9
-    screen_distance = (100 if screen_distance is None else screen_distance) * 1e-2
-    diffraction_rows = tables.get("table3", [])
-    first_width = as_number(diffraction_rows[0].get("c1")) if diffraction_rows else None
-    for row in diffraction_rows:
-        width = as_number(row.get("c1"))
-        value = None
-        if width and first_width:
-            value = wavelength * screen_distance * (1 / (width * 1e-3) - 1 / (first_width * 1e-3)) * 1e6
-        row["c2"] = f"{value:.4f}" if value is not None else ""
+        row["c2"] = formatted(average, 3)
+        row["c3"] = formatted(average - first_average if average is not None and first_average is not None else None, 3)
     return {"tables": tables}
 
 
-def _fit_result(x_values, y_values):
-    if len(x_values) < 2 or np.ptp(x_values) == 0:
-        return None
-    x_array, y_array = np.asarray(x_values, dtype=float), np.asarray(y_values, dtype=float)
-    slope, intercept = np.polyfit(x_array, y_array, 1)
-    predicted = slope * x_array + intercept
-    residual = float(np.sum((y_array - predicted) ** 2))
-    total = float(np.sum((y_array - np.mean(y_array)) ** 2))
-    return float(slope), 1 - residual / total if total else 0
-
-
-def _calculate_structured(data, constants=None):
-    constants = constants or {}
-    length_cm = as_number(constants.get("钢丝原长L(cm)")) or 50.0
-    distance_cm = as_number(constants.get("镜尺距D(cm)")) or 100.0
-    arm_cm = as_number(constants.get("臂长l(cm)")) or 4.0
-    results = {"steps": {}, "final": {}}
-
-    diameters = [as_number(row[0]) for row in data.get("table1", []) if row]
-    diameters = [value for value in diameters if value is not None]
-    if len(diameters) < 2:
-        return {"status": "error", "message": "钢丝直径测量表至少需要2个有效数据。"}
-    diameter_mean = float(np.mean(diameters))
-    diameter_std = float(np.std(diameters, ddof=1))
-    diameter_m = diameter_mean / 1000
-    results["steps"].update({
-        "直径平均值 d̄": f"{diameter_mean:.4f} mm", "直径标准差 σ_d": f"{diameter_std:.4f} mm",
-        "截面积 A": f"{np.pi * (diameter_m / 2) ** 2:.4e} m²",
-    })
-
-    forces, displacements = [], []
-    for row in data.get("table2", []):
-        if len(row) < 5:
-            continue
-        mass, displacement = as_number(row[0]), as_number(row[4])
-        if mass is not None and displacement is not None:
-            forces.append(mass * 9.8)
-            displacements.append(displacement)
-    lever_fit = _fit_result(forces, displacements)
-    if lever_fit:
-        slope, r_squared = lever_fit
-        slope_m = slope / 1000
-        modulus = 8 * (distance_cm / 100) * (length_cm / 100) / (np.pi * diameter_m ** 2 * (arm_cm / 100) * slope_m) if slope_m > 0 else 0
-        results["steps"].update({"b-F 拟合斜率 M": f"{slope:.4f} mm/N", "b-F 拟合优度 R²": f"{r_squared:.6f}"})
-        results["final"]["光杠杆法杨氏模量 E"] = f"{modulus:.3e} Pa"
-    else:
-        results["final"]["光杠杆法"] = "数据不足，无法计算"
-
-    diffraction_forces, elongations = [], []
-    for row in data.get("table3", []):
-        if len(row) < 3:
-            continue
-        mass, elongation = as_number(row[0]), as_number(row[2])
-        if mass is not None and elongation is not None:
-            diffraction_forces.append(mass * 9.8)
-            elongations.append(elongation)
-    diffraction_fit = _fit_result(diffraction_forces, elongations)
-    if diffraction_fit:
-        slope, r_squared = diffraction_fit
-        slope_m = slope * 1e-6
-        modulus = 8 * (distance_cm / 100) * (length_cm / 100) / (np.pi * diameter_m ** 2 * (arm_cm / 100) * slope_m) if slope_m > 0 else 0
-        results["steps"].update({"ΔL-F 拟合斜率 k": f"{slope:.4f} μm/N", "ΔL-F 拟合优度 R²": f"{r_squared:.6f}"})
-        results["final"]["单缝衍射法杨氏模量 E"] = f"{modulus:.3e} Pa"
-    else:
-        results["final"]["单缝衍射法"] = "数据不足，无法计算"
-    results["steps"].update({"钢丝原长 L": f"{length_cm} cm", "镜尺距 D": f"{distance_cm} cm", "臂长 l": f"{arm_cm} cm"})
-    return results
-
-
 def handle_structured(workpath, payload):
-    prepared = dict(payload)
-    prepared["tables"] = preview(payload)["tables"]
-    current_schema = schema()
-    results = _calculate_structured(ordered_rows(current_schema, prepared), parameter_values(current_schema, prepared))
-    if results.get("status") == "error":
-        return {"code": 1, "message": results.get("message", "实验计算失败")}
-    summary, warnings = result_lines(results)
-    return structured_result(workpath, display_name(), current_schema, prepared, summary=summary, warnings=warnings)
+    enriched = dict(payload)
+    enriched["tables"] = preview(payload)["tables"]
+    return structured_result(
+        workpath, name(), schema(), enriched,
+        summary=["钢丝直径、光杠杆数据已处理，b̄ 和 Δb 已由后端计算。"],
+    )

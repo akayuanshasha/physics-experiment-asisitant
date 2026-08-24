@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "凯特摆"
@@ -80,14 +82,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[1.52, 30.0, 42.5], [1.518, 30.0, 42.5], [1.521, 30.0, 42.5],
-              [1.519, 30.0, 42.5], [1.522, 30.0, 42.5]]
+    sample=load_sample_data_numeric("exp44", "exp44_example")
     table = make_table(
         "table1", "凯特摆测量数据表", ["T", "h1", "h2"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "周期 T", "y_label": "刀口位置 h1",
                "title": "凯特摆测量数据检查", "fit": "auto"},
     )
-    return make_schema("利用凯特摆周期与刀口位置测量重力加速度。", [table], analysis_hints="检查周期重复性及两个刀口位置的记录一致性。")
+    return make_schema("利用凯特摆周期与刀口位置测量重力加速度。", [table], analysis_hints="检查周期重复性及两个刀口位置的记录一致性。",
+        table_theory=get_table_theory("exp44"),)
 
 
 def handle_structured(workpath, payload):

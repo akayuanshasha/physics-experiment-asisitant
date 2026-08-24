@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "传感器实验"
@@ -85,14 +87,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[0.0, 0.0], [1.0, 10.2], [2.0, 20.0], [3.0, 30.1], [4.0, 40.0],
-              [5.0, 49.9], [6.0, 59.8], [7.0, 70.0], [8.0, 80.2], [9.0, 90.1], [10.0, 100.0]]
+    sample=load_sample_data_numeric("exp48", "exp48_example")
     table = make_table(
         "table1", "传感器标定数据表", ["x", "U"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c0", "y_column": "c1", "x_label": "输入量 x", "y_label": "输出电压 U",
                "title": "传感器标定曲线", "fit": "linear"},
     )
-    return make_schema("通过输入量与输出电压关系标定传感器。", [table], analysis_hints="检查灵敏度、零点偏移、线性和迟滞误差。")
+    return make_schema("通过输入量与输出电压关系标定传感器。", [table], analysis_hints="检查灵敏度、零点偏移、线性和迟滞误差。",
+        table_theory=get_table_theory("exp48"), report_enabled=False,)
 
 
 def handle_structured(workpath, payload):

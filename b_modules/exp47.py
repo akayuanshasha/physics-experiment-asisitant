@@ -1,5 +1,7 @@
 from head import * # 导入万能头
 from structured_support import handle_legacy_single_table, make_schema, make_table
+from theory_content import get_table_theory
+from sample_data_loader import load_sample_data_numeric
 
 def name():
     return "接触角仪"
@@ -88,14 +90,14 @@ def handle(workpath,extension):
 
 
 def schema():
-    sample = [[45.0, 1.5, 3.0], [46.0, 1.52, 2.98], [44.5, 1.48, 3.02],
-              [45.5, 1.51, 2.99], [45.0, 1.5, 3.0]]
+    sample=load_sample_data_numeric("exp47", "exp47_example")
     table = make_table(
         "table1", "接触角测量数据表", ["theta", "h", "d"], sample=sample, initial_rows=len(sample),
         chart={"x_column": "c1", "y_column": "c0", "x_label": "液滴高度 h", "y_label": "接触角 θ",
                "title": "接触角测量关系", "fit": "auto"},
     )
-    return make_schema("根据液滴几何参数测量接触角。", [table], analysis_hints="检查角度与液滴高度、直径之间的几何一致性。")
+    return make_schema("根据液滴几何参数测量接触角。", [table], analysis_hints="检查角度与液滴高度、直径之间的几何一致性。",
+        table_theory=get_table_theory("exp47"),)
 
 
 def handle_structured(workpath, payload):
