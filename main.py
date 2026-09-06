@@ -702,6 +702,10 @@ def api_chat_stream():
             })
         except Exception as exc:
             total_ms = (time.perf_counter() - request_started) * 1000
+            # 打印真实错误到 gunicorn 日志，便于排查部署环境问题（此前为静默失败）
+            import traceback as _tb
+            print(f"[Chat流式错误] {type(exc).__name__}: {exc}", flush=True)
+            _tb.print_exc()
             chat_config = getattr(
                 getattr(assistant, "chat_backend", None), "config", None,
             )
