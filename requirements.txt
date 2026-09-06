@@ -10,6 +10,7 @@ python-dotenv>=1.0.0     # 从 .env 文件加载 API 密钥等环境变量
 
 # --- Web框架 ---
 flask>=2.3.0             # Web应用框架
+gunicorn>=21.2.0        # WSGI HTTP 服务器（生产环境运行 Flask）
 
 # --- 科学计算与图表 ---
 numpy>=1.24.0            # 数组与统计运算（head.py 万能头及各 exp 模块）
