@@ -1,0 +1,154 @@
+{
+  "schema_version": "rag_v1_final_metrics_v1",
+  "created_utc": "2026-09-06",
+  "systems": {
+    "llm_only": {
+      "label": "LLM Only",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 71.39,
+        "e2e_system_capability_score": 42.83
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 70,
+        "e2e_system_capability_score": 42
+      },
+      "retrieval": {
+        "applicable": false,
+        "recall_at_1": 0,
+        "recall_at_3": 0,
+        "recall_at_5": 0,
+        "mrr": 0,
+        "anchor_recall_at_5": 0
+      },
+      "evidence_traceability": {
+        "applicable": false,
+        "evidence_validity_rate": 0,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 0,
+          "pass_rate": 0
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 21091.73,
+        "p50": 19328.3,
+        "p95": 39963.54
+      }
+    },
+    "bm25": {
+      "label": "BM25 RAG",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 90.56,
+        "e2e_system_capability_score": 94.33
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 90.56,
+        "e2e_system_capability_score": 94.33
+      },
+      "retrieval": {
+        "applicable": true,
+        "recall_at_1": 0.9333,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9667,
+        "anchor_recall_at_5": 0.7
+      },
+      "evidence_traceability": {
+        "applicable": true,
+        "evidence_validity_rate": 1,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 1,
+          "pass_rate": 1
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 23246.42,
+        "p50": 18350.91,
+        "p95": 53829.47
+      }
+    },
+    "hybrid": {
+      "label": "Hybrid RAG",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 93.75,
+        "e2e_system_capability_score": 96.25
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 93.75,
+        "e2e_system_capability_score": 96.25
+      },
+      "retrieval": {
+        "applicable": true,
+        "recall_at_1": 0.9333,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9667,
+        "anchor_recall_at_5": 0.6333
+      },
+      "evidence_traceability": {
+        "applicable": true,
+        "evidence_validity_rate": 1,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 1,
+          "pass_rate": 1
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 21686.79,
+        "p50": 16137.55,
+        "p95": 48531.55
+      }
+    }
+  },
+  "automatic_human_disagreement_count": 3,
+  "unresolved_manual_dispute_count": 0,
+  "comparison_summary": {
+    "llm_only_to_bm25": {
+      "improved": 10,
+      "declined": 1,
+      "unchanged": 4
+    },
+    "bm25_to_hybrid": {
+      "improved": 1,
+      "declined": 1,
+      "unchanged": 13
+    }
+  },
+  "definitions": {
+    "answer_quality_score": "冻结 scorer 的共同回答维度：Factual 30 + Completeness 15 + Boundary 10 + Clarity 5，满分 60 后归一化为 100；不含 Retrieval 与 Evidence。",
+    "e2e_system_capability_score": "冻结六维系统总分：Retrieval 20 + Factual 30 + Evidence/Groundedness 20 + Completeness 15 + Boundary 10 + Clarity 5。人工口径只替换已裁定回答维度，冻结 Retrieval/Evidence 分保持不变。",
+    "evidence_validity_rate": "原字段 citation_valid_rate；仅表示附带 Context evidence ID 属于合法 Context 集合，是 Evidence Validity / Traceability 指标，不是模型逐结论引用准确率。",
+    "model_citation_observation_rate": "是否保存并能观测模型原始 citation selection；本实验三组均为 0.0，因此不能评估模型真实逐结论 citation accuracy。",
+    "llm_only_retrieval_evidence": "LLM Only 关闭检索且没有证据链，系统能力总分中 Retrieval 与 Evidence 按既定口径记 0；Answer Quality 另行公平比较。",
+    "boundary": "pass_rate 的分母为 test 中 answerable=false 的题（本测试为 B007，共 1 题）；automatic 与 human_adjudicated 分开报告。"
+  }
+}

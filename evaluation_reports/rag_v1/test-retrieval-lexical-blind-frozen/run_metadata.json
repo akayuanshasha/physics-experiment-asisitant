@@ -1,0 +1,40 @@
+{
+  "run_id": "test-retrieval-lexical-blind-frozen",
+  "timestamp": "2026-09-02T07:20:55.545716+00:00",
+  "build_id": "corpus-716d48ff22ac",
+  "git_commit_or_build_id": "corpus-716d48ff22ac",
+  "model_name": "disabled-for-retrieval-only",
+  "model_parameters": {
+    "temperature": 0.1,
+    "max_tokens": 8192
+  },
+  "prompt_version": "sha256:abf594c5de145619",
+  "knowledge_base_version": "sha256:716d48ff22ac125be9aa99eae648d129fb5be366d0f98e4b70d8f75604536963",
+  "embedding_model": "disabled-for-lexical-diagnostic",
+  "chunking": {
+    "strategy": "online_rag.corpus structure-aware character chunking",
+    "chunk_size": 700,
+    "chunk_max": 1000,
+    "chunk_overlap": 100
+  },
+  "retrieval": {
+    "filter_key": "experiment_id",
+    "top_k": 5,
+    "assistant_retrieval_top_k": 12,
+    "candidate_k_before_fusion": 20,
+    "document_embedding_batch_size": 16,
+    "experiment_title_boost": 0.01,
+    "fusion": "weighted_rrf",
+    "reranker": "none",
+    "mode": "blind"
+  },
+  "dataset": {
+    "benchmark_version": "1.0",
+    "split": "test",
+    "question_count": 15,
+    "sha256": "373e24bbb3662c90f875e64f20e6eb2e21fd333696d7a905ca9bbc68392116d3"
+  },
+  "notes": "本次结果为唯一新基线；未执行Legacy/Online对照。",
+  "run_scope": "retrieval_only",
+  "lexical_only": true
+}

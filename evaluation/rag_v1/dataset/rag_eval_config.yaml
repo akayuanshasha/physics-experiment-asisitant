@@ -1,0 +1,61 @@
+benchmark_version: "1.2"
+questions_file: rag_eval_questions.jsonl
+
+splits:
+  development: dev
+  acceptance: test
+
+retrieval:
+  filter_key: experiment_id
+  top_k: 5
+  candidate_k_before_rerank: 20
+  require_source_metadata:
+    - experiment_id
+    - source_file
+    - section
+    - chunk_id
+    - source_tier
+    - source_kind
+    - authority
+  metrics:
+    - experiment_hit_at_1
+    - experiment_hit_at_5
+    - evidence_recall_at_5
+    - reciprocal_rank
+    - irrelevant_chunk_ratio
+    - expected_source_tier_rate
+    - secondary_source_leak_rate
+    - example_data_misuse_count
+
+generation:
+  temperature: 0.1
+  require_citations: true
+  require_missing_information_disclosure: true
+  forbid_example_data_as_user_data: true
+  primary_sources_exclude_secondary_when_sufficient: true
+  unanswerable_definition: "无法确定用户要求的具体结果；允许说明通用原理、测量方法和所需输入。"
+  max_answer_chars: 1800
+
+http_adapter:
+  method: POST
+  timeout_seconds: 60
+  request_fields:
+    question_id: question_id
+    question: question
+    experiment_ids: experiment_ids
+  response_fields:
+    answer: answer
+    retrieved_sources: retrieved_sources
+
+run_metadata_required:
+  - run_id
+  - timestamp
+  - git_commit_or_build_id
+  - model_name
+  - prompt_version
+  - knowledge_base_version
+  - embedding_model
+  - chunk_size
+  - chunk_overlap
+  - top_k
+  - reranker

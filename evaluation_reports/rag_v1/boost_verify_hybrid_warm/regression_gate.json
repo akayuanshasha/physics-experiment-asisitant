@@ -1,0 +1,105 @@
+{
+  "version": "1.3",
+  "profile": "hybrid_retrieval",
+  "passed": false,
+  "checks": [
+    {
+      "metric": "recall_at_1",
+      "actual": 1.0,
+      "minimum": 0.93,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "recall_at_3",
+      "actual": 1.0,
+      "minimum": 0.98,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "recall_at_5",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "source_metadata_complete_rate_at_5",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "expected_source_tier_rate_at_5",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "secondary_source_leak_rate_at_5",
+      "actual": 0.0,
+      "minimum": null,
+      "maximum": 0.0,
+      "passed": true
+    },
+    {
+      "metric": "example_data_misuse_count",
+      "actual": 0,
+      "minimum": null,
+      "maximum": 0,
+      "passed": true
+    },
+    {
+      "metric": "prediction_errors",
+      "actual": 0,
+      "minimum": null,
+      "maximum": 0,
+      "passed": true
+    },
+    {
+      "metric": "latency_ms.p95",
+      "actual": 600.99,
+      "minimum": null,
+      "maximum": 500.0,
+      "passed": false
+    },
+    {
+      "metric": "retrieval_runtime.hybrid_query_rate",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "retrieval_runtime.bm25_fallback_rate",
+      "actual": 0.0,
+      "minimum": null,
+      "maximum": 0.0,
+      "passed": true
+    },
+    {
+      "metric": "retrieval_runtime.unknown_mode_rate",
+      "actual": 0.0,
+      "minimum": null,
+      "maximum": 0.0,
+      "passed": true
+    },
+    {
+      "metric": "retrieval_runtime.dense_nonzero_hit_count",
+      "actual": 475,
+      "minimum": 1,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "retrieval_runtime.document_vector_coverage",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    }
+  ]
+}

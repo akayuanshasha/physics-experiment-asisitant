@@ -1,0 +1,1394 @@
+{
+  "benchmark_version": "1.0",
+  "notice": "自动评分用于定位问题，物理事实正确性与P0/P1仍需人工复核。",
+  "summary": {
+    "question_count": 15,
+    "average_auto_score": 17.78,
+    "recall_at_1": 1.0,
+    "recall_at_3": 1.0,
+    "recall_at_5": 1.0,
+    "mrr": 1.0,
+    "anchor_recall_at_5": 0.6667,
+    "irrelevant_chunk_ratio_at_5": 0.0,
+    "source_metadata_complete_rate_at_5": 1.0,
+    "citation_valid_rate": 0.0,
+    "boundary_pass_rate": 0.0,
+    "prediction_errors": 0,
+    "flagged_questions": 15,
+    "latency_ms": {
+      "average": 45.67,
+      "p50": 44.86,
+      "p95": 89.37
+    }
+  },
+  "breakdowns": {
+    "by_split": {
+      "test": {
+        "question_count": 15,
+        "average_auto_score": 17.78,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.6667,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 15,
+        "latency_ms": {
+          "average": 45.67,
+          "p50": 44.86,
+          "p95": 89.37
+        }
+      }
+    },
+    "by_suite": {
+      "boundary": {
+        "question_count": 3,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 3,
+        "latency_ms": {
+          "average": 26.07,
+          "p50": 25.59,
+          "p95": 31.76
+        }
+      },
+      "deep": {
+        "question_count": 7,
+        "average_auto_score": 15.24,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 7,
+        "latency_ms": {
+          "average": 53.06,
+          "p50": 49.99,
+          "p95": 84.83
+        }
+      },
+      "representative": {
+        "question_count": 5,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.6,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 5,
+        "latency_ms": {
+          "average": 47.06,
+          "p50": 44.86,
+          "p95": 79.38
+        }
+      }
+    },
+    "by_category": {
+      "calibration": {
+        "question_count": 1,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 22.99,
+          "p50": 22.99,
+          "p95": 22.99
+        }
+      },
+      "data_processing": {
+        "question_count": 4,
+        "average_auto_score": 17.5,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.75,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 4,
+        "latency_ms": {
+          "average": 60.86,
+          "p50": 56.9,
+          "p95": 84.62
+        }
+      },
+      "principle": {
+        "question_count": 2,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 2,
+        "latency_ms": {
+          "average": 39.79,
+          "p50": 39.79,
+          "p95": 44.81
+        }
+      },
+      "requirements": {
+        "question_count": 4,
+        "average_auto_score": 14.17,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 4,
+        "latency_ms": {
+          "average": 41.98,
+          "p50": 47.43,
+          "p95": 50.9
+        }
+      },
+      "unanswerable": {
+        "question_count": 3,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 3,
+        "latency_ms": {
+          "average": 26.07,
+          "p50": 25.59,
+          "p95": 31.76
+        }
+      },
+      "uncertainty": {
+        "question_count": 1,
+        "average_auto_score": 20.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "citation_valid_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 92.84,
+          "p50": 92.84,
+          "p95": 92.84
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "R026",
+      "split": "test",
+      "suite": "representative",
+      "category": "calibration",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37",
+          "exp37"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "像素",
+            "波长",
+            "定标"
+          ],
+          [
+            "标准谱线",
+            "拟合"
+          ],
+          [
+            "拼接",
+            "接缝"
+          ],
+          [
+            "人工复核",
+            "峰中心"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 22.9898999677971
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R027",
+      "split": "test",
+      "suite": "representative",
+      "category": "principle",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp39",
+          "exp39",
+          "exp39",
+          "exp39",
+          "exp39",
+          "exp39",
+          "exp39",
+          "exp39"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "非弹性碰撞",
+            "激发"
+          ],
+          [
+            "峰谷",
+            "周期"
+          ],
+          [
+            "ΔU",
+            "激发电势"
+          ],
+          [
+            "E=e",
+            "能量"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 45.36780004855245
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R028",
+      "split": "test",
+      "suite": "representative",
+      "category": "data_processing",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp40",
+          "exp40",
+          "exp40",
+          "exp40",
+          "exp40",
+          "exp40"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "轴向应变",
+            "杨氏模量"
+          ],
+          [
+            "横向应变",
+            "泊松比"
+          ],
+          [
+            "线性",
+            "弹性限度"
+          ],
+          [
+            "符号",
+            "收缩"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 87.88330003153533
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R029",
+      "split": "test",
+      "suite": "representative",
+      "category": "principle",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41",
+          "exp41"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "驻波",
+            "折射率",
+            "光栅"
+          ],
+          [
+            "衍射",
+            "超声波长"
+          ],
+          [
+            "v=f",
+            "声速"
+          ],
+          [
+            "光波长",
+            "声波长"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 34.21149996574968
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R030",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "±1级",
+            "光栅常数"
+          ],
+          [
+            "缺级",
+            "占空比"
+          ],
+          [
+            "比较法",
+            "折射率"
+          ],
+          [
+            "三次",
+            "10条"
+          ],
+          [
+            "选作",
+            "不提交"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 44.86229992471635
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D011",
+      "split": "test",
+      "suite": "deep",
+      "category": "data_processing",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24",
+          "exp24"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "qi",
+            "ni",
+            "e"
+          ],
+          [
+            "斜率",
+            "元电荷"
+          ],
+          [
+            "量子化",
+            "离群"
+          ],
+          [
+            "选取一颗油滴",
+            "标准不确定度"
+          ],
+          [
+            "时间",
+            "电压",
+            "传播"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 41.7680999962613
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D012",
+      "split": "test",
+      "suite": "deep",
+      "category": "requirements",
+      "mode": "page-context",
+      "auto_score": 6.67,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 0.3333,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "比列",
+            "Billet"
+          ],
+          [
+            "梅斯林",
+            "Maslin"
+          ],
+          [
+            "基础内容",
+            "提升内容"
+          ],
+          [
+            "实验1",
+            "实验报告"
+          ],
+          [
+            "实验2",
+            "不写"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 21.99149993248284
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D013",
+      "split": "test",
+      "suite": "deep",
+      "category": "data_processing",
+      "mode": "page-context",
+      "auto_score": 10.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "S",
+            "N",
+            "多周期"
+          ],
+          [
+            "p",
+            "q",
+            "放大率"
+          ],
+          [
+            "原始条纹间距",
+            "M"
+          ],
+          [
+            "1倍焦距",
+            "公式(7)"
+          ],
+          [
+            "1.5倍",
+            "公式(2)"
+          ],
+          [
+            "3次",
+            "平均值"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 47.64789994806051
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D014",
+      "split": "test",
+      "suite": "deep",
+      "category": "requirements",
+      "mode": "page-context",
+      "auto_score": 10.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33",
+          "exp33"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "不需要",
+            "B类"
+          ],
+          [
+            "1倍焦距",
+            "L1",
+            "L2"
+          ],
+          [
+            "1.3倍焦距"
+          ],
+          [
+            "进阶",
+            "半径"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 49.99359999783337
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D015",
+      "split": "test",
+      "suite": "deep",
+      "category": "requirements",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "透射式",
+            "反射式",
+            "必作"
+          ],
+          [
+            "微弯",
+            "电流",
+            "电压",
+            "选作"
+          ],
+          [
+            "功率",
+            "位移",
+            "曲线"
+          ],
+          [
+            "前沿",
+            "后沿",
+            "峰值"
+          ],
+          [
+            "动态范围"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 51.06009996961802
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D016",
+      "split": "test",
+      "suite": "deep",
+      "category": "data_processing",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35",
+          "exp35"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "吞进",
+            "吐出",
+            "条纹"
+          ],
+          [
+            "2Δd",
+            "Nλ"
+          ],
+          [
+            "标准差",
+            "拟合"
+          ],
+          [
+            "白光",
+            "中央条纹"
+          ],
+          [
+            "厚度",
+            "3次"
+          ],
+          [
+            "不要求作图",
+            "计算"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 66.14300003275275
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "D017",
+      "split": "test",
+      "suite": "deep",
+      "category": "uncertainty",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36",
+          "exp36"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "cos²",
+            "线性拟合"
+          ],
+          [
+            "斜率",
+            "截距",
+            "相关系数"
+          ],
+          [
+            "至少3次",
+            "布儒斯特角"
+          ],
+          [
+            "tan",
+            "折射率"
+          ],
+          [
+            "Δθ",
+            "√3",
+            "B类"
+          ],
+          [
+            "弧度",
+            "传播"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 92.83949993550777
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "B001",
+      "split": "test",
+      "suite": "boundary",
+      "category": "unanswerable",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34",
+          "exp34"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "资料不足",
+            "未提供"
+          ],
+          [
+            "铭牌",
+            "台账",
+            "校准证书"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": false,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 32.45099994819611
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "B002",
+      "split": "test",
+      "suite": "boundary",
+      "category": "unanswerable",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp23",
+          "exp23",
+          "exp23",
+          "exp23"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "没有",
+            "实测"
+          ],
+          [
+            "现场测量",
+            "功率计"
+          ],
+          [
+            "预热",
+            "10",
+            "20"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": false,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 20.179999992251396
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "B003",
+      "split": "test",
+      "suite": "boundary",
+      "category": "unanswerable",
+      "mode": "page-context",
+      "auto_score": 20.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38",
+          "exp38"
+        ]
+      },
+      "answer": {
+        "required_term_coverage": 0.0,
+        "missing_term_groups": [
+          [
+            "数据表",
+            "样品厚度"
+          ],
+          [
+            "标准样品",
+            "折射率"
+          ],
+          [
+            "转角",
+            "条纹"
+          ],
+          [
+            "无法计算",
+            "补充"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": false,
+        "boundary_ok": false,
+        "answer_chars": 0
+      },
+      "citations": {
+        "count": 0,
+        "valid_count": 0,
+        "invalid_ids": [],
+        "valid_rate": 0.0,
+        "all_cited_evidence_from_relevant_experiments": false,
+        "grounded": false
+      },
+      "timings_ms": {
+        "total": 25.58559994213283
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points",
+        "boundary_failure",
+        "missing_citation"
+      ],
+      "manual_review_required": true
+    }
+  ]
+}

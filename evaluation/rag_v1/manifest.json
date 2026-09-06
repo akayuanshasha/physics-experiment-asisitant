@@ -1,0 +1,28 @@
+{
+  "benchmark": "physics_experiment_rag_v1",
+  "version": "1.2",
+  "imported_at": "2026-09-05",
+  "source_directory": "C:\\Users\\lenovo\\Desktop\\RAG相关资料整理\\RAG测评基准_v1",
+  "runtime_dependency_on_source_directory": false,
+  "files": {
+    "rag_eval_questions.jsonl": "8233a6a07d77ca2ef6f6f1bef1bc289a4ae7066bb4a7757817534156d22a5f6e",
+    "rag_eval_schema.json": "a4a38404ed1ec0fa45002b07f4d1799c584a8c718f7c55d67c3b8e0d659ba11c",
+    "rag_eval_rubric.yaml": "053f98b594e2b4b830670a2afb28062ae98da1d7d874680760a9727d755e9a77",
+    "rag_eval_config.yaml": "28d4b6edde9cd2b2e1ac351cf7662f75e33bd796b901cb13414d045b6b5e6c05"
+  },
+  "split": {"dev": 56, "test": 15},
+  "freeze": {
+    "frozen_at": "2026-09-05",
+    "policy": "开发集调优结束后打开测试集；不得依据测试集结果继续调参。",
+    "knowledge_base_sha256": null,
+    "knowledge_base_sha256_note": "口径=corpus_fingerprint(chunks)：由 online_rag.corpus.load_corpus 加载语料后经 rag_eval.reporting.corpus_fingerprint 计算。本次重冻结时 online_rag/corpus.py 仍在调整、对应语料状态尚未跑 dev 基线，故暂置 null；待当前代码下 dev 基线结果稳定后回填。",
+    "prompt_sha256": "6fa4995b21838db580207df37d876d30d15e99ab0539b9f19d96a26e0a36b5d6",
+    "prompt_sha256_note": "口径=sha256(online_rag/prompts.py)。",
+    "retriever_sha256": "fe2de33bb09ecf18e63b9b13dbb52e916e3cde52685eab88a6a48b1d86cc3db7",
+    "retriever_sha256_note": "自本次起口径=sha256(online_rag/retriever.py)。旧值 540b44be… 的原始口径在代码/文档中无记录，按与 prompt_sha256 对称推断为同一口径；旧值不符系 retriever.py 在 9/2 冻结后被改动所致。",
+    "retrieval_only_test_runs": [],
+    "end_to_end_baseline_complete": false
+  },
+  "baseline_policy": "本次完整结果覆盖旧2026-08-30结果，作为未来唯一对照基线。",
+  "notes": "2026-09-05 重新冻结：原 9/2 冻结记录的 split 为 dev=35，而实际题库自 v1.2 起为 dev=56、test=15（共 71 题）；同时 files、prompt、knowledge_base 哈希均与磁盘不符，故整体作废并按当前仓库状态重新固结。knowledge_base_sha256 暂置 null 待回填。"
+}

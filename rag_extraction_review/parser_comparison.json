@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-09-04T18:33:42",
+  "note": "同页质量分仅用于候选比较；unavailable 表示本机未安装，没有伪造 Docling/MinerU 结果。",
+  "parsers": [
+    {
+      "parser": "pypdf2-plain",
+      "pages_evaluated": 592,
+      "average_score": 31.9646,
+      "status": "available",
+      "selected_pages": 418,
+      "empty_pages": 1,
+      "pua_count": 2312,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    },
+    {
+      "parser": "pymupdf-fitz",
+      "pages_evaluated": 592,
+      "average_score": 31.2046,
+      "status": "available",
+      "selected_pages": 67,
+      "empty_pages": 1,
+      "pua_count": 2374,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    },
+    {
+      "parser": "pdfplumber",
+      "pages_evaluated": 592,
+      "average_score": 31.8417,
+      "status": "available",
+      "selected_pages": 28,
+      "empty_pages": 1,
+      "pua_count": 2312,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    },
+    {
+      "parser": "pdftotext-cli",
+      "pages_evaluated": 592,
+      "average_score": 32.8435,
+      "status": "unavailable",
+      "selected_pages": 79,
+      "empty_pages": 0,
+      "pua_count": 2312,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    },
+    {
+      "parser": "docling",
+      "pages_evaluated": 0,
+      "average_score": null,
+      "status": "unavailable",
+      "selected_pages": 0,
+      "empty_pages": 0,
+      "pua_count": 0,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    },
+    {
+      "parser": "mineru",
+      "pages_evaluated": 0,
+      "average_score": null,
+      "status": "unavailable",
+      "selected_pages": 0,
+      "empty_pages": 0,
+      "pua_count": 0,
+      "replacement_count": 0,
+      "table_lines": 0,
+      "formula_lines": 0,
+      "two_column_suspect_lines": 0,
+      "scanned_suspect_pages": 0
+    }
+  ]
+}

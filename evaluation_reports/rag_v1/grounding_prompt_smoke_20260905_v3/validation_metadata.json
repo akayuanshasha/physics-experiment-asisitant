@@ -1,0 +1,50 @@
+{
+  "question_ids": [
+    "D006",
+    "R001",
+    "R002",
+    "R025"
+  ],
+  "document_vector_count": 1291,
+  "chunk_count": 1291,
+  "initial_embedding_health": {
+    "backend": "remote",
+    "model": "qwen3.7-text-embedding-flash",
+    "cache_namespace": "qwen3.7-text-embedding-flash:remote-e60481808a0d",
+    "dimensions": null,
+    "batch_size": 64,
+    "max_concurrency": 4,
+    "proxy_mode": "direct",
+    "circuit_open": false,
+    "circuit_remaining_seconds": 0.0,
+    "circuit_probe_inflight": false,
+    "requests": 0,
+    "retries": 0,
+    "failures": 0,
+    "consecutive_failures": 0,
+    "circuit_trips": 0,
+    "positional_index_fallbacks": 0,
+    "last_status": null,
+    "last_error": null
+  },
+  "final_embedding_health": {
+    "backend": "remote",
+    "model": "qwen3.7-text-embedding-flash",
+    "cache_namespace": "qwen3.7-text-embedding-flash:remote-e60481808a0d",
+    "dimensions": 1024,
+    "batch_size": 64,
+    "max_concurrency": 4,
+    "proxy_mode": "direct",
+    "circuit_open": false,
+    "circuit_remaining_seconds": 0.0,
+    "circuit_probe_inflight": false,
+    "requests": 4,
+    "retries": 0,
+    "failures": 0,
+    "consecutive_failures": 0,
+    "circuit_trips": 0,
+    "positional_index_fallbacks": 3,
+    "last_status": 200,
+    "last_error": null
+  }
+}

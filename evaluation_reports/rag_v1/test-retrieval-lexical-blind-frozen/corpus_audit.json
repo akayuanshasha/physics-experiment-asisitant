@@ -1,0 +1,473 @@
+{
+  "summary": {
+    "question_count": 15,
+    "chunk_count": 706,
+    "experiment_count": 52,
+    "missing_experiment_ids": [
+      "exp33_a",
+      "exp33_b"
+    ],
+    "source_check_count": 15,
+    "section_presence_rate": 0.3333,
+    "anchor_presence_rate": 0.7333
+  },
+  "chunks_by_experiment": {
+    "exp0": 2,
+    "exp1": 13,
+    "exp10": 10,
+    "exp11": 22,
+    "exp12": 19,
+    "exp13": 9,
+    "exp14": 5,
+    "exp15": 7,
+    "exp16": 6,
+    "exp17": 10,
+    "exp18_a": 14,
+    "exp18_b": 11,
+    "exp19": 10,
+    "exp2": 13,
+    "exp20": 11,
+    "exp21": 10,
+    "exp22": 11,
+    "exp23": 19,
+    "exp24": 15,
+    "exp25": 38,
+    "exp26": 7,
+    "exp27": 15,
+    "exp28": 8,
+    "exp29": 20,
+    "exp3": 15,
+    "exp30": 9,
+    "exp31": 17,
+    "exp32": 11,
+    "exp33": 10,
+    "exp34": 27,
+    "exp35": 12,
+    "exp36": 16,
+    "exp37": 31,
+    "exp38": 7,
+    "exp39": 8,
+    "exp4": 12,
+    "exp40": 6,
+    "exp41": 14,
+    "exp42": 12,
+    "exp43": 9,
+    "exp44": 8,
+    "exp45": 14,
+    "exp46": 22,
+    "exp47": 15,
+    "exp48": 7,
+    "exp49": 13,
+    "exp5": 13,
+    "exp50": 34,
+    "exp6": 6,
+    "exp7": 18,
+    "exp8": 16,
+    "exp9": 19
+  },
+  "details": [
+    {
+      "id": "R026",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp37"
+      ],
+      "available_chunk_count": 31,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp37/实验指导_提取文本.txt",
+          "section": "摄谱仪定标与谱线识别",
+          "section_hit": false,
+          "anchor": "标准谱线、未知谱线、谱图",
+          "anchor_terms": [
+            "标准谱线",
+            "未知谱线",
+            "谱图"
+          ],
+          "matched_anchor_terms": [
+            "未知谱线",
+            "谱图"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R027",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp39"
+      ],
+      "available_chunk_count": 8,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp39/实验指导_提取文本.txt",
+          "section": "F-H曲线与第一激发电势",
+          "section_hit": false,
+          "anchor": "板极电流、加速电压、峰谷",
+          "anchor_terms": [
+            "板极电流",
+            "加速电压",
+            "峰谷"
+          ],
+          "matched_anchor_terms": [
+            "板极电流",
+            "加速电压"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R028",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp40"
+      ],
+      "available_chunk_count": 6,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp40/实验指导_提取文本.txt",
+          "section": "杨氏模量与泊松比",
+          "section_hit": true,
+          "anchor": "轴向形变、横向形变、载荷",
+          "anchor_terms": [
+            "轴向形变",
+            "横向形变",
+            "载荷"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "R029",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp41"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp41/实验指导_提取文本.txt",
+          "section": "超声光栅原理与声速计算",
+          "section_hit": false,
+          "anchor": "衍射条纹、超声波长",
+          "anchor_terms": [
+            "衍射条纹",
+            "超声波长"
+          ],
+          "matched_anchor_terms": [
+            "衍射条纹"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R030",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp38"
+      ],
+      "available_chunk_count": 7,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp38/实验指导_提取文本.txt",
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容、进阶内容、高阶内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容",
+            "高阶内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容",
+            "高阶内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D011",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp24"
+      ],
+      "available_chunk_count": 15,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp24/实验指导_提取文本.txt",
+          "section": "元电荷测量法与报告要求",
+          "section_hit": false,
+          "anchor": "qi=nie、作图法、不确定度",
+          "anchor_terms": [
+            "qi=nie",
+            "作图法",
+            "不确定度"
+          ],
+          "matched_anchor_terms": [
+            "作图法",
+            "不确定度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D012",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp33_a",
+        "exp33_b",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [
+        "exp33_a",
+        "exp33_b"
+      ],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp33/实验指导_提取文本.txt",
+          "section": "实验要求与报告撰写阶段",
+          "section_hit": false,
+          "anchor": "实验1、实验2、B类、报告",
+          "anchor_terms": [
+            "实验1",
+            "实验2",
+            "B类",
+            "报告"
+          ],
+          "matched_anchor_terms": [
+            "实验1",
+            "实验2",
+            "B类",
+            "报告"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D013",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp33_a",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [
+        "exp33_a"
+      ],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp33/实验指导_提取文本.txt",
+          "section": "3.1 比列对切透镜干涉实验",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D014",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp33_b",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [
+        "exp33_b"
+      ],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp33/实验指导_提取文本.txt",
+          "section": "3.2 梅斯林对切透镜干涉实验",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容、进阶内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D015",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp34"
+      ],
+      "available_chunk_count": 27,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp34/实验指导_提取文本.txt",
+          "section": "课堂注意事项、反射式位移传感与报告要求",
+          "section_hit": false,
+          "anchor": "必作、选作、反射式调制特性曲线",
+          "anchor_terms": [
+            "必作",
+            "选作",
+            "反射式调制特性曲线"
+          ],
+          "matched_anchor_terms": [
+            "必作",
+            "选作",
+            "反射式调制特性曲线"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D016",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp35"
+      ],
+      "available_chunk_count": 12,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp35/实验指导_提取文本.txt",
+          "section": "基本内容：测波长与测透明薄片折射率",
+          "section_hit": false,
+          "anchor": "N不小于、白光中央条纹、重复3次",
+          "anchor_terms": [
+            "N不小于",
+            "白光中央条纹",
+            "重复3次"
+          ],
+          "matched_anchor_terms": [
+            "N不小于"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D017",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp36"
+      ],
+      "available_chunk_count": 16,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp36/实验指导_提取文本.txt",
+          "section": "验证马吕斯定律与测定玻璃折射率",
+          "section_hit": false,
+          "anchor": "线性拟合、折射率及其不确定度",
+          "anchor_terms": [
+            "线性拟合",
+            "折射率及其不确定度"
+          ],
+          "matched_anchor_terms": [
+            "线性拟合",
+            "折射率及其不确定度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B001",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp34"
+      ],
+      "available_chunk_count": 27,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp34/实验指导_提取文本.txt",
+          "section": "实验仪器",
+          "section_hit": true,
+          "anchor": "只列仪器类型，不含序列号",
+          "anchor_terms": [
+            "只列仪器类型",
+            "不含序列号"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "B002",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp23"
+      ],
+      "available_chunk_count": 19,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp23/实验指导_提取文本.txt",
+          "section": "注意事项与实验仪器",
+          "section_hit": false,
+          "anchor": "汞灯预热，不含现场功率",
+          "anchor_terms": [
+            "汞灯预热",
+            "不含现场功率"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "B003",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp38"
+      ],
+      "available_chunk_count": 7,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "第一优先级/exp38/实验指导_提取文本.txt",
+          "section": "提升内容：比较法测折射率",
+          "section_hit": false,
+          "anchor": "参数从实验室数据表中查到",
+          "anchor_terms": [
+            "参数从实验室数据表中查到"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    }
+  ]
+}

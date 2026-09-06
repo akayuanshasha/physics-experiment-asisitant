@@ -1,0 +1,82 @@
+{
+  "run_id": "boost_verify_hybrid",
+  "timestamp": "2026-09-05T13:01:01.601152+00:00",
+  "build_id": "corpus-e5e5d043c817",
+  "git_commit_or_build_id": "corpus-e5e5d043c817",
+  "model_name": "glm-5.2-107",
+  "model_parameters": {
+    "temperature": 0.1,
+    "max_tokens": 8192
+  },
+  "prompt_version": "sha256:d9586bda665afc0c",
+  "knowledge_base_version": "sha256:e5e5d043c817beb69d0616fe7d81461053ef7d51bdaba379bb572f64c89c6547",
+  "knowledge_source_manifest": {
+    "path": "/root/107杯/main/b_static/knowledge_sources.json",
+    "sha256": "4c3c103a1c7f519fa6275c7f48300fea06c386c59b54fc7ae45c22828d9ef901"
+  },
+  "embedding_model": "qwen3.7-text-embedding-flash",
+  "chunking": {
+    "strategy": "online_rag.corpus structure-aware character chunking",
+    "chunk_size": 700,
+    "chunk_max": 1000,
+    "chunk_overlap": 100
+  },
+  "retrieval": {
+    "filter_key": "experiment_id",
+    "top_k": 5,
+    "assistant_retrieval_top_k": 12,
+    "candidate_k_before_fusion": 20,
+    "document_embedding_batch_size": 8,
+    "experiment_title_boost": 0.01,
+    "primary_minimum_retrieval_score": 0.03,
+    "primary_minimum_bm25_score": 50.0,
+    "source_hierarchy": "primary_only_when_sufficient_else_secondary_fallback",
+    "example_data_policy": "explicit_example_intent_only",
+    "fusion": "weighted_rrf",
+    "reranker": "none",
+    "mode": "blind"
+  },
+  "dataset": {
+    "benchmark_version": "1.2",
+    "split": "dev",
+    "question_count": 56,
+    "sha256": "8233a6a07d77ca2ef6f6f1bef1bc289a4ae7066bb4a7757817534156d22a5f6e"
+  },
+  "notes": "本次结果为唯一新基线；未执行Legacy/Online对照。",
+  "run_scope": "retrieval_only",
+  "lexical_only": false,
+  "retrieval_runtime": {
+    "retrieval_mode_counts": {
+      "hybrid": 56
+    },
+    "hybrid_query_rate": 1.0,
+    "bm25_fallback_rate": 0.0,
+    "unknown_mode_rate": 0.0,
+    "dense_nonzero_hit_count": 481,
+    "dense_nonzero_hit_rate": 0.7233,
+    "dense_available": true,
+    "document_vector_count": 1291,
+    "expected_document_vector_count": 1291,
+    "document_vector_coverage": 1.0
+  },
+  "embedding_health": {
+    "backend": "remote",
+    "model": "qwen3.7-text-embedding-flash",
+    "cache_namespace": "qwen3.7-text-embedding-flash:remote-e60481808a0d",
+    "dimensions": 1024,
+    "batch_size": 64,
+    "max_concurrency": 4,
+    "proxy_mode": "direct",
+    "circuit_open": false,
+    "circuit_remaining_seconds": 0.0,
+    "circuit_probe_inflight": false,
+    "requests": 56,
+    "retries": 0,
+    "failures": 0,
+    "consecutive_failures": 0,
+    "circuit_trips": 0,
+    "positional_index_fallbacks": 45,
+    "last_status": 200,
+    "last_error": null
+  }
+}

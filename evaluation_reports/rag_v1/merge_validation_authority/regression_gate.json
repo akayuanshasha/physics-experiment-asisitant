@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "profile": "lexical_retrieval",
+  "passed": true,
+  "checks": [
+    {
+      "metric": "recall_at_1",
+      "actual": 0.9464,
+      "minimum": 0.93,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "recall_at_3",
+      "actual": 1.0,
+      "minimum": 0.98,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "recall_at_5",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "source_metadata_complete_rate_at_5",
+      "actual": 1.0,
+      "minimum": 1.0,
+      "maximum": null,
+      "passed": true
+    },
+    {
+      "metric": "prediction_errors",
+      "actual": 0,
+      "minimum": null,
+      "maximum": 0,
+      "passed": true
+    },
+    {
+      "metric": "latency_ms.p95",
+      "actual": 76.23,
+      "minimum": null,
+      "maximum": 500.0,
+      "passed": true
+    }
+  ]
+}

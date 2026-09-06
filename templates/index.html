@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <style>
+        .home-main { width: min(100%, 1120px); padding-top: 34px; }
+        .section-heading { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-size: 21px; }
+        .section-heading svg { width: 20px; height: 20px; color: var(--accent); }
+
+        /* 主分类主题色：定义在分组上，向下级联到学科圆点/计数与聚焦描边（cat-other 用靛蓝默认） */
+        .category-group { --cat-color: var(--accent-strong); --cat-tint: var(--accent-soft); --cat-tint-2: var(--accent-soft-2); margin-bottom: 16px; }
+        .category-group.cat-tools { --cat-color: var(--info); --cat-tint: var(--info-soft); --cat-tint-2: rgba(52, 120, 173, 0.18); }
+        .category-group.cat-level1 { --cat-color: var(--ok); --cat-tint: var(--ok-soft); --cat-tint-2: rgba(39, 132, 91, 0.18); }
+        .category-group.cat-level2 { --cat-color: #764ba2; --cat-tint: rgba(118, 75, 162, 0.08); --cat-tint-2: rgba(118, 75, 162, 0.18); }
+
+        /* 主分类：整条可点击的浅色标题栏 + 左侧强调色条 */
+        .category-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            margin: 34px 0 14px;
+            padding: 15px 18px 15px 16px;
+            border: 1px solid var(--cat-tint-2);
+            border-left: 5px solid var(--cat-color);
+            border-radius: var(--radius-lg);
+            background: var(--cat-tint);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 160ms ease, border-color 160ms ease;
+        }
+        .category-header:hover { background: var(--cat-tint-2); }
+        .category-header:focus-visible { outline: 3px solid var(--cat-color); outline-offset: 2px; }
+        .category-header h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 0; font-size: 23px; font-weight: 750; }
+        .level-tag { padding: 3px 10px; border: 1px solid var(--cat-tint-2); border-radius: 999px; background: var(--surface); color: var(--cat-color); font-size: 11px; font-weight: 650; letter-spacing: .08em; }
+        .division-note { color: var(--ink-2); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+        .category-header .arrow { margin-left: auto; color: var(--cat-color); transition: transform 200ms ease; }
+        .category-header .arrow svg, .subcategory-header .arrow svg { display: block; width: 15px; height: 15px; }
+        .category-header.collapsed .arrow, .subcategory-group.collapsed .subcategory-header .arrow { transform: rotate(-90deg); }
+        .category-header.collapsed + .category-content, .subcategory-group.collapsed > .category-content { display: none; }
+
+        /* 学科分类：整条可点击的浅色圆角框 */
+        .subcategory-group { margin-bottom: 22px; }
+        .subcategory-header {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 12px;
+            padding: 9px 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 160ms ease, border-color 160ms ease;
+        }
+        .subcategory-header:hover { border-color: var(--cat-tint-2); background: var(--surface); }
+        .subcategory-header:focus-visible { outline: 3px solid var(--cat-color); outline-offset: 2px; }
+        .subject-name { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-size: 14.5px; font-weight: 700; }
+        .subject-name::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--cat-color); flex-shrink: 0; }
+        .subject-count { margin-left: auto; padding: 2px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink-2); font-size: 11.5px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .subcategory-header .arrow { color: var(--ink-3); flex-shrink: 0; transition: transform 200ms ease; }
+
+        /* 实验卡片：默认弱化，悬停增强 */
+        .experiment-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 13px; }
+        .experiment-card {
+            position: relative;
+            min-height: 120px;
+            padding: 16px 18px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--ink);
+            box-shadow: 0 1px 2px rgba(32, 37, 54, 0.04);
+            text-decoration: none;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        }
+        .experiment-card:hover { color: var(--ink); border-color: var(--accent-soft-2); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .experiment-card.is-disabled { cursor: default; opacity: .68; }
+        .experiment-card.is-disabled:hover { border-color: var(--line); box-shadow: 0 1px 2px rgba(32, 37, 54, 0.04); transform: none; }
+        .card-name { color: var(--ink); font-family: var(--font-sans); font-size: 15px; font-weight: 650; line-height: 1.5; }
+        .card-desc { overflow: hidden; color: var(--ink-2); font-family: var(--font-sans); font-size: 12px; line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+        .card-arrow { position: absolute; right: 15px; bottom: 12px; color: var(--ink-3); opacity: .72; transition: color 180ms ease, transform 180ms ease, opacity 180ms ease; }
+        .card-arrow svg { display: block; width: 15px; height: 15px; }
+        .experiment-card:hover .card-arrow { color: var(--accent); opacity: 1; transform: translateX(3px); }
+        .footer { padding: 4px 20px 30px; color: var(--ink-3); font-size: 12px; text-align: center; }
+
+        @media (max-width: 680px) {
+            .home-main { padding-top: 26px; }
+            .category-header { margin: 28px 0 12px; padding: 12px 14px 12px 12px; gap: 8px 10px; border-left-width: 4px; }
+            .category-header h2 { font-size: 19px; gap: 8px; }
+            .level-tag { padding: 2px 8px; }
+            .division-note { font-size: 11px; }
+            .subcategory-header { padding: 8px 12px; gap: 8px; }
+            .subject-count { padding: 1px 8px; font-size: 11px; }
+            .experiment-grid { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 10px; }
+            .experiment-card { min-height: 112px; padding: 14px 14px 34px; }
+        }
+    </style>
+</head>
+<body>
+    {% import '_icons.html' as icons %}
+    <header class="home-hero">
+        <div class="home-hero__inner">
+            <div class="home-hero__top">
+                <a class="home-brand" href="/">{{ icons.icon('flask') }}<span>AI 物理实验助教系统</span></a>
+                <nav class="home-nav" aria-label="主要功能">
+                    <a class="home-nav__link is-active" href="/" aria-current="page">{{ icons.icon('table') }}<span>实验列表</span></a>
+                    <a class="home-nav__link" href="/chat">{{ icons.icon('message') }}<span>AI助教问答</span></a>
+                </nav>
+            </div>
+            <div class="home-hero__content">
+                <h1>AI 物理实验助教系统</h1>
+                <p class="home-hero__lede">智能数据处理 · 自动报告生成 · AI助教问答 · 知识库检索</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container home-main">
+        <h2 class="section-heading">{{ icons.icon('table') }}<span>可用实验列表</span></h2>
+        {% for level_name, subcats in nested.items() %}
+        {% set total_exps = [] %}
+        {% for sub_name, exps in subcats.items() %}{% for e in exps %}{% set _ = total_exps.append(1) %}{% endfor %}{% endfor %}
+        {% set cat_class = 'cat-tools' if level_name == '基础工具' else ('cat-level1' if level_name == '一级大物' else ('cat-level2' if level_name == '二级大物' else 'cat-other')) %}
+        <section class="category-group {{ cat_class }}">
+            <div class="category-header" role="button" tabindex="0" aria-expanded="true" onclick="toggleCategory(this)" onkeydown="headerKeydown(event, this)">
+                <h2>{{ level_name }}<span class="level-tag">{{ '一级' if level_name == '一级大物' else ('二级' if level_name == '二级大物' else '工具') }}</span></h2>
+                <span class="division-note">{{ total_exps|length }}个实验</span>
+                <span class="arrow">{{ icons.icon('chevron-down') }}</span>
+            </div>
+            <div class="category-content">
+                {% for sub_name, exps in subcats.items() %}
+                <div class="subcategory-group">
+                    {% if sub_name %}
+                    <div class="subcategory-header" role="button" tabindex="0" aria-expanded="true" onclick="toggleSubcategory(event, this)" onkeydown="headerKeydown(event, this)">
+                        <span class="subject-name">{{ sub_name }}</span>
+                        <span class="subject-count">{{ exps|length }}个实验</span>
+                        <span class="arrow">{{ icons.icon('chevron-down') }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="category-content experiment-grid">
+                        {% for exp in exps %}
+                        {% if exp.mod_name %}
+                        <a class="experiment-card" href="/experiment/{{ exp.mod_name }}">
+                            <span class="card-name">{{ exp.name }}</span>
+                            {% if exp.description and exp.description != exp.name %}<span class="card-desc">{{ exp.description }}</span>{% endif %}
+                            <span class="card-arrow">{{ icons.icon('arrow-right') }}</span>
+                        </a>
+                        {% else %}
+                        <div class="experiment-card is-disabled" title="{{ exp.description }}">
+                            <span class="card-name">{{ exp.name }}</span>
+                            {% if exp.description and exp.description != exp.name %}<span class="card-desc">{{ exp.description }}</span>{% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+
+        {% if not nested %}<div class="empty">暂无可用实验模块，请检查插件加载。</div>{% endif %}
+        <div class="footer-note">提示：实验页会自动保存当前浏览器中的输入草稿；清空浏览器站点数据后草稿也会被删除。敏感信息（例如 API Key）不会保存在实验草稿中。</div>
+    </main>
+    <footer class="footer">AI物理实验助教系统 · 数据处理与智能问答</footer>
+
+    <script>
+        function toggleCategory(header) {
+            header.classList.toggle('collapsed');
+            header.setAttribute('aria-expanded', header.classList.contains('collapsed') ? 'false' : 'true');
+        }
+        function toggleSubcategory(event, header) {
+            event.stopPropagation();
+            var group = header.closest('.subcategory-group');
+            group.classList.toggle('collapsed');
+            header.setAttribute('aria-expanded', group.classList.contains('collapsed') ? 'false' : 'true');
+        }
+        function headerKeydown(event, header) {
+            if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+                event.preventDefault();
+                header.click();
+            }
+        }
+    </script>
+</body>
+</html>

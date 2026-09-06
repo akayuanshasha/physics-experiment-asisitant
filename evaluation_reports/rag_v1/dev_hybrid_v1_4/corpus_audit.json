@@ -1,0 +1,1584 @@
+{
+  "summary": {
+    "question_count": 56,
+    "chunk_count": 1011,
+    "experiment_count": 56,
+    "missing_experiment_ids": [],
+    "source_check_count": 57,
+    "source_path_presence_rate": 1.0,
+    "section_presence_rate": 1.0,
+    "anchor_presence_rate": 1.0
+  },
+  "chunks_by_experiment": {
+    "exp0": 5,
+    "exp1": 15,
+    "exp10": 12,
+    "exp11": 22,
+    "exp12": 24,
+    "exp13": 13,
+    "exp14": 6,
+    "exp15": 11,
+    "exp16": 13,
+    "exp17": 10,
+    "exp18_a": 17,
+    "exp18_b": 14,
+    "exp19": 12,
+    "exp2": 15,
+    "exp20": 11,
+    "exp21": 10,
+    "exp22": 14,
+    "exp23": 22,
+    "exp24": 21,
+    "exp25": 35,
+    "exp26": 8,
+    "exp27": 17,
+    "exp28": 10,
+    "exp29": 25,
+    "exp3": 16,
+    "exp30": 10,
+    "exp31": 17,
+    "exp32": 15,
+    "exp33": 10,
+    "exp34": 26,
+    "exp35": 15,
+    "exp36": 19,
+    "exp37": 33,
+    "exp38": 10,
+    "exp39": 11,
+    "exp4": 17,
+    "exp40": 7,
+    "exp41": 14,
+    "exp42": 13,
+    "exp43": 10,
+    "exp44": 9,
+    "exp45": 13,
+    "exp46": 24,
+    "exp47": 16,
+    "exp48": 8,
+    "exp49": 14,
+    "exp5": 14,
+    "exp50": 34,
+    "exp6": 7,
+    "exp7": 19,
+    "exp8": 24,
+    "exp9": 23,
+    "reference:experiment-summary": 1,
+    "reference:一级大雾出入门测_RAG文本-8f167dbd": 47,
+    "reference:二级大雾出入门测11_7_RAG文本-861ac53b": 56,
+    "reference:大雾实验不完全指北_RAG文本-f358d75e": 97
+  },
+  "details": [
+    {
+      "id": "R001",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp0"
+      ],
+      "available_chunk_count": 5,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp0/RAG补充资料/基础数据处理工具.md",
+          "path_exists": true,
+          "section": "参考资料",
+          "section_hit": true,
+          "anchor": "A 类标准不确定度",
+          "anchor_terms": [
+            "类标准不确定度"
+          ],
+          "matched_anchor_terms": [
+            "类标准不确定度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R002",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp1"
+      ],
+      "available_chunk_count": 15,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp1/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "通过测量周期、摆长可求出重力加速度",
+          "anchor_terms": [
+            "通过测量周期",
+            "摆长可求出重力加速度"
+          ],
+          "matched_anchor_terms": [
+            "通过测量周期",
+            "摆长可求出重力加速度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R003",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp2"
+      ],
+      "available_chunk_count": 15,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp2/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "弹簧伸长量、液膜破裂读数",
+          "anchor_terms": [
+            "弹簧伸长量",
+            "液膜破裂读数"
+          ],
+          "matched_anchor_terms": [
+            "弹簧伸长量"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R004",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp3"
+      ],
+      "available_chunk_count": 16,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp3/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "匀速下降区、容器修正、雷诺数",
+          "anchor_terms": [
+            "匀速下降区",
+            "容器修正",
+            "雷诺数"
+          ],
+          "matched_anchor_terms": [
+            "匀速下降区",
+            "雷诺数"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R005",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp4"
+      ],
+      "available_chunk_count": 17,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp4/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "圆柱体直径、高度、质量",
+          "anchor_terms": [
+            "圆柱体直径",
+            "高度",
+            "质量"
+          ],
+          "matched_anchor_terms": [
+            "高度",
+            "质量"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R006",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp5"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp5/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "加减砝码读数、线性拟合",
+          "anchor_terms": [
+            "加减砝码读数",
+            "线性拟合"
+          ],
+          "matched_anchor_terms": [
+            "线性拟合"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R007",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp6"
+      ],
+      "available_chunk_count": 7,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp6/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "金属环对称地置于圆盘上",
+          "anchor_terms": [
+            "金属环对称地置于圆盘上"
+          ],
+          "matched_anchor_terms": [
+            "金属环对称地置于圆盘上"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R008",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp7"
+      ],
+      "available_chunk_count": 19,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp7/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "温度-时间曲线",
+          "anchor_terms": [
+            "温度-时间曲线"
+          ],
+          "matched_anchor_terms": [
+            "温度-时间曲线"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R009",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp8"
+      ],
+      "available_chunk_count": 24,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp8/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "作 s/t-t 图和 v²-s 图",
+          "anchor_terms": [
+            "t-t",
+            "图和",
+            "v²-s"
+          ],
+          "matched_anchor_terms": [
+            "t-t",
+            "图和"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R010",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp9"
+      ],
+      "available_chunk_count": 23,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp9/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "驻波法、相位比较法、时差法",
+          "anchor_terms": [
+            "驻波法",
+            "相位比较法",
+            "时差法"
+          ],
+          "matched_anchor_terms": [
+            "驻波法",
+            "相位比较法",
+            "时差法"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R011",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp10"
+      ],
+      "available_chunk_count": 12,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp10/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "测量磁场大小与线圈电流的关系",
+          "anchor_terms": [
+            "测量磁场大小与线圈电流的关系"
+          ],
+          "matched_anchor_terms": [
+            "测量磁场大小与线圈电流的关系"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R012",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp11"
+      ],
+      "available_chunk_count": 22,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp11/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "微安表的电流刻度应替换为标定后的温度计刻度",
+          "anchor_terms": [
+            "微安表的电流刻度应替换为标定后的温度计刻度"
+          ],
+          "matched_anchor_terms": [
+            "微安表的电流刻度应替换为标定后的温度计刻度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R013",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp12"
+      ],
+      "available_chunk_count": 24,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp12/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "稳定清晰的李萨如图形",
+          "anchor_terms": [
+            "稳定清晰的李萨如图形"
+          ],
+          "matched_anchor_terms": [
+            "稳定清晰的李萨如图形"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R014",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp13"
+      ],
+      "available_chunk_count": 13,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp13/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "纹波系数",
+          "anchor_terms": [
+            "纹波系数"
+          ],
+          "matched_anchor_terms": [
+            "纹波系数"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R015",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp14"
+      ],
+      "available_chunk_count": 6,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp14/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "P-R、Ku-R、非线性内阻",
+          "anchor_terms": [
+            "P-R",
+            "Ku-R",
+            "非线性内阻"
+          ],
+          "matched_anchor_terms": [
+            "非线性内阻"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R016",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp15"
+      ],
+      "available_chunk_count": 11,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp15/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "暗伏安、输出、照度特性",
+          "anchor_terms": [
+            "暗伏安",
+            "输出",
+            "照度特性"
+          ],
+          "matched_anchor_terms": [
+            "暗伏安",
+            "输出",
+            "照度特性"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R017",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp18_b"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp18_b/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "最小偏向角法",
+          "section_hit": true,
+          "anchor": "顶角、最小偏向角、折射率",
+          "anchor_terms": [
+            "顶角",
+            "最小偏向角",
+            "折射率"
+          ],
+          "matched_anchor_terms": [
+            "顶角",
+            "最小偏向角",
+            "折射率"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R018",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp19"
+      ],
+      "available_chunk_count": 12,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp19/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "20条暗纹总长度、细丝直径",
+          "anchor_terms": [
+            "20条暗纹总长度",
+            "细丝直径"
+          ],
+          "matched_anchor_terms": [
+            "细丝直径"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R019",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp26"
+      ],
+      "available_chunk_count": 8,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp26/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "电阻率的相对改变量",
+          "anchor_terms": [
+            "电阻率的相对改变量"
+          ],
+          "matched_anchor_terms": [
+            "电阻率的相对改变量"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R020",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp27"
+      ],
+      "available_chunk_count": 17,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp27/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "输出电压Ug与桥臂电阻的变化量ΔR",
+          "anchor_terms": [
+            "输出电压Ug与桥臂电阻的变化量ΔR"
+          ],
+          "matched_anchor_terms": [
+            "输出电压Ug与桥臂电阻的变化量ΔR"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R021",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp28"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp28/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "改变 IS和磁场B的方向",
+          "anchor_terms": [
+            "改变",
+            "IS和磁场B的方向"
+          ],
+          "matched_anchor_terms": [
+            "改变",
+            "IS和磁场B的方向"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R022",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp29"
+      ],
+      "available_chunk_count": 25,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp29/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "幅频曲线、半功率带宽",
+          "anchor_terms": [
+            "幅频曲线",
+            "半功率带宽"
+          ],
+          "matched_anchor_terms": [
+            "幅频曲线"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R023",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp30"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp30/实验指导_提取文本.txt",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "平行板电容器构成",
+          "anchor_terms": [
+            "平行板电容器构成"
+          ],
+          "matched_anchor_terms": [
+            "平行板电容器构成"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R024",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp31"
+      ],
+      "available_chunk_count": 17,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp31/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "加一级分压电路",
+          "anchor_terms": [
+            "加一级分压电路"
+          ],
+          "matched_anchor_terms": [
+            "加一级分压电路"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R025",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp32"
+      ],
+      "available_chunk_count": 15,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp32/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "四端连接、电阻率",
+          "anchor_terms": [
+            "四端连接",
+            "电阻率"
+          ],
+          "matched_anchor_terms": [
+            "电阻率"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R026",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp37"
+      ],
+      "available_chunk_count": 33,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp37/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "标准谱线、未知谱线、谱图",
+          "anchor_terms": [
+            "标准谱线",
+            "未知谱线",
+            "谱图"
+          ],
+          "matched_anchor_terms": [
+            "未知谱线",
+            "谱图"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R027",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp39"
+      ],
+      "available_chunk_count": 11,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp39/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "板极电流、加速电压、峰谷",
+          "anchor_terms": [
+            "板极电流",
+            "加速电压",
+            "峰谷"
+          ],
+          "matched_anchor_terms": [
+            "板极电流",
+            "加速电压"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R028",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp40"
+      ],
+      "available_chunk_count": 7,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp40/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "杨氏模量与泊松比",
+          "section_hit": true,
+          "anchor": "泊松比",
+          "anchor_terms": [
+            "泊松比"
+          ],
+          "matched_anchor_terms": [
+            "泊松比"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R029",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp41"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp41/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "衍射条纹、超声波长",
+          "anchor_terms": [
+            "衍射条纹",
+            "超声波长"
+          ],
+          "matched_anchor_terms": [
+            "衍射条纹"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R030",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp38"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp38/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容、进阶内容、高阶内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容",
+            "高阶内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容",
+            "高阶内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D001",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp20"
+      ],
+      "available_chunk_count": 11,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp20/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "测凸透镜焦距",
+          "section_hit": true,
+          "anchor": "公式法、位移法",
+          "anchor_terms": [
+            "公式法",
+            "位移法"
+          ],
+          "matched_anchor_terms": [
+            "公式法",
+            "位移法"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D002",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp20"
+      ],
+      "available_chunk_count": 11,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp20/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "物距单次、像距6次、凹透镜3次",
+          "anchor_terms": [
+            "物距单次",
+            "像距6次",
+            "凹透镜3次"
+          ],
+          "matched_anchor_terms": [
+            "物距单次",
+            "像距6次"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D003",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp20"
+      ],
+      "available_chunk_count": 11,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp20/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "物距、像距、焦距符号",
+          "anchor_terms": [
+            "物距",
+            "像距",
+            "焦距符号"
+          ],
+          "matched_anchor_terms": [
+            "物距",
+            "像距"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D004",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp22"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp22/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "单缝夫琅禾费衍射",
+          "section_hit": true,
+          "anchor": "暗条纹条件、提升实验",
+          "anchor_terms": [
+            "暗条纹条件",
+            "提升实验"
+          ],
+          "matched_anchor_terms": [
+            "提升实验"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D005",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp22"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp22/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "双缝夫琅禾费衍射",
+          "section_hit": true,
+          "anchor": "亮纹、暗纹条件与中心间距",
+          "anchor_terms": [
+            "亮纹",
+            "暗纹条件与中心间距"
+          ],
+          "matched_anchor_terms": [
+            "亮纹"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D006",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp22"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp22/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "利用光的衍射测量弹簧的参数",
+          "anchor_terms": [
+            "利用光的衍射测量弹簧的参数"
+          ],
+          "matched_anchor_terms": [
+            "利用光的衍射测量弹簧的参数"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D007",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp23"
+      ],
+      "available_chunk_count": 22,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp23/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "不要求写实验报告、必做、选做",
+          "anchor_terms": [
+            "不要求写实验报告",
+            "必做",
+            "选做"
+          ],
+          "matched_anchor_terms": [
+            "不要求写实验报告",
+            "必做",
+            "选做"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D008",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp23"
+      ],
+      "available_chunk_count": 22,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp23/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "遏止电压、频率、普朗克常量",
+          "anchor_terms": [
+            "遏止电压",
+            "频率",
+            "普朗克常量"
+          ],
+          "matched_anchor_terms": [
+            "遏止电压",
+            "频率",
+            "普朗克常量"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D009",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp23"
+      ],
+      "available_chunk_count": 22,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp23/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "饱和光电流与光强",
+          "section_hit": true,
+          "anchor": "光阑孔径、入射距离",
+          "anchor_terms": [
+            "光阑孔径",
+            "入射距离"
+          ],
+          "matched_anchor_terms": [
+            "光阑孔径",
+            "入射距离"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D010",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp24"
+      ],
+      "available_chunk_count": 21,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp24/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "3个油滴、8次、数据处理",
+          "anchor_terms": [
+            "3个油滴",
+            "8次"
+          ],
+          "matched_anchor_terms": [
+            "8次"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D011",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp24"
+      ],
+      "available_chunk_count": 21,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp24/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "qi=nie、作图法、不确定度",
+          "anchor_terms": [
+            "qi=nie",
+            "作图法",
+            "不确定度"
+          ],
+          "matched_anchor_terms": [
+            "作图法",
+            "不确定度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D012",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp33_a",
+        "exp33_b",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp33/实验指导_提取文本.txt",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "实验1、实验2、B类、报告",
+          "anchor_terms": [
+            "实验1",
+            "实验2",
+            "B类",
+            "报告"
+          ],
+          "matched_anchor_terms": [
+            "实验1",
+            "实验2",
+            "B类",
+            "报告"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D013",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp33_a",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp33/实验指导_提取文本.txt",
+          "path_exists": true,
+          "section": "3.1 比列对切透镜干涉实验",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D014",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp33_b",
+        "exp33"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp33/实验指导_提取文本.txt",
+          "path_exists": true,
+          "section": "3.2 梅斯林对切透镜干涉实验",
+          "section_hit": true,
+          "anchor": "基础内容、提升内容、进阶内容",
+          "anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容"
+          ],
+          "matched_anchor_terms": [
+            "基础内容",
+            "提升内容",
+            "进阶内容"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D015",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp34"
+      ],
+      "available_chunk_count": 26,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp34/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "必作、选作、反射式调制特性曲线",
+          "anchor_terms": [
+            "必作",
+            "选作",
+            "反射式调制特性曲线"
+          ],
+          "matched_anchor_terms": [
+            "必作",
+            "选作",
+            "反射式调制特性曲线"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D016",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp35"
+      ],
+      "available_chunk_count": 15,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp35/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "N不小于、白光中央条纹、重复3次",
+          "anchor_terms": [
+            "N不小于",
+            "白光中央条纹",
+            "重复3次"
+          ],
+          "matched_anchor_terms": [
+            "N不小于"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D017",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp36"
+      ],
+      "available_chunk_count": 19,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp36/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "数据处理",
+          "section_hit": true,
+          "anchor": "线性拟合、折射率及其不确定度",
+          "anchor_terms": [
+            "线性拟合",
+            "折射率及其不确定度"
+          ],
+          "matched_anchor_terms": [
+            "线性拟合",
+            "折射率及其不确定度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B001",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp34"
+      ],
+      "available_chunk_count": 26,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp34/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验仪器",
+          "section_hit": true,
+          "anchor": "光纤功率计",
+          "anchor_terms": [
+            "光纤功率计"
+          ],
+          "matched_anchor_terms": [
+            "光纤功率计"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B002",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp23"
+      ],
+      "available_chunk_count": 22,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp23/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "注意事项",
+          "section_hit": true,
+          "anchor": "预热10~20 分钟",
+          "anchor_terms": [
+            "预热10~20",
+            "分钟"
+          ],
+          "matched_anchor_terms": [
+            "预热10~20",
+            "分钟"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B003",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp38"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp38/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "实验室提供的数据表中查到",
+          "anchor_terms": [
+            "实验室提供的数据表中查到"
+          ],
+          "matched_anchor_terms": [
+            "实验室提供的数据表中查到"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D018",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp21"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp21/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "在物镜不同放大倍数下进行定标",
+          "anchor_terms": [
+            "在物镜不同放大倍数下进行定标"
+          ],
+          "matched_anchor_terms": [
+            "在物镜不同放大倍数下进行定标"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D019",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp26",
+        "exp28"
+      ],
+      "available_chunk_count": 18,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp28/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "改变 IS和磁场B的方向",
+          "anchor_terms": [
+            "改变",
+            "IS和磁场B的方向"
+          ],
+          "matched_anchor_terms": [
+            "改变",
+            "IS和磁场B的方向"
+          ],
+          "anchor_hit": true
+        },
+        {
+          "relative_path": "b_static/experiment/exp26/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "电阻率的相对改变量",
+          "anchor_terms": [
+            "电阻率的相对改变量"
+          ],
+          "matched_anchor_terms": [
+            "电阻率的相对改变量"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D020",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp46"
+      ],
+      "available_chunk_count": 24,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp46/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "两个温度传感器之间测得的温度差值基本恒定",
+          "anchor_terms": [
+            "两个温度传感器之间测得的温度差值基本恒定"
+          ],
+          "matched_anchor_terms": [
+            "两个温度传感器之间测得的温度差值基本恒定"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B004",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp24"
+      ],
+      "available_chunk_count": 21,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp24/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "测量油滴平衡电压和下落时间",
+          "anchor_terms": [
+            "测量油滴平衡电压和下落时间"
+          ],
+          "matched_anchor_terms": [
+            "测量油滴平衡电压和下落时间"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B005",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp29"
+      ],
+      "available_chunk_count": 25,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp29/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "与标称值进行比较",
+          "anchor_terms": [
+            "与标称值进行比较"
+          ],
+          "matched_anchor_terms": [
+            "与标称值进行比较"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B006",
+      "split": "dev",
+      "relevant_experiment_ids": [
+        "exp47"
+      ],
+      "available_chunk_count": 16,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp47/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "CCD图像",
+          "anchor_terms": [
+            "CCD图像"
+          ],
+          "matched_anchor_terms": [
+            "CCD图像"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    }
+  ]
+}

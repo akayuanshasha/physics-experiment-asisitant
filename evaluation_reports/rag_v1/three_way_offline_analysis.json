@@ -1,0 +1,942 @@
+{
+  "answer_score_definition": "Factual30+Completeness15+Boundary10+Clarity5=60, ×100/60归一化",
+  "group_answer_score_avg": {
+    "LLM Only": 71.39,
+    "BM25 RAG": 90.56,
+    "Hybrid RAG": 93.75
+  },
+  "per_question": {
+    "R057": {
+      "LLM Only": {
+        "factual": 7.5,
+        "completeness": 3.75,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 26.25,
+        "answer_score_100": 43.75,
+        "term_coverage": 0.25,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 706
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 198
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 182
+      }
+    },
+    "R058": {
+      "LLM Only": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 1040
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 311
+      },
+      "Hybrid RAG": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 646
+      }
+    },
+    "R059": {
+      "LLM Only": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 271
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 268
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 103
+      }
+    },
+    "R060": {
+      "LLM Only": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 349
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 344
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 283
+      }
+    },
+    "R061": {
+      "LLM Only": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 952
+      },
+      "BM25 RAG": {
+        "factual": 0.0,
+        "completeness": 15.0,
+        "boundary": 0.0,
+        "clarity": 5.0,
+        "raw_total_60": 20.0,
+        "answer_score_100": 33.33,
+        "term_coverage": 1.0,
+        "forbidden_hits": [
+          "v=(S2-S1)/(t2-t1)"
+        ],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 778
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [
+          "v=(S2-S1)/(t2-t1)"
+        ],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 588
+      }
+    },
+    "R062": {
+      "LLM Only": {
+        "factual": 7.5,
+        "completeness": 3.75,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 26.25,
+        "answer_score_100": 43.75,
+        "term_coverage": 0.25,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 706
+      },
+      "BM25 RAG": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 486
+      },
+      "Hybrid RAG": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 460
+      }
+    },
+    "R063": {
+      "LLM Only": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 891
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 603
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 539
+      }
+    },
+    "R064": {
+      "LLM Only": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 795
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 651
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 631
+      }
+    },
+    "R065": {
+      "LLM Only": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 626
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 493
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 366
+      }
+    },
+    "R066": {
+      "LLM Only": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 617
+      },
+      "BM25 RAG": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 213
+      },
+      "Hybrid RAG": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 328
+      }
+    },
+    "R067": {
+      "LLM Only": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 683
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 721
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 656
+      }
+    },
+    "R068": {
+      "LLM Only": {
+        "factual": 7.5,
+        "completeness": 3.75,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 26.25,
+        "answer_score_100": 43.75,
+        "term_coverage": 0.25,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 264
+      },
+      "BM25 RAG": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 125
+      },
+      "Hybrid RAG": {
+        "factual": 22.5,
+        "completeness": 11.25,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 48.75,
+        "answer_score_100": 81.25,
+        "term_coverage": 0.75,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 107
+      }
+    },
+    "B007": {
+      "LLM Only": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 0.0,
+        "clarity": 5.0,
+        "raw_total_60": 50.0,
+        "answer_score_100": 83.33,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": false,
+        "boundary_ok": false,
+        "boundary_class": "unqualified_answer",
+        "answer_chars": 600
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": true,
+        "boundary_ok": true,
+        "boundary_class": "insufficient_with_qualified_supplement",
+        "answer_chars": 489
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": true,
+        "boundary_ok": true,
+        "boundary_class": "insufficient_with_qualified_supplement",
+        "answer_chars": 405
+      }
+    },
+    "R069": {
+      "LLM Only": {
+        "factual": 15.0,
+        "completeness": 7.5,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 37.5,
+        "answer_score_100": 62.5,
+        "term_coverage": 0.5,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 1040
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 901
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 671
+      }
+    },
+    "D021": {
+      "LLM Only": {
+        "factual": 7.5,
+        "completeness": 3.75,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 26.25,
+        "answer_score_100": 43.75,
+        "term_coverage": 0.25,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 247
+      },
+      "BM25 RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 409
+      },
+      "Hybrid RAG": {
+        "factual": 30.0,
+        "completeness": 15.0,
+        "boundary": 10.0,
+        "clarity": 5.0,
+        "raw_total_60": 60.0,
+        "answer_score_100": 100.0,
+        "term_coverage": 1.0,
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 393
+      }
+    }
+  },
+  "retrieval_metrics": {
+    "BM25 RAG": {
+      "recall_at_1": 0.9333,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 0.9667,
+      "anchor_recall_at_5": 0.7
+    },
+    "Hybrid RAG": {
+      "recall_at_1": 0.9333,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 0.9667,
+      "anchor_recall_at_5": 0.6333
+    },
+    "LLM Only": "N/A"
+  },
+  "manual_review": [
+    {
+      "题号": "R061",
+      "系统": "Hybrid RAG",
+      "auto_boundary_ok": true,
+      "auto_boundary_class": "answerable_response",
+      "auto_forbidden_hits": [],
+      "auto_forbidden_suspicions": [
+        "v=(S2-S1)/(t2-t1)"
+      ],
+      "建议人工结论": "疑似改写禁用公式但未硬命中，自动判 PASS；建议人工确认是否构成禁用主张"
+    },
+    {
+      "题号": "B007",
+      "系统": "LLM Only",
+      "auto_boundary_ok": false,
+      "auto_boundary_class": "unqualified_answer",
+      "auto_forbidden_hits": [],
+      "auto_forbidden_suspicions": [],
+      "建议人工结论": "模型语义上正确拒答示例数据误用，但措辞未命中冻结 scorer refusal 关键词"
+    }
+  ],
+  "llm_to_bm25": [
+    {
+      "id": "R057",
+      "llm": 43.75,
+      "bm25": 100.0,
+      "delta": 56.25
+    },
+    {
+      "id": "D021",
+      "llm": 43.75,
+      "bm25": 100.0,
+      "delta": 56.25
+    },
+    {
+      "id": "R058",
+      "llm": 62.5,
+      "bm25": 100.0,
+      "delta": 37.5
+    },
+    {
+      "id": "R059",
+      "llm": 62.5,
+      "bm25": 100.0,
+      "delta": 37.5
+    },
+    {
+      "id": "R065",
+      "llm": 62.5,
+      "bm25": 100.0,
+      "delta": 37.5
+    },
+    {
+      "id": "R068",
+      "llm": 43.75,
+      "bm25": 81.25,
+      "delta": 37.5
+    },
+    {
+      "id": "R069",
+      "llm": 62.5,
+      "bm25": 100.0,
+      "delta": 37.5
+    },
+    {
+      "id": "R060",
+      "llm": 81.25,
+      "bm25": 100.0,
+      "delta": 18.75
+    },
+    {
+      "id": "R062",
+      "llm": 43.75,
+      "bm25": 62.5,
+      "delta": 18.75
+    },
+    {
+      "id": "B007",
+      "llm": 83.33,
+      "bm25": 100.0,
+      "delta": 16.67
+    },
+    {
+      "id": "R063",
+      "llm": 100.0,
+      "bm25": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R064",
+      "llm": 100.0,
+      "bm25": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R067",
+      "llm": 100.0,
+      "bm25": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R066",
+      "llm": 100.0,
+      "bm25": 81.25,
+      "delta": -18.75
+    },
+    {
+      "id": "R061",
+      "llm": 81.25,
+      "bm25": 33.33,
+      "delta": -47.92
+    }
+  ],
+  "bm25_to_hybrid": [
+    {
+      "id": "R061",
+      "bm25": 33.33,
+      "hybrid": 100.0,
+      "delta": 66.67
+    },
+    {
+      "id": "R057",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R059",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R060",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R062",
+      "bm25": 62.5,
+      "hybrid": 62.5,
+      "delta": 0.0
+    },
+    {
+      "id": "R063",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R064",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R065",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R066",
+      "bm25": 81.25,
+      "hybrid": 81.25,
+      "delta": 0.0
+    },
+    {
+      "id": "R067",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R068",
+      "bm25": 81.25,
+      "hybrid": 81.25,
+      "delta": 0.0
+    },
+    {
+      "id": "B007",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R069",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "D021",
+      "bm25": 100.0,
+      "hybrid": 100.0,
+      "delta": 0.0
+    },
+    {
+      "id": "R058",
+      "bm25": 100.0,
+      "hybrid": 81.25,
+      "delta": -18.75
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "run_id": "release_gate",
+  "timestamp": "2026-09-03T00:51:05.903844+00:00",
+  "build_id": "corpus-02bb19ee9aad",
+  "git_commit_or_build_id": "corpus-02bb19ee9aad",
+  "model_name": "disabled-for-retrieval-only",
+  "model_parameters": {
+    "temperature": 0.1,
+    "max_tokens": 8192
+  },
+  "prompt_version": "sha256:4157eb577a8e191d",
+  "knowledge_base_version": "sha256:02bb19ee9aadceb2dacd54fd070f65b182533e38e60ebd42748f66a159e59458",
+  "embedding_model": "disabled-for-lexical-diagnostic",
+  "chunking": {
+    "strategy": "online_rag.corpus structure-aware character chunking",
+    "chunk_size": 700,
+    "chunk_max": 1000,
+    "chunk_overlap": 100
+  },
+  "retrieval": {
+    "filter_key": "experiment_id",
+    "top_k": 5,
+    "assistant_retrieval_top_k": 12,
+    "candidate_k_before_fusion": 20,
+    "document_embedding_batch_size": 16,
+    "experiment_title_boost": 0.01,
+    "fusion": "weighted_rrf",
+    "reranker": "none",
+    "mode": "blind"
+  },
+  "dataset": {
+    "benchmark_version": "1.0",
+    "split": "all",
+    "question_count": 56,
+    "sha256": "6d1523e8a4e479e26bdf6012c634531f4f4706cddfde3d2d9fdd988aa4e08948"
+  },
+  "notes": "本次结果为唯一新基线；未执行Legacy/Online对照。",
+  "run_scope": "retrieval_only",
+  "lexical_only": true
+}

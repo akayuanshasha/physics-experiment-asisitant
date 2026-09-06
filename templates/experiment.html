@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>{{name}} - AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/rich-text.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'Source Han Sans SC', sans-serif; background: #f5f7fa; color: #333; }
+        .top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 20px; }
+        .top-bar a { color: white; text-decoration: none; margin-right: 16px; opacity: 0.9; }
+        .top-bar a:hover { opacity: 1; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 10px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .card h2 { font-size: 1.3em; margin-bottom: 16px; color: #333; }
+        .table-wrapper { overflow-x: auto; margin: 10px 0; }
+        .data-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+        .data-table th { background: #f2f2f2; border: 1px solid #d2d2d2; padding: 10px 6px; text-align: center; min-width: 80px; font-weight: bold; position: sticky; top: 0; }
+        .data-table td { border: 1px solid #d2d2d2; padding: 2px; text-align: center; }
+        .data-table input { width: 100%; min-width: 70px; border: none; outline: none; text-align: center; padding: 8px 4px; font-size: 13px; background: transparent; }
+        .data-table input:focus { background-color: #e8f4fd; outline: 1px solid #5bc0de; }
+        .data-table tr:hover td { background-color: #f9f9f9; }
+        .row-num { color: #999; font-size: 11px; min-width: 30px; width: 30px; }
+        .structured-wrapper { display: none; }
+        .schema-description { padding: 12px 14px; background: #f3f6ff; border-left: 4px solid #667eea; border-radius: 4px; margin-bottom: 16px; line-height: 1.7; }
+        .schema-description p { margin: 0 0 0.4em; }
+        .schema-description p:last-child { margin-bottom: 0; }
+        .schema-description ul, .schema-description ol { margin: 0.3em 0; padding-left: 1.5em; }
+        .schema-description li + li { margin-top: 0.15em; }
+        .parameter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 18px; }
+        .parameter-item label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 5px; }
+        .parameter-item input, .parameter-item select { width: 100%; border: 1px solid #d9d9d9; border-radius: 5px; padding: 8px 10px; background: white; }
+        .parameter-help, .table-help { color: #777; font-size: 12px; line-height: 1.55; margin-top: 4px; }
+        .qvar-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 10px; padding: 8px 10px; background: #f3f6fb; border: 1px solid #dde6f2; border-radius: 6px; font-size: 12.5px; color: #45536b; }
+        .qvar-strip .qvar-heading { font-weight: 650; color: #3f51b5; margin-right: 2px; }
+        .qvar-chip { display: inline-flex; align-items: center; padding: 2px 9px; background: #fff; border: 1px solid #cfd9e8; border-radius: 999px; color: #33415c; white-space: nowrap; cursor: default; }
+        .mode-select-card { border-left: 4px solid #667eea; background: #f6f8ff; }
+        .mode-select-card select { max-width: 520px; font-size: 14px; }
+        .parameter-card .parameter-grid { margin-bottom: 6px; }
+        .table-parameters { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 10px 0 4px; }
+        .parameter-note { font-weight: bold; color: #2c3e50; font-size: 12.5px; line-height: 1.7; margin-top: 6px; }
+        .table-calc-footer { margin-top: 12px; }
+        .table-action-button.calc { background: #667eea; color: #fff; }
+        .table-action-button.calc:hover { background: #5a6fd6; color: #fff; }
+        .btn-group .btn.btn-pill-outline { background: transparent; color: #667eea; border: 1px solid #667eea; border-radius: 999px; }
+        .btn-group .btn.btn-pill-outline:hover { background: rgba(102,126,234,0.08); color: #5a6fd6; }
+        .schema-table-card { border: 1px solid #dfe4ea; border-radius: 8px; padding: 16px; margin: 14px 0; background: #fcfdff; }
+        .schema-table-card h3 { font-size: 16px; margin-bottom: 6px; color: #3f51b5; }
+        .schema-table-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0; }
+        .table-action-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .table-action-button { appearance: none; border: 0; outline: 0; border-radius: 999px; padding: 7px 14px; background: #eef1ff; color: #5367cc; font-family: inherit; font-size: 13px; line-height: 1.35; cursor: pointer; box-shadow: none; transition: background-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease; }
+        .table-action-button:hover { background: #dde3ff; color: #4054bd; transform: translateY(-1px); }
+        .table-action-button:active { transform: translateY(0); }
+        .table-action-button:focus-visible { box-shadow: 0 0 0 3px rgba(102,126,234,.22); }
+        .table-action-button.sample { background: #e8f7f0; color: #23865f; }
+        .table-action-button.sample:hover { background: #d6f1e4; color: #176b4a; }
+        .table-action-button.remove { background: #fff1f0; color: #cf4b48; }
+        .table-action-button.remove:hover { background: #ffe2df; color: #b43b38; }
+      .keyboard-hint { color: #8b93a7; font-size: 12px; line-height: 1.5; }
+      .fit-notes-box { margin-top: 12px; padding: 10px 14px; background: #f2f7ff; border: 1px solid #cfdcf7; border-left: 4px solid #5367cc; border-radius: 6px; }
+      .fit-notes-line { font-size: 13px; color: #2c3e50; line-height: 1.6; }
+      .fit-notes-line.warn { color: #c0392b; font-weight: 600; }
+        .optional-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 999px; background: #f5f6fa; font-size: 13px; color: #555; cursor: pointer; }
+        .required-mark { color: #e74c3c; margin-left: 4px; }
+        .image-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 12px 0; }
+        .image-slot { padding: 10px; background: white; border: 1px solid #e0e4eb; border-radius: 6px; }
+        .image-slot label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 6px; }
+        .image-slot input { display: block; width: 100%; font-size: 12px; }
+        .image-process-result { display: none; margin-top: 12px; padding: 12px; border-radius: 6px; background: #f4f8ff; white-space: pre-wrap; line-height: 1.65; font-size: 13px; }
+        .chart-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+        .chart-gallery figure { margin: 0; padding: 10px; background: white; border-radius: 6px; }
+        .chart-gallery figcaption { text-align: center; margin-top: 8px; color: #555; font-size: 13px; }
+        .btn-group { text-align: center; margin: 16px 0; }
+        .btn-group .btn { display: inline-block; padding: 8px 20px; margin: 4px 6px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd6; }
+        .btn-secondary { background: #f0f0f0; color: #555; }
+        .btn-secondary:hover { background: #e0e0e0; }
+        .btn-success { background: #52c41a; color: white; }
+        .btn-success:hover { background: #46a817; }
+        .btn-warning { background: #fa8c16; color: white; }
+        .btn-warning:hover { background: #d87a12; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .result-area { margin-top: 20px; padding: 16px; background: #f9f9f9; border-radius: 8px; display: none; }
+        .result-area h3 { margin-bottom: 10px; color: #667eea; }
+        .result-area pre { white-space: pre-wrap; word-break: break-all; font-size: 14px; line-height: 1.7; }
+        .chart-area { margin-top: 20px; padding: 20px; background: #f0f7ff; border: 1px solid #b3d4fc; border-radius: 8px; display: none; }
+        .chart-area h3 { color: #2980b9; margin-bottom: 12px; }
+        .chart-area img { max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .chart-info { margin-top: 12px; padding: 10px; background: white; border-radius: 6px; font-size: 13px; }
+        .chart-info .fit-eq { font-family: 'Consolas', monospace; color: #e74c3c; font-weight: bold; }
+        .chart-info .r2 { color: #27ae60; font-weight: bold; }
+        .abnormal-area { margin-top: 20px; padding: 20px; background: #fff8f0; border: 1px solid #ffd699; border-radius: 8px; display: none; max-height: 500px; overflow-y: auto; }
+        .abnormal-area h3 { color: #e67e22; margin-bottom: 12px; }
+        .abnormal-area .rich-text-output { font-size: 13px; line-height: 1.75; }
+        .anomaly-summary { font-size: 13px; line-height: 1.6; margin-bottom: 10px; padding: 8px 12px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 4px; color: #ad6800; }
+        tr.row-anomaly td { background-color: #fff1f0 !important; }
+        td.cell-anomaly { background-color: #ffccc7 !important; outline: 2px solid #ff4d4f; }
+        td.cell-anomaly input { background: transparent !important; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 12px; }
+        .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
+        .stat-card .label { color: #999; }
+        .stat-card .value { font-weight: bold; color: #333; }
+        .stat-card .outlier { color: #e74c3c; font-weight: bold; }
+        .report-area { margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; display: none; }
+        .report-area h3 { color: #667eea; margin-bottom: 12px; }
+        .report-content { line-height: 1.8; font-size: 14px; }
+        .report-content h1, .report-content h2, .report-content h3 { margin: 12px 0 8px; }
+        .draft-status { color: #7b8498; font-size: 12px; padding: 6px 10px; border-radius: 999px; background: #f5f6fa; }
+        .table-action-button.chart { background: #eaf5ff; color: #2474a8; }
+        .table-action-button.analysis { background: #fff5e8; color: #b56b13; }
+        .data-table input[readonly] { color: #315b89; background: #f2f7fc; cursor: default; font-weight: 600; }
+        .report-preview { display: none; margin-top: 16px; }
+        .report-preview iframe { width: 100%; height: 680px; border: 1px solid #dfe4ea; border-radius: 8px; background: #fff; }
+        .report-fallback { margin-top: 14px; }
+        .loading { text-align: center; padding: 30px; color: #999; }
+        .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 24px; border-radius: 6px; z-index: 9999; display: none; }
+        /* ── 公式展示块 ── */
+        .formula-box { background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%); border: 1px solid #e0e7ff; border-radius: 10px; padding: 24px 20px; margin: 16px 0; overflow-x: auto; box-shadow: 0 2px 8px rgba(102,126,234,0.08); }
+        .formula-box .formula-title { font-weight: 600; color: #3f51b5; margin-bottom: 12px; font-size: 14px; padding-bottom: 8px; border-bottom: 1px dashed #d0d5e8; }
+        .formula-box .formula-step { margin: 12px 0; text-align: center; }
+        .formula-box .formula-note { color: #555; font-size: 13px; line-height: 1.7; margin: 8px 0 4px; text-align: left; }
+        .formula-box .formula-note + .formula-note { margin-top: 2px; }
+        /* ── 物理量说明表 ── */
+        .var-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .var-table th { background: #f5f7ff; border: 1px solid #e0e4f0; padding: 10px 12px; text-align: center; font-weight: 600; color: #3f51b5; font-size: 14px; }
+        .var-table td { border: 1px solid #e8ecf4; padding: 9px 12px; vertical-align: middle; }
+        .var-table td:first-child { text-align: center; font-weight: 500; white-space: nowrap; min-width: 70px; color: #5c6bc0; font-style: italic; }
+        .var-table td:last-child { text-align: center; white-space: nowrap; min-width: 80px; color: #666; font-size: 12px; }
+        .var-table tr:nth-child(even) { background: #fafbff; }
+        .var-table tr:hover { background: #f0f4ff; }
+        /* ── 每表公式/物理量块 ── */
+        .table-theory-block { background: #fafbff; border: 1px solid #e8ecf4; border-radius: 8px; padding: 16px; margin: 12px 0 8px; }
+        .table-theory-block .formula-box { margin: 8px 0; padding: 16px 14px; background: white; }
+        .table-theory-block .formula-box .formula-title { font-size: 13px; margin-bottom: 8px; padding-bottom: 6px; }
+        .table-theory-block .formula-box .formula-step { margin: 8px 0; font-size: 14px; }
+        .table-theory-block .formula-box .formula-note { font-size: 12px; margin: 4px 0 2px; }
+        .var-heading { font-size: 13px; font-weight: 600; color: #3f51b5; margin: 12px 0 8px; padding-bottom: 6px; border-bottom: 1px dashed #d0d5e8; display: flex; align-items: center; gap: 4px; }
+        .table-theory-block .var-table { margin: 0; font-size: 12px; box-shadow: none; }
+        .table-theory-block .var-table th { padding: 6px 10px; font-size: 12px; }
+        .table-theory-block .var-table td { padding: 5px 10px; }
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.7); z-index: 9998; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .spinner { width: 40px; height: 40px; border: 4px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loading-overlay .msg { margin-top: 16px; font-size: 15px; color: #555; }
+        .loading-overlay .loading-cancel { margin-top: 16px; padding: 7px 26px; font-size: 14px; color: #667eea; background: #fff; border: 1px solid #667eea; border-radius: 999px; cursor: pointer; }
+        .loading-overlay .loading-cancel:hover { background: #667eea; color: #fff; }
+    </style>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/topbar.css">
+    {% import '_icons.html' as icons %}
+    <style>
+        .container { width: min(100%, 980px); }
+        .structured-wrapper { display: none; }
+        .btn-group.submit-row { justify-content: center; margin-top: 20px; }
+        .g-calc-result { border-color: rgba(39,132,91,.28) !important; background: var(--ok-soft) !important; color: var(--ink) !important; }
+        .calc-result-panel { display: none; margin-top: 14px; padding: 14px 16px; background: #f4faf7; border: 1px solid #d6f1e4; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    {% with active_page='experiments', experiment_name=name %}
+        {% include '_topbar.html' %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="card">
+            <h2>{{name}}</h2>
+            <p class="card-subtitle">在下方表格中输入实验数据，系统将自动计算并生成报告文档。</p>
+
+            <div class="btn-group" id="legacyControls" style="margin-bottom:12px;">
+                <button class="btn btn-secondary" id="sampleBtn" onclick="fillExample()" disabled>{{ icons.icon('clipboard') }}<span>填入示例数据</span></button>
+                <button class="btn btn-secondary" onclick="addRow()">{{ icons.icon('plus') }}<span>添加行</span></button>
+                <button class="btn btn-secondary" onclick="removeRow()">{{ icons.icon('minus') }}<span>删除行</span></button>
+            </div>
+
+            <p id="loadingTip" class="loading">正在加载表格结构…</p>
+            <p id="errorTip" style="font-size:13px;color:var(--danger);display:none; text-align:center;"></p>
+
+            <div class="table-wrapper" id="tableWrapper" style="display:none;">
+                <table class="data-table" id="dataTable">
+                    <thead id="tableHead"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="structured-wrapper" id="structuredWrapper"></div>
+
+            <div class="btn-group submit-row">
+                <button class="btn btn-primary" id="submitBtn" onclick="submitData()" style="display:none;">{{ icons.icon('zap') }}<span>提交计算</span></button>
+                <button class="btn btn-pill-outline" id="clearTablesBtn" onclick="clearStructuredTables()" style="display:none;">{{ icons.icon('eraser') }}<span>清空表格</span></button>
+            </div>
+        </div>
+
+        <!-- 计算结果区域 -->
+        <div class="card result-area result-section" id="resultArea">
+            <h3>{{ icons.icon('sigma') }}<span>计算结果</span></h3>
+            <pre id="resultContent"></pre>
+            <div class="btn-group" style="margin-top:16px;">
+                <a class="btn btn-success" id="downloadbtn" style="display:none; text-decoration:none;">{{ icons.icon('download') }}<span>下载Word文档</span></a>
+                <button class="btn btn-info" id="chartBtn" onclick="generateChart()" style="display:none;">{{ icons.icon('chart') }}<span>生成图表</span></button>
+                <button class="btn btn-warning" id="abnormalBtn" onclick="runAbnormalDetect()" style="display:none;">{{ icons.icon('search') }}<span>数据异常检测</span></button>
+                <button class="btn btn-danger" id="aiReportBtn" onclick="generateAIReport()" style="display:none;">{{ icons.icon('robot') }}<span>生成实验报告</span></button>
+            </div>
+        </div>
+
+        <!-- 图表展示区域 -->
+        <div class="card chart-area result-section" id="chartArea">
+            <h3>{{ icons.icon('chart') }}<span>实验数据图表</span></h3>
+            <div class="chart-gallery" id="chartGallery"></div>
+            <div style="text-align:center;">
+                <img id="chartImage" src="" alt="实验图表" style="display:none;" />
+            </div>
+            <div class="chart-info" id="chartInfo" style="display:none;"></div>
+        </div>
+
+        <!-- 异常检测报告区域 -->
+        <div class="card abnormal-area result-section" id="abnormalArea">
+            <h3>{{ icons.icon('search') }}<span>数据异常检测报告</span></h3>
+            <div id="statsPreview"></div>
+            <div id="anomalySummary" class="anomaly-summary" style="display:none;"></div>
+            <div id="abnormalReport" class="rich-text-output"></div>
+        </div>
+
+        <!-- AI报告区域 -->
+        <div class="card report-area result-section" id="reportArea">
+            <h3>{{ icons.icon('robot') }}<span>AI生成的实验报告</span></h3>
+            <p class="card-subtitle">本机安装 LaTeX 编译器时优先在线预览 PDF；否则仍可下载 TEX 源码继续编译。</p>
+            <div class="report-preview" id="reportPreview"><iframe id="reportPdfFrame" title="实验报告 PDF 在线预览"></iframe></div>
+            <details class="report-fallback" id="reportSourceDetails">
+                <summary>查看 LaTeX 源码</summary>
+                <pre id="reportContent" style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:16px; font-size:12px; line-height:1.6; max-height:500px; overflow:auto; white-space:pre-wrap; word-break:break-all; font-family:'Consolas','Courier New',monospace;"></pre>
+            </details>
+            <div class="btn-group" style="margin-top:16px;">
+                <a class="btn btn-secondary" id="texDownloadBtn" style="display:none; text-decoration:none;">{{ icons.icon('file-text') }}<span>下载 TEX 源码</span></a>
+                <a class="btn btn-primary" id="pdfDownloadBtn" style="display:none; text-decoration:none;">{{ icons.icon('download') }}<span>下载 PDF 报告</span></a>
+                <button class="btn btn-secondary" onclick="copyReport()">{{ icons.icon('copy') }}<span>复制全部代码</span></button>
+            </div>
+            <p id="reportCompileTip" style="display:none; font-size:12px; color:var(--warn); margin-top:8px;"></p>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="msg" id="loadingMsg">处理中，请稍候…</div>
+        <button class="loading-cancel" id="loadingCancelBtn" type="button" style="display:none;">取消</button>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        window.MathJax = {
+            loader: {
+                paths: {
+                    mathjax: '/static/vendor/mathjax',
+                    'mathjax-newcm': '/static/vendor/mathjax',
+                    fonts: '/static/vendor/mathjax'
+                }
+            },
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true
+            },
+            chtml: {
+                fontURL: '/static/vendor/mathjax/chtml/woff2',
+                dynamicPrefix: '/static/vendor/mathjax/chtml/dynamic'
+            },
+            options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}
+        };
+    </script>
+    <script src="/static/vendor/markdown-it/markdown-it.min.js"></script>
+    <script src="/static/vendor/dompurify/purify.min.js"></script>
+    <script id="MathJax-script" src="/static/vendor/mathjax/tex-mml-chtml-mathjax-newcm.js"></script>
+    <script src="/static/js/rich-text-renderer.js"></script>
+    <script src="/static/js/icons.js"></script>
+    <script>
+        window.EXPERIMENT_CONTEXT = { id: {{ num|tojson }}, name: {{ name|tojson }} };
+    </script>
+    <script>
+        var tableColumns = [];
+        var exampleData = [];
+        var initialRowCount = 1;
+        var lastCalcResult = null;
+        var lastUserData = null;
+        var lastAbnormalReport = '';
+        var lastChartInfo = null;  // 存储图表信息
+        var structuredMode = false;
+        var experimentSchema = null;
+
+        function iconLabel(iconName, text) {
+            return (window.AppIcons && AppIcons[iconName] ? AppIcons[iconName] : '') + '<span>' + text + '</span>';
+        }
+
+        // 页面加载时获取表格结构
+        (function initTable() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/{{num}}/table-info', true);
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var info = JSON.parse(xhr.responseText);
+                    if (info.schema_version === 2) {
+                        structuredMode = true;
+                        experimentSchema = info;
+                        buildStructuredUI();
+                        return;
+                    }
+                    tableColumns = info.columns || [];
+                    exampleData = info.exampleData || [];
+                    initialRowCount = info.rowCount > 0 ? info.rowCount : 1;
+                    buildTable();
+                } else {
+                    document.getElementById('errorTip').innerText = '加载表格结构失败';
+                    document.getElementById('errorTip').style.display = '';
+                    document.getElementById('loadingTip').style.display = 'none';
+                }
+            };
+            xhr.onerror = function() {
+                document.getElementById('errorTip').innerText = '网络错误';
+                document.getElementById('errorTip').style.display = '';
+                document.getElementById('loadingTip').style.display = 'none';
+            };
+            xhr.send();
+        })();
+
+        function createParameterField(parameter, skipLabel) {
+            var item = document.createElement('div');
+            item.className = 'parameter-item';
+            item.dataset.condition = JSON.stringify(parameter.condition || {});
+            if (!skipLabel) {
+                var label = document.createElement('label');
+                label.textContent = parameter.label + (parameter.unit ? '（' + parameter.unit + '）' : '');
+                if (parameter.required) {
+                    var mark = document.createElement('span');
+                    mark.className = 'required-mark';
+                    mark.textContent = '*';
+                    label.appendChild(mark);
+                }
+                item.appendChild(label);
+            }
+            var input;
+            if (parameter.type === 'select') {
+                input = document.createElement('select');
+                (parameter.options || []).forEach(function(option) {
+                    var element = document.createElement('option');
+                    element.value = option.value;
+                    element.textContent = option.label;
+                    input.appendChild(element);
+                });
+            } else {
+                input = document.createElement('input');
+                input.type = parameter.type === 'number' ? 'number' : 'text';
+                if (parameter.step != null) input.step = parameter.step;
+                if (parameter.min != null) input.min = parameter.min;
+                if (parameter.max != null) input.max = parameter.max;
+            }
+            input.id = 'param-' + parameter.id;
+            input.value = parameter.default != null ? parameter.default : '';
+            input.dataset.parameterId = parameter.id;
+            input.addEventListener('change', updateStructuredVisibility);
+            item.appendChild(input);
+            if (parameter.help) {
+                var help = document.createElement('div');
+                help.className = 'parameter-help';
+                help.textContent = parameter.help;
+                item.appendChild(help);
+            }
+            if (parameter.note) {
+                var note = document.createElement('div');
+                note.className = 'parameter-note';
+                note.textContent = parameter.note;
+                item.appendChild(note);
+            }
+            return item;
+        }
+
+        function buildStructuredUI() {
+            document.getElementById('loadingTip').style.display = 'none';
+            document.getElementById('legacyControls').style.display = 'none';
+            document.getElementById('structuredWrapper').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'inline-flex';
+            document.getElementById('clearTablesBtn').style.display = 'inline-flex';
+
+            var wrapper = document.getElementById('structuredWrapper');
+            wrapper.innerHTML = '';
+            if (experimentSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'schema-description';
+                if (experimentSchema.shell) {
+                    // 外壳实验：尚未开发的实验用醒目提示展示，并隐藏提交按钮
+                    description.style.cssText = 'background:#fff8e6;border-left-color:#f39c12;font-size:16px;font-weight:bold;padding:22px 20px;';
+                    document.getElementById('submitBtn').style.display = 'none';
+                    document.getElementById('clearTablesBtn').style.display = 'none';
+                }
+                wrapper.appendChild(description);
+                if (window.RichTextRenderer && typeof window.RichTextRenderer.renderInto === 'function') {
+                    RichTextRenderer.renderInto(description, experimentSchema.description);
+                } else {
+                    description.textContent = experimentSchema.description;
+                }
+            }
+
+            var parameters = experimentSchema.parameters || [];
+
+            // 被其他条件引用的下拉参数（如「实验内容」）是模式选择器，单独成卡独占一行
+            function isModeSelector(parameter) {
+                if (parameter.type !== 'select') return false;
+                var referenced = false;
+                (experimentSchema.tables || []).forEach(function(table) {
+                    if (table.condition && table.condition.parameter === parameter.id) referenced = true;
+                });
+                parameters.forEach(function(other) {
+                    if (other.condition && other.condition.parameter === parameter.id) referenced = true;
+                });
+                if (experimentSchema.image_upload && experimentSchema.image_upload.condition
+                    && experimentSchema.image_upload.condition.parameter === parameter.id) referenced = true;
+                return referenced;
+            }
+
+            var modeSelectors = parameters.filter(isModeSelector);
+            var normalParameters = parameters.filter(function(parameter) { return !isModeSelector(parameter); });
+
+            // 模式选择卡：实验内容等单独成卡、独占一行
+            modeSelectors.forEach(function(parameter) {
+                var modeCard = document.createElement('section');
+                modeCard.className = 'schema-table-card mode-select-card';
+                modeCard.dataset.condition = JSON.stringify(parameter.condition || {});
+                var modeTitle = document.createElement('h3');
+                modeTitle.textContent = parameter.label;
+                modeCard.appendChild(modeTitle);
+                modeCard.appendChild(createParameterField(parameter, true));
+                wrapper.appendChild(modeCard);
+            });
+
+            // 实验参数卡：其余参数集中展示，附「填入参数示例」
+            if (normalParameters.length) {
+                var parameterCard = document.createElement('section');
+                parameterCard.className = 'schema-table-card parameter-card';
+                var parameterTitle = document.createElement('h3');
+                parameterTitle.textContent = '实验参数';
+                parameterCard.appendChild(parameterTitle);
+                var grid = document.createElement('div');
+                grid.className = 'parameter-grid';
+                normalParameters.forEach(function(parameter) { grid.appendChild(createParameterField(parameter, false)); });
+                parameterCard.appendChild(grid);
+
+                var parameterSample = experimentSchema.parameters_sample;
+                if (parameterSample && Object.keys(parameterSample).length > 0) {
+                    var parameterSampleButton = document.createElement('button');
+                    parameterSampleButton.type = 'button';
+                    parameterSampleButton.className = 'table-action-button sample';
+                    parameterSampleButton.style.marginBottom = '8px';
+                    parameterSampleButton.innerHTML = iconLabel('clipboard', '填入参数示例');
+                    parameterSampleButton.onclick = fillStructuredParameterExample;
+                    parameterCard.appendChild(parameterSampleButton);
+                }
+                wrapper.appendChild(parameterCard);
+            }
+
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                var tableCard = createStructuredTable(tableSchema);
+                wrapper.appendChild(tableCard);
+            });
+
+            // MathJax 渲染所有公式节点（等待 MathJax 完全加载，避免竞态导致公式显示源码）
+            var mathNodes = wrapper.querySelectorAll('.formula-step, .var-table td:first-child');
+            if (mathNodes.length && window.RichTextRenderer && RichTextRenderer.typeset) {
+                RichTextRenderer.typeset(wrapper).catch(function(err) { console.warn('MathJax typeset error:', err); });
+            }
+
+            if (experimentSchema.image_upload) {
+                wrapper.appendChild(createStructuredImageUpload(experimentSchema.image_upload));
+            }
+
+            updateStructuredVisibility();
+        }
+
+        function createStructuredImageUpload(uploadSchema) {
+            var card = document.createElement('section');
+            card.className = 'schema-table-card';
+            card.id = 'structured-image-upload';
+            card.dataset.condition = JSON.stringify(uploadSchema.condition || {});
+            var title = document.createElement('h3');
+            title.textContent = uploadSchema.title || '实验图像处理';
+            card.appendChild(title);
+            if (uploadSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'table-help';
+                description.textContent = uploadSchema.description;
+                card.appendChild(description);
+            }
+            var grid = document.createElement('div');
+            grid.className = 'image-slot-grid';
+            (uploadSchema.slots || []).forEach(function(slot) {
+                var item = document.createElement('div');
+                item.className = 'image-slot';
+                var label = document.createElement('label');
+                label.htmlFor = 'image-slot-' + slot.id;
+                label.textContent = slot.label;
+                item.appendChild(label);
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/png,image/jpeg,image/bmp,image/tiff';
+                input.id = 'image-slot-' + slot.id;
+                input.dataset.slotId = slot.id;
+                item.appendChild(input);
+                grid.appendChild(item);
+            });
+            card.appendChild(grid);
+            var action = document.createElement('div');
+            action.className = 'btn-group';
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn btn-primary';
+            button.innerHTML = iconLabel('image', '拼接谱图并检测候选峰');
+            button.onclick = processStructuredImages;
+            action.appendChild(button);
+            card.appendChild(action);
+            var result = document.createElement('div');
+            result.id = 'image-process-result';
+            result.className = 'image-process-result';
+            card.appendChild(result);
+            return card;
+        }
+
+        function processStructuredImages() {
+            var uploadSchema = experimentSchema.image_upload || {};
+            var formData = new FormData();
+            var missing = [];
+            (uploadSchema.slots || []).forEach(function(slot) {
+                var input = document.getElementById('image-slot-' + slot.id);
+                if (!input || !input.files || !input.files[0]) {
+                    missing.push(slot.label);
+                    return;
+                }
+                formData.append(slot.id, input.files[0], input.files[0].name);
+            });
+            if (missing.length) {
+                showToast('请先补齐9张谱图；尚缺：' + missing.join('、'), 6000);
+                return;
+            }
+            showLoading('正在增强、拼接谱图并检测候选峰…');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/process-images', true);
+            xhr.onload = function() {
+                hideLoading();
+                if (xhr.status !== 200) {
+                    showToast('图像上传或处理失败', 4500);
+                    return;
+                }
+                var response = JSON.parse(xhr.responseText);
+                if (response.code !== 0) {
+                    showToast(response.data || '图像处理失败', 6000);
+                    return;
+                }
+                var lines = ['图像处理完成。请对照下方拼接图人工复核峰中心：'];
+                (response.summary || []).forEach(function(item) { lines.push('• ' + item); });
+                (response.warnings || []).forEach(function(item) { lines.push('⚠ ' + item); });
+                var result = document.getElementById('image-process-result');
+                result.textContent = lines.join('\n');
+                result.style.display = 'block';
+                renderStructuredCharts(response.charts || []);
+                document.getElementById('chartArea').scrollIntoView({behavior: 'smooth'});
+                showToast('谱图处理完成');
+            };
+            xhr.onerror = function() { hideLoading(); showToast('网络错误'); };
+            xhr.send(formData);
+        }
+
+        // ── 表格上方物理量速览条辅助函数 ──
+        // 把 LaTeX 符号归一化为"基础字母串"（希腊命令转希腊字母、去上下标与其余命令）
+        function symbolBase(sym) {
+            if (!sym) return '';
+            var s = String(sym)
+                .replace(/\\Delta\s*x/g, 'Δx').replace(/\\Delta/g, 'Δ')   // \Delta x → Δx，\Delta L → ΔL
+                .replace(/\\Lambda/g, 'Λ').replace(/\\lambda/g, 'λ')
+                .replace(/\\mu/g, 'μ').replace(/\\pi/g, 'π').replace(/\\omega/g, 'ω')
+                .replace(/\\delta/g, 'δ')
+                .replace(/\\theta/g, 'θ').replace(/\\alpha/g, 'α').replace(/\\beta/g, 'β')
+                .replace(/\\sigma/g, 'σ').replace(/\\rho/g, 'ρ').replace(/\\nu/g, 'ν')
+                .replace(/\\tau/g, 'τ').replace(/\\varepsilon/g, 'ε').replace(/\\varphi/g, 'φ')
+                .replace(/\\gamma/g, 'γ').replace(/\\eta/g, 'η').replace(/\\kappa/g, 'κ')
+                .replace(/\\xi/g, 'ξ').replace(/\\zeta/g, 'ζ').replace(/\\chi/g, 'χ')
+                .replace(/\\psi/g, 'ψ').replace(/\\Omega/g, 'Ω').replace(/\\Gamma/g, 'Γ')
+                .replace(/\\Phi/g, 'Φ').replace(/\\Sigma/g, 'Σ').replace(/\\Theta/g, 'Θ')
+                .replace(/\\Pi/g, 'Π')
+                .replace(/\\[a-zA-Z]+\s*/g, '');   // 其余 LaTeX 命令（\bar、\ldots 等）去掉
+            s = s.replace(/_([0-9]+)/g, '$1')      // 下标数字保留（f_0 → f0，与 f 区分）
+                .replace(/\^[0-9]+/g, '')           // 上标幂次去掉（T^2 → T）
+                .replace(/[_{}]/g, '');             // 其余上下标记号去掉
+            return s.replace(/[^A-Za-zΑ-Ωα-ω0-9]/g, '');
+        }
+        // 从表头标签提取基础字母串：末尾括号只在内容像单位时才剥掉，
+        // "斜杠单位"直接剥掉，中文与其余符号去掉后只留字母
+        function columnSymbolBase(label) {
+            var s = String(label || '')
+                .replace(/[（(]([A-Za-z0-9Α-Ωα-ω²³⁰¹⁴⁵⁶⁷⁸⁹⁻⁺·%°Ω\/^\-]+)[）)]\s*$/, '')
+                .replace(/\/[^A-Za-zΑ-Ωα-ω]*[A-Za-zΑ-Ωα-ω²³0-9·%°]*\s*$/, '')
+                .replace(/delta/gi, 'Δ');
+            return s.replace(/[^A-Za-zΑ-Ωα-ω]/g, '');
+        }
+        // 判断是否为纯标签列（无物理符号、无单位、无数字，如"序号/测量次数/组别"）
+        function isLabelColumn(label) {
+            var text = String(label || '');
+            return !columnSymbolBase(text) &&
+                !/[0-9]/.test(text) &&
+                !/[（(][^（）()]*[）)]/.test(text) &&
+                !/\/[A-Za-z]/.test(text);
+        }
+        // 构建速览条：列出本表所有物理量列（跳过纯文字/标签列，如"序号/测量点"），
+        // 若 theory 变量按符号匹配到该列，则把含义说明放进悬停提示
+        function buildQuickVariableStrip(tableSchema, tableTheory) {
+            var columns = (tableSchema.columns || []).filter(function (c) {
+                return c.type !== 'text' && !isLabelColumn(c.label);
+            });
+            if (!columns.length) return null;
+            var variables = (tableTheory && tableTheory.variables) || [];
+            var strip = document.createElement('div');
+            strip.className = 'qvar-strip';
+            var heading = document.createElement('span');
+            heading.className = 'qvar-heading';
+            heading.textContent = '本表物理量';
+            strip.appendChild(heading);
+            columns.forEach(function (column) {
+                var chip = document.createElement('span');
+                chip.className = 'qvar-chip';
+                chip.textContent = column.label;
+                var base = columnSymbolBase(column.label);
+                var hints = [];
+                if (base) {
+                    variables.forEach(function (v) {
+                        var vbase = symbolBase(v.symbol);
+                        if (!vbase) return;
+                        var matched = vbase === base ||
+                            (vbase.length > base.length && vbase.indexOf(base) === vbase.length - base.length) ||
+                            (vbase.length >= 2 && base.length > vbase.length && base.indexOf(vbase) === 0);
+                        if (matched) {
+                            var desc = String(v.description || '').replace(/<[^>]+>/g, '').trim();
+                            hints.push(desc + (v.unit ? '（单位：' + v.unit + '）' : ''));
+                        }
+                    });
+                }
+                if (hints.length) chip.title = hints.join('；');
+                strip.appendChild(chip);
+            });
+            return strip;
+        }
+
+        function createStructuredTable(tableSchema) {
+            var card = document.createElement('section');
+            card.className = 'schema-table-card';
+            card.id = 'schema-table-' + tableSchema.id;
+            card.dataset.tableId = tableSchema.id;
+            card.dataset.condition = JSON.stringify(tableSchema.condition || {});
+
+            var title = document.createElement('h3');
+            title.textContent = tableSchema.title;
+            if (tableSchema.required) {
+                var mark = document.createElement('span');
+                mark.className = 'required-mark';
+                mark.textContent = '*';
+                title.appendChild(mark);
+            }
+            card.appendChild(title);
+            if (tableSchema.description) {
+                var description = document.createElement('div');
+                description.className = 'table-help';
+                description.textContent = tableSchema.description;
+                card.appendChild(description);
+            }
+
+            // ── 本表理论数据：per-table 优先，缺失的公式/变量逐键回退 _global ──
+            var theorySpecific = (experimentSchema.table_theory || {})[tableSchema.id] || {};
+            var theoryGlobal = (experimentSchema.table_theory || {})['_global'] || {};
+            var mergedTableTheory = {
+                formulas: (theorySpecific.formulas && theorySpecific.formulas.length)
+                    ? theorySpecific.formulas : (theoryGlobal.formulas || []),
+                variables: (theorySpecific.variables && theorySpecific.variables.length)
+                    ? theorySpecific.variables : (theoryGlobal.variables || []),
+            };
+
+            // ── 表格上方物理量速览条（每列一个符号说明，始终可见）──
+            var quickStrip = buildQuickVariableStrip(tableSchema, mergedTableTheory);
+            if (quickStrip) card.appendChild(quickStrip);
+
+            // ── 渲染本表专属参数（位于本表上方）──
+            if (tableSchema.parameters && tableSchema.parameters.length) {
+                var tableParamRow = document.createElement('div');
+                tableParamRow.className = 'table-parameters';
+                tableSchema.parameters.forEach(function(parameter) {
+                    tableParamRow.appendChild(createParameterField(parameter, false));
+                });
+                card.appendChild(tableParamRow);
+            }
+
+            // ── 渲染本表的公式和物理量说明（来自 schema.table_theory） ──
+            var tableTheory = mergedTableTheory;
+            if (tableTheory) {
+                var tableFormulas = tableTheory.formulas || [];
+                var tableVariables = tableTheory.variables || [];
+                if (tableFormulas.length || tableVariables.length) {
+                    // 计算参考区：默认折叠（details 不带 open），展开时重新排版 MathJax
+                    var refDetails = document.createElement('details');
+                    refDetails.className = 'calculation-reference';
+                    var refSummary = document.createElement('summary');
+                    refSummary.className = 'calculation-reference-toggle';
+                    var refLabel = document.createElement('span');
+                    refLabel.className = 'toggle-label';
+                    refLabel.textContent = '查看计算公式与物理量说明';
+                    var refIcon = document.createElement('span');
+                    refIcon.className = 'toggle-icon';
+                    refIcon.setAttribute('aria-hidden', 'true');
+                    refIcon.textContent = '⌄';
+                    refSummary.appendChild(refLabel);
+                    refSummary.appendChild(refIcon);
+                    refDetails.appendChild(refSummary);
+
+                    var theoryBlock = document.createElement('div');
+                    theoryBlock.className = 'table-theory-block';
+                    if (tableFormulas.length) {
+                        tableFormulas.forEach(function(fb) {
+                            var box = document.createElement('div');
+                            box.className = 'formula-box';
+                            if (fb.title) { var ft = document.createElement('div'); ft.className = 'formula-title'; ft.textContent = fb.title; box.appendChild(ft); }
+                            (fb.steps || []).forEach(function(step) {
+                                if (step.note) { var note = document.createElement('div'); note.className = 'formula-note'; note.innerHTML = step.note; box.appendChild(note); }
+                                if (step.formula) { var fd = document.createElement('div'); fd.className = 'formula-step'; fd.textContent = '$$' + step.formula + '$$'; box.appendChild(fd); }
+                            });
+                            theoryBlock.appendChild(box);
+                        });
+                    }
+                    if (tableVariables.length) {
+                        var varHeading = document.createElement('div');
+                        varHeading.className = 'var-heading';
+                        varHeading.innerHTML = iconLabel('book', '本表物理量说明');
+                        theoryBlock.appendChild(varHeading);
+                        var vTable = document.createElement('table');
+                        vTable.className = 'var-table';
+                        var vHead = document.createElement('thead');
+                        vHead.innerHTML = '<tr><th>符号</th><th>名称与含义</th><th>单位</th></tr>';
+                        vTable.appendChild(vHead);
+                        var vBody = document.createElement('tbody');
+                        tableVariables.forEach(function(v) {
+                            var tr = document.createElement('tr');
+                            var tdSym = document.createElement('td'); tdSym.innerHTML = '$' + v.symbol + '$'; tr.appendChild(tdSym);
+                            var tdDesc = document.createElement('td'); tdDesc.innerHTML = v.description; tr.appendChild(tdDesc);
+                            var tdUnit = document.createElement('td'); tdUnit.textContent = v.unit || '无单位'; tr.appendChild(tdUnit);
+                            vBody.appendChild(tr);
+                        });
+                        vTable.appendChild(vBody);
+                        theoryBlock.appendChild(vTable);
+                    }
+                    refDetails.appendChild(theoryBlock);
+
+                    // 展开：更新控制栏文字并重排公式；收起：恢复文字。不影响下方数据表。
+                    refDetails.addEventListener('toggle', function () {
+                        refLabel.textContent = refDetails.open ? '收起计算公式与物理量说明' : '查看计算公式与物理量说明';
+                        if (refDetails.open && window.RichTextRenderer && RichTextRenderer.typeset) {
+                            RichTextRenderer.typeset(refDetails).catch(function (err) { console.warn('MathJax typeset error:', err); });
+                        }
+                    });
+
+                    card.appendChild(refDetails);
+                }
+            }
+
+            var toolbar = document.createElement('div');
+            toolbar.className = 'schema-table-toolbar';
+            var controls = document.createElement('div');
+            controls.className = 'table-action-group';
+            if (tableSchema.calc) {
+                var calcButton = document.createElement('button');
+                calcButton.type = 'button';
+                calcButton.className = 'table-action-button calc';
+                calcButton.innerHTML = iconLabel('zap', tableSchema.calc.label || '计算');
+                calcButton.onclick = function() { calcStructuredTable(tableSchema.id, tableSchema.calc.table || tableSchema.id); };
+                controls.appendChild(calcButton);
+            }
+            if (tableSchema.sample && tableSchema.sample.length) {
+                var sampleButton = document.createElement('button');
+                sampleButton.type = 'button';
+                sampleButton.className = 'table-action-button sample';
+                sampleButton.innerHTML = iconLabel('clipboard', '填入本表全部示例数据');
+                sampleButton.onclick = function() { fillStructuredTableExample(tableSchema.id); };
+                controls.appendChild(sampleButton);
+            }
+            var addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'table-action-button';
+            addButton.innerHTML = iconLabel('plus', '添加行');
+            addButton.onclick = function() { addStructuredRowFromButton(tableSchema.id); };
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'table-action-button remove';
+            removeButton.innerHTML = iconLabel('minus', '删除行');
+            removeButton.onclick = function() { removeStructuredRow(tableSchema.id); };
+            controls.appendChild(addButton);
+            controls.appendChild(removeButton);
+            toolbar.appendChild(controls);
+            if (!tableSchema.required) {
+                var toggleLabel = document.createElement('label');
+                toggleLabel.className = 'optional-toggle';
+                var toggle = document.createElement('input');
+                toggle.type = 'checkbox';
+                toggle.id = 'enable-table-' + tableSchema.id;
+                toggle.checked = !!tableSchema.enabled_by_default;
+                toggle.addEventListener('change', function() {
+                    card.querySelector('.table-wrapper').style.display = toggle.checked ? 'block' : 'none';
+                    if (toggle.checked) {
+                        var currentBody = document.getElementById('schema-body-' + tableSchema.id);
+                        if (currentBody && !currentBody.children.length) addStructuredRow(tableSchema.id);
+                    }
+                });
+                toggleLabel.appendChild(toggle);
+                toggleLabel.appendChild(document.createTextNode(' 启用此选做数据表'));
+                toolbar.appendChild(toggleLabel);
+            }
+            card.appendChild(toolbar);
+            var keyboardHint = document.createElement('div');
+            keyboardHint.className = 'keyboard-hint';
+            keyboardHint.textContent = '键盘操作：Tab / Shift+Tab 左右切换，Enter / ↑ / ↓ 上下切换；在最后一格按 Enter 或 Tab 会自动新增一行。';
+            card.appendChild(keyboardHint);
+
+            var tableWrapper = document.createElement('div');
+            tableWrapper.className = 'table-wrapper';
+            if (!tableSchema.required && !tableSchema.enabled_by_default) tableWrapper.style.display = 'none';
+            var table = document.createElement('table');
+            table.className = 'data-table';
+            var thead = document.createElement('thead');
+            var header = document.createElement('tr');
+            var rowNumber = document.createElement('th');
+            rowNumber.className = 'row-num';
+            rowNumber.textContent = '#';
+            header.appendChild(rowNumber);
+            (tableSchema.columns || []).forEach(function(column) {
+                var th = document.createElement('th');
+                th.textContent = column.label + (column.unit ? ' / ' + column.unit : '');
+                if (column.help) th.title = column.help;
+                header.appendChild(th);
+            });
+            thead.appendChild(header);
+            table.appendChild(thead);
+            var tbody = document.createElement('tbody');
+            tbody.id = 'schema-body-' + tableSchema.id;
+            table.appendChild(tbody);
+            tableWrapper.appendChild(table);
+            card.appendChild(tableWrapper);
+
+            var count = (!tableSchema.required && !tableSchema.enabled_by_default)
+                ? 0
+                : Math.max(1, tableSchema.initial_rows || tableSchema.min_rows || 1);
+            for (var index = 0; index < count; index++) addStructuredRow(tableSchema.id, null, tbody, tableSchema);
+            return card;
+        }
+
+        function getTableSchema(tableId) {
+            return (experimentSchema.tables || []).find(function(item) { return item.id === tableId; });
+        }
+
+        function addStructuredRow(tableId, values, suppliedBody, suppliedSchema) {
+            var tableSchema = suppliedSchema || getTableSchema(tableId);
+            var tbody = suppliedBody || document.getElementById('schema-body-' + tableId);
+            if (!tableSchema || !tbody) return;
+            var tr = document.createElement('tr');
+            var numberCell = document.createElement('td');
+            numberCell.className = 'row-num';
+            numberCell.textContent = tbody.children.length + 1;
+            tr.appendChild(numberCell);
+            (tableSchema.columns || []).forEach(function(column) {
+                var td = document.createElement('td');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.columnId = column.id;
+                input.dataset.gridInput = 'true';
+                input.value = values && values[column.id] != null ? values[column.id] : '';
+                input.placeholder = column.placeholder || '';
+                input.addEventListener('keydown', function(event) {
+                    handleGridKeydown(event, function() {
+                        addStructuredRow(tableId);
+                    });
+                });
+                td.appendChild(input);
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+            updateStructuredRowNumbers(tableId);
+            return tr;
+        }
+
+        function enableStructuredTable(tableId) {
+            var toggle = document.getElementById('enable-table-' + tableId);
+            if (toggle && !toggle.checked) toggle.checked = true;
+            var tbody = document.getElementById('schema-body-' + tableId);
+            var wrapper = tbody ? tbody.closest('.table-wrapper') : null;
+            if (wrapper) wrapper.style.display = 'block';
+        }
+
+        function addStructuredRowFromButton(tableId) {
+            enableStructuredTable(tableId);
+            var row = addStructuredRow(tableId);
+            var firstInput = row ? row.querySelector('input[data-grid-input]') : null;
+            if (firstInput) {
+                firstInput.focus();
+                firstInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+        }
+
+        function focusGridCell(input, targetRow, targetColumn, addRowCallback) {
+            var tbody = input.closest('tbody');
+            if (!tbody) return;
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+            if (targetRow >= rows.length && addRowCallback) {
+                addRowCallback();
+                rows = Array.from(tbody.querySelectorAll('tr'));
+            }
+            if (!rows.length) return;
+            targetRow = Math.max(0, Math.min(targetRow, rows.length - 1));
+            var inputs = Array.from(rows[targetRow].querySelectorAll('input[data-grid-input]'));
+            if (!inputs.length) return;
+            targetColumn = Math.max(0, Math.min(targetColumn, inputs.length - 1));
+            inputs[targetColumn].focus();
+            inputs[targetColumn].select();
+        }
+
+        function handleGridKeydown(event, addRowCallback) {
+            var input = event.currentTarget;
+            var tbody = input.closest('tbody');
+            var row = input.closest('tr');
+            if (!tbody || !row) return;
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+            var inputs = Array.from(row.querySelectorAll('input[data-grid-input]'));
+            var rowIndex = rows.indexOf(row);
+            var columnIndex = inputs.indexOf(input);
+            var lastColumn = inputs.length - 1;
+            var atStart = input.selectionStart === 0 && input.selectionEnd === 0;
+            var atEnd = input.selectionStart === input.value.length && input.selectionEnd === input.value.length;
+
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + (event.shiftKey ? -1 : 1), columnIndex, event.shiftKey ? null : addRowCallback);
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + 1, columnIndex, addRowCallback);
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                focusGridCell(input, rowIndex - 1, columnIndex, null);
+            } else if (event.key === 'ArrowRight' && atEnd) {
+                event.preventDefault();
+                if (columnIndex < lastColumn) {
+                    focusGridCell(input, rowIndex, columnIndex + 1, null);
+                } else {
+                    focusGridCell(input, rowIndex + 1, 0, addRowCallback);
+                }
+            } else if (event.key === 'ArrowLeft' && atStart) {
+                event.preventDefault();
+                if (columnIndex > 0) {
+                    focusGridCell(input, rowIndex, columnIndex - 1, null);
+                } else if (rowIndex > 0) {
+                    var previousInputs = rows[rowIndex - 1].querySelectorAll('input[data-grid-input]');
+                    focusGridCell(input, rowIndex - 1, Math.max(0, previousInputs.length - 1), null);
+                }
+            } else if (event.key === 'Tab' && !event.shiftKey && rowIndex === rows.length - 1 && columnIndex === lastColumn) {
+                event.preventDefault();
+                focusGridCell(input, rowIndex + 1, 0, addRowCallback);
+            }
+        }
+
+        function removeStructuredRow(tableId) {
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tbody || !tbody.children.length) {
+                showToast('当前表格已经没有数据行');
+                return;
+            }
+            tbody.removeChild(tbody.lastElementChild);
+            updateStructuredRowNumbers(tableId);
+        }
+
+        function updateStructuredRowNumbers(tableId) {
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tbody) return;
+            tbody.querySelectorAll('tr').forEach(function(row, rowIndex) {
+                var numberCell = row.querySelector('.row-num');
+                if (numberCell) numberCell.textContent = rowIndex + 1;
+            });
+        }
+
+        function fillStructuredTableExample(tableId) {
+            var tableSchema = getTableSchema(tableId);
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tableSchema || !tbody || !tableSchema.sample || !tableSchema.sample.length) {
+                showToast('本表暂无示例数据');
+                return;
+            }
+            tbody.innerHTML = '';
+            tableSchema.sample.forEach(function(row) { addStructuredRow(tableId, row); });
+            if (!tableSchema.required) enableStructuredTable(tableId);
+            updateStructuredRowNumbers(tableId);
+            var firstInput = tbody.querySelector('input[data-grid-input]');
+            if (firstInput) firstInput.focus();
+            showToast('“' + tableSchema.title + '”示例数据已填入');
+        }
+
+        function calcStructuredTable(tableId, calcTableId) {
+            var tbody = document.getElementById('schema-body-' + tableId);
+            if (!tbody) return;
+            var rows = [];
+            tbody.querySelectorAll('tr').forEach(function(tr) {
+                var row = {}, hasValue = false;
+                tr.querySelectorAll('input[data-column-id]').forEach(function(input) {
+                    var value = input.value.trim();
+                    row[input.dataset.columnId] = value;
+                    if (value !== '') hasValue = true;
+                });
+                if (hasValue) rows.push(row);
+            });
+            if (!rows.length) { showToast('请先输入数据再计算'); return; }
+
+            var card = document.getElementById('schema-table-' + tableId);
+            var escapeHtml = function (text) {
+                return String(text).replace(/[&<>"']/g, function (ch) {
+                    return {'&': '&', '<': '<', '>': '>', '"': '"', "'": '&#39;'}[ch];
+                });
+            };
+            var panel = document.getElementById('calc-result-' + tableId);
+            if (!panel) {
+                panel = document.createElement('div');
+                panel.id = 'calc-result-' + tableId;
+                panel.className = 'calc-result-panel';
+                card.appendChild(panel);
+            }
+            panel.innerHTML = '<div style="color:#667eea;font-size:13px;">正在计算…</div>';
+            panel.style.display = 'block';
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/calc-table', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status !== 200) { panel.innerHTML = '<div style="color:#cf4b48;">计算请求失败</div>'; return; }
+                var res = JSON.parse(xhr.responseText);
+                if (res.code !== 0) { panel.innerHTML = '<div style="color:#cf4b48;">' + escapeHtml(res.message || '计算失败') + '</div>'; return; }
+                var html = '<div style="font-weight:bold;color:#23865f;font-size:14px;border-bottom:1px solid #d6f1e4;padding-bottom:6px;margin-bottom:8px;">计算结果</div>';
+                (res.summary || []).forEach(function(item) {
+                    html += '<div style="margin-top:6px;font-weight:bold;font-size:15px;color:#111;line-height:1.7;">• ' + escapeHtml(item) + '</div>';
+                });
+                (res.warnings || []).forEach(function(item) {
+                    html += '<div style="margin-top:4px;color:#d35400;line-height:1.6;">⚠ ' + escapeHtml(item) + '</div>';
+                });
+                panel.innerHTML = html || '<div>无计算结果</div>';
+            };
+            xhr.onerror = function() { panel.innerHTML = '<div style="color:#cf4b48;">网络错误</div>'; };
+            xhr.send(JSON.stringify({ table_id: calcTableId, tables: (function(){ var t = {}; t[calcTableId] = rows; return t; })() }));
+        }
+
+        function fillStructuredParameterExample() {
+            var sample = experimentSchema && experimentSchema.parameters_sample;
+            if (!sample) return;
+            var filled = 0;
+            Object.keys(sample).forEach(function(parameterId) {
+                var input = document.getElementById('param-' + parameterId);
+                if (!input) return;
+                var item = input.closest('.parameter-item');
+                if (item && item.style.display === 'none') return;
+                input.value = sample[parameterId] == null ? '' : sample[parameterId];
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+                filled += 1;
+            });
+            if (filled) showToast('实验参数示例已填入');
+            else showToast('当前实验内容下暂无参数示例');
+        }
+
+        function clearStructuredTables() {
+            if (!experimentSchema || !(experimentSchema.tables || []).length) return;
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                var tbody = document.getElementById('schema-body-' + tableSchema.id);
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                var count = (!tableSchema.required && !tableSchema.enabled_by_default)
+                    ? 0
+                    : Math.max(1, tableSchema.initial_rows || tableSchema.min_rows || 1);
+                for (var index = 0; index < count; index++) addStructuredRow(tableSchema.id);
+            });
+            showToast('已清空全部数据表格');
+        }
+
+        function conditionMatches(condition) {
+            if (!condition || !condition.parameter) return true;
+            var input = document.getElementById('param-' + condition.parameter);
+            if (!input) return true;
+            var values = condition.in || [condition.equals];
+            return values.indexOf(input.value) >= 0;
+        }
+
+        function updateStructuredVisibility() {
+            document.querySelectorAll('[data-condition]').forEach(function(element) {
+                var condition = {};
+                try { condition = JSON.parse(element.dataset.condition || '{}'); } catch (error) {}
+                element.style.display = conditionMatches(condition) ? '' : 'none';
+            });
+            // 参数卡内所有字段都被条件隐藏时，整卡一起隐藏
+            document.querySelectorAll('.parameter-card, .mode-select-card').forEach(function(card) {
+                var items = card.querySelectorAll('.parameter-item');
+                var anyVisible = Array.prototype.some.call(items, function(item) { return item.style.display !== 'none'; });
+                card.style.display = anyVisible ? '' : 'none';
+            });
+        }
+
+        function buildTable() {
+            if (tableColumns.length === 0) {
+                document.getElementById('loadingTip').innerText = '暂无示例数据，请手动输入';
+                document.getElementById('sampleBtn').disabled = true;
+                return;
+            }
+            document.getElementById('loadingTip').style.display = 'none';
+            document.getElementById('tableWrapper').style.display = '';
+            document.getElementById('submitBtn').style.display = '';
+            document.getElementById('sampleBtn').disabled = false;
+
+            var thead = document.getElementById('tableHead');
+            var headerRow = '<tr><th class="row-num">#</th>';
+            for (var i = 0; i < tableColumns.length; i++) {
+                headerRow += '<th>' + escapeHtml(tableColumns[i]) + '</th>';
+            }
+            headerRow += '</tr>';
+            thead.innerHTML = headerRow;
+
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            for (var r = 0; r < Math.min(initialRowCount, 20); r++) {
+                addRowTo(r + 1);
+            }
+            if (initialRowCount === 0) addRowTo(1);
+        }
+
+        function addRowTo(rowNum) {
+            var tbody = document.getElementById('tableBody');
+            var tr = document.createElement('tr');
+            var td = document.createElement('td');
+            td.className = 'row-num';
+            td.innerText = rowNum || (tbody.children.length + 1);
+            tr.appendChild(td);
+            for (var c = 0; c < tableColumns.length; c++) {
+                var td2 = document.createElement('td');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.gridInput = 'true';
+                input.setAttribute('data-col', c);
+                input.setAttribute('data-row', tbody.children.length);
+                input.addEventListener('keydown', function(event) {
+                    handleGridKeydown(event, function() {
+                        addRowTo(document.getElementById('tableBody').children.length + 1);
+                        updateRowNumbers();
+                    });
+                });
+                td2.appendChild(input);
+                tr.appendChild(td2);
+            }
+            tbody.appendChild(tr);
+        }
+
+        function addRow() {
+            if (!tableColumns.length) {
+                showToast('该实验还没有定义数据列，暂时无法添加输入行');
+                return;
+            }
+            addRowTo(document.getElementById('tableBody').children.length + 1);
+            updateRowNumbers();
+            var lastRow = document.getElementById('tableBody').lastElementChild;
+            if (lastRow) {
+                var firstInput = lastRow.querySelector('input[data-grid-input]');
+                if (firstInput) firstInput.focus();
+                lastRow.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+        }
+
+        function removeRow() {
+            var tbody = document.getElementById('tableBody');
+            if (!tbody.children.length) {
+                showToast('当前表格已经没有数据行');
+                return;
+            }
+            tbody.removeChild(tbody.lastChild);
+            updateRowNumbers();
+        }
+
+        function updateRowNumbers() {
+            var tbody = document.getElementById('tableBody');
+            for (var i = 0; i < tbody.children.length; i++) {
+                tbody.children[i].children[0].innerText = i + 1;
+                var inputs = tbody.children[i].querySelectorAll('input');
+                for (var j = 0; j < inputs.length; j++) inputs[j].setAttribute('data-row', i);
+            }
+        }
+
+        function fillExample() {
+            if (exampleData.length === 0) { showToast('暂无示例数据'); return; }
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            for (var r = 0; r < exampleData.length; r++) {
+                addRowTo(r + 1);
+                var row = tbody.children[r];
+                var inputs = row.querySelectorAll('input');
+                for (var c = 0; c < Math.min(inputs.length, exampleData[r].length); c++) {
+                    inputs[c].value = exampleData[r][c] != null ? exampleData[r][c] : '';
+                }
+            }
+            for (var r = exampleData.length; r < exampleData.length + 3; r++) addRowTo(r + 1);
+            updateRowNumbers();
+            showToast('示例数据已填入');
+        }
+
+        function submitData() {
+            if (structuredMode) {
+                submitStructuredData();
+                return;
+            }
+            var tbody = document.getElementById('tableBody');
+            var rows = tbody.querySelectorAll('tr');
+            var data = [];
+            for (var r = 0; r < rows.length; r++) {
+                var inputs = rows[r].querySelectorAll('input');
+                var row = [];
+                var allEmpty = true;
+                for (var c = 0; c < inputs.length; c++) {
+                    var val = inputs[c].value.trim();
+                    row.push(val);
+                    if (val !== '') allEmpty = false;
+                }
+                if (!allEmpty) data.push(row);
+            }
+            if (data.length === 0) { showToast('请先输入数据'); return; }
+
+            showLoading('正在计算实验数据…');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/handle-table', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.code == 0) {
+                        // 显示结果
+                        var resultArea = document.getElementById('resultArea');
+                        resultArea.style.display = 'block';
+                        document.getElementById('resultContent').innerText = '文档生成成功！\n\n实验名称：{{name}}\n文件ID：' + res.data;
+                        document.getElementById('submitBtn').style.display = 'none';
+                        document.getElementById('downloadbtn').href = '/api/download/{{num}}/' + res.data + '.docx';
+                        document.getElementById('downloadbtn').style.display = 'inline-flex';
+                        document.getElementById('chartBtn').style.display = 'inline-flex';
+                        document.getElementById('abnormalBtn').style.display = 'inline-flex';
+                        document.getElementById('aiReportBtn').style.display = 'inline-flex';
+                        // 保存数据用于AI报告
+                        lastUserData = { columns: tableColumns, data: data };
+                        lastCalcResult = { fileid: res.data, exp_name: res.exp_name };
+                        showToast('计算完成！');
+                        hideLoading();
+                        // 隐藏表格
+                        document.getElementById('tableWrapper').style.display = 'none';
+                    } else {
+                        showToast(res.data || '处理失败');
+                    }
+                } else {
+                    showToast('提交失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({ columns: tableColumns, data: data }));
+        }
+
+        function collectStructuredPayload() {
+            var payload = { schema_version: 2, parameters: {}, tables: {} };
+            (experimentSchema.parameters || []).forEach(function(parameter) {
+                var input = document.getElementById('param-' + parameter.id);
+                if (input) payload.parameters[parameter.id] = input.value.trim();
+            });
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                (tableSchema.parameters || []).forEach(function(parameter) {
+                    var input = document.getElementById('param-' + parameter.id);
+                    if (input) payload.parameters[parameter.id] = input.value.trim();
+                });
+            });
+            (experimentSchema.tables || []).forEach(function(tableSchema) {
+                var card = document.getElementById('schema-table-' + tableSchema.id);
+                if (!card || card.style.display === 'none') return;
+                var enabled = tableSchema.required;
+                if (!enabled) {
+                    var toggle = document.getElementById('enable-table-' + tableSchema.id);
+                    enabled = !!(toggle && toggle.checked);
+                }
+                if (!enabled) return;
+                var rows = [];
+                var tbody = document.getElementById('schema-body-' + tableSchema.id);
+                tbody.querySelectorAll('tr').forEach(function(tr) {
+                    var row = {};
+                    var hasValue = false;
+                    tr.querySelectorAll('input[data-column-id]').forEach(function(input) {
+                        var value = input.value.trim();
+                        row[input.dataset.columnId] = value;
+                        if (value !== '') hasValue = true;
+                    });
+                    if (hasValue) rows.push(row);
+                });
+                payload.tables[tableSchema.id] = rows;
+            });
+            return payload;
+        }
+
+        function submitStructuredData() {
+            var payload = collectStructuredPayload();
+            showLoading('正在按实验指导书处理多组数据…');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/{{num}}/handle-table', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                hideLoading();
+                if (xhr.status !== 200) {
+                    showToast('提交失败');
+                    return;
+                }
+                var res = JSON.parse(xhr.responseText);
+                if (res.code !== 0) {
+                    showToast(res.data || '处理失败', 4500);
+                    return;
+                }
+                var resultArea = document.getElementById('resultArea');
+                resultArea.style.display = 'block';
+                var escapeHtml = function (text) {
+                    return String(text).replace(/[&<>"']/g, function (ch) {
+                        return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[ch];
+                    });
+                };
+                var resultHtml = '<div style="font-weight:bold;color:#2c3e50;font-size:15px;">✅ 文档生成成功！</div>'
+                    + '<div style="margin-top:4px;color:#555;">实验名称：{{name}}　　文件ID：' + escapeHtml(res.data) + '</div>';
+                if (res.summary && res.summary.length) {
+                    resultHtml += '<div style="margin-top:14px;font-weight:bold;color:#667eea;font-size:16px;border-bottom:2px solid #667eea;padding-bottom:6px;">📌 主要计算结果</div>';
+                    res.summary.forEach(function(item) {
+                        resultHtml += '<div style="margin-top:8px;font-weight:bold;font-size:17px;color:#111;line-height:1.7;">• ' + escapeHtml(item) + '</div>';
+                    });
+                }
+                if (res.warnings && res.warnings.length) {
+                    resultHtml += '<div style="margin-top:14px;font-weight:bold;color:#d35400;">数据检查提示：</div>';
+                    res.warnings.forEach(function(item) {
+                        resultHtml += '<div style="margin-top:4px;color:#d35400;line-height:1.6;">⚠ ' + escapeHtml(item) + '</div>';
+                    });
+                }
+                document.getElementById('resultContent').innerHTML = resultHtml;
+                document.getElementById('downloadbtn').href = '/api/download/{{num}}/' + res.data + '.docx';
+                document.getElementById('downloadbtn').style.display = 'inline-flex';
+                document.getElementById('chartBtn').style.display = 'none';
+                document.getElementById('abnormalBtn').style.display = 'inline-flex';
+                if (!window.experimentSchema || window.experimentSchema.report_enabled !== false) {
+                    document.getElementById('aiReportBtn').style.display = 'inline-flex';
+                }
+                lastUserData = payload;
+                lastCalcResult = { fileid: res.data, exp_name: res.exp_name, summary: res.summary || [], warnings: res.warnings || [] };
+                renderStructuredCharts(res.charts || []);
+                resultArea.scrollIntoView({behavior: 'smooth'});
+                showToast('计算完成！');
+            };
+            xhr.onerror = function() { hideLoading(); showToast('网络错误'); };
+            xhr.send(JSON.stringify(payload));
+        }
+
+        function renderStructuredCharts(charts) {
+            var gallery = document.getElementById('chartGallery');
+            gallery.innerHTML = '';
+            document.getElementById('chartImage').style.display = 'none';
+            document.getElementById('chartInfo').style.display = 'none';
+            if (!charts.length) {
+                document.getElementById('chartArea').style.display = 'none';
+                lastChartInfo = null;
+                return;
+            }
+            charts.forEach(function(chart) {
+                var figure = document.createElement('figure');
+                var image = document.createElement('img');
+                image.src = chart.url + '?t=' + Date.now();
+                image.alt = chart.title || '实验图表';
+                figure.appendChild(image);
+                var caption = document.createElement('figcaption');
+                caption.textContent = chart.title || chart.filename;
+                figure.appendChild(caption);
+                gallery.appendChild(figure);
+            });
+            document.getElementById('chartArea').style.display = 'block';
+            lastChartInfo = { charts: charts };
+        }
+
+        function runAbnormalDetect() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            var startTime = Date.now();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/abnormal-detect', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            showLoading('正在进行数据异常检测，请耐心等待（约1-3分钟）…', function() {
+                xhr.abort();
+                showToast('已取消本次检测');
+            });
+            xhr.onabort = function() { hideLoading(); };
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.report) {
+                        lastAbnormalReport = res.report;
+                        // 显示统计预分析
+                        var statsHtml = '';
+                        if (res.stats && Object.keys(res.stats).length > 0) {
+                            statsHtml = '<div class="stats-grid">';
+                            for (var col in res.stats) {
+                                var s = res.stats[col];
+                                var outlierText = (s.outliers_3sigma || []).length > 0
+                                    ? '<span class="outlier">发现 ' + s.outliers_3sigma.length + ' 个离群值</span>'
+                                    : '<span style="color:#52c41a;">无离群值</span>';
+                                var fmtText = '';
+                                var pfCount = (s.parse_fails || []).length;
+                                var umCount = (s.unit_mixed || []).length;
+                                if (pfCount > 0) {
+                                    fmtText = '<div style="color:#d35400;">⚠ ' + pfCount + ' 个单元格疑似格式问题</div>';
+                                } else if (umCount > 0) {
+                                    fmtText = '<div style="color:#d35400;">⚠ ' + umCount + ' 个数值混有单位</div>';
+                                }
+                                statsHtml += '<div class="stat-card">'
+                                    + '<div class="label">' + escapeHtml(col) + '</div>'
+                                    + '<div class="value">均值: ' + s.mean + ' | σ: ' + s.std + '</div>'
+                                    + '<div>' + outlierText + '</div>'
+                                    + fmtText
+                                    + '</div>';
+                            }
+                            statsHtml += '</div>';
+                        }
+                        document.getElementById('statsPreview').innerHTML = statsHtml;
+                        document.getElementById('abnormalReport').innerText = res.report;
+                        renderAnomalyHighlights(res);
+                        document.getElementById('abnormalArea').style.display = 'block';
+                        document.getElementById('abnormalArea').scrollIntoView({behavior: 'smooth'});
+                        var elapsed = Math.round((Date.now() - startTime) / 1000);
+                        var extra = res.cached ? '（命中缓存，秒出）' : '（耗时 ' + elapsed + ' 秒）';
+                        showToast('异常检测完成！' + extra, 3500);
+                        hideLoading();
+                    } else {
+                        showToast(res.error || '检测失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('异常检测请求失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                experiment_name: '{{name}}',
+                mod_name: '{{num}}',
+                columns: lastUserData.columns || [],
+                data: lastUserData.data || [],
+                tables: lastUserData.tables || {},
+                pdf_text: ''
+            }));
+        }
+
+        function clearAnomalyHighlights() {
+            document.querySelectorAll('tr.row-anomaly, td.cell-anomaly').forEach(function(el) {
+                el.classList.remove('row-anomaly', 'cell-anomaly');
+                el.removeAttribute('title');
+            });
+            var summary = document.getElementById('anomalySummary');
+            if (summary) { summary.style.display = 'none'; summary.innerHTML = ''; }
+        }
+
+        // 将后端合并表行号映射回页面上的表格行。
+        // 与后端合并顺序保持一致：legacy 模式按提交的 data 顺序；
+        // 结构化模式按 tables 键顺序逐表累计，跳过全空行。
+        function buildDetectedRowMap() {
+            function isEmptyRow(inputs) {
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i].value.trim() !== '') return false;
+                }
+                return true;
+            }
+            var map = [];
+            if (!structuredMode) {
+                var tbody = document.getElementById('tableBody');
+                if (tbody) tbody.querySelectorAll('tr').forEach(function(tr) {
+                    if (isEmptyRow(tr.querySelectorAll('input'))) return;
+                    map.push({ tr: tr, tableId: null });
+                });
+                return map;
+            }
+            Object.keys(lastUserData.tables || {}).forEach(function(tableId) {
+                var tbody = document.getElementById('schema-body-' + tableId);
+                if (!tbody) return;
+                tbody.querySelectorAll('tr').forEach(function(tr) {
+                    if (isEmptyRow(tr.querySelectorAll('input[data-column-id]'))) return;
+                    map.push({ tr: tr, tableId: tableId });
+                });
+            });
+            return map;
+        }
+
+        function renderAnomalyHighlights(res) {
+            clearAnomalyHighlights();
+            var structured = res.structured;
+            var summaryEl = document.getElementById('anomalySummary');
+            if (!structured) return; // 模型未输出合法 JSON，无法定位到单元格，只展示文本报告
+            var anomalies = structured.anomalies || [];
+            var summary = '📋 综合结论：<strong>' + escapeHtml(structured.conclusion || '（未给出）') + '</strong>';
+            if (anomalies.length === 0) {
+                summaryEl.innerHTML = summary + '，未发现明显异常，表格无需高亮。';
+                summaryEl.style.display = '';
+                return;
+            }
+            var rowMap = buildDetectedRowMap();
+            var counts = { '高': 0, '中': 0, '低': 0 };
+            var missed = 0;
+            anomalies.forEach(function(a) {
+                var sev = a.severity || '中';
+                if (counts[sev] !== undefined) counts[sev]++;
+                var idx = (parseInt(a.row, 10) || 1) - 1;
+                var entry = rowMap[idx];
+                if (!entry) { missed++; return; } // 行号超出表格范围（如模型行号有误）
+                var tr = entry.tr;
+                tr.classList.add('row-anomaly');
+                var tooltip = '[' + (a.dimension || '未分类') + ' · ' + sev + '] ' + (a.issue || '');
+                if (a.suggestion) tooltip += ' 建议：' + a.suggestion;
+                // 定位具体单元格：结构化模式按列id，legacy 模式按列名对应表头顺序
+                var cell = null;
+                if (structuredMode && entry.tableId) {
+                    var input = tr.querySelector('input[data-column-id="' + CSS.escape(a.column || '') + '"]');
+                    cell = input ? input.parentElement : null;
+                } else if (a.column) {
+                    var colIdx = tableColumns.indexOf(a.column);
+                    if (colIdx >= 0 && colIdx + 1 < tr.children.length) cell = tr.children[colIdx + 1];
+                }
+                if (cell) {
+                    cell.classList.add('cell-anomaly');
+                    cell.title = tooltip;
+                } else {
+                    tr.title = tr.title ? tr.title + '\n' + tooltip : tooltip;
+                }
+            });
+            var hint = ' ⚠️ 检测到 <strong>' + anomalies.length + '</strong> 处异常'
+                + '（高:' + counts['高'] + ' / 中:' + counts['中'] + ' / 低:' + counts['低'] + '），'
+                + '已在上方数据表格中标红高亮，鼠标悬停可查看说明。';
+            if (missed > 0) hint += '（其中 ' + missed + ' 处因行号无法对应未高亮，请以报告为准）';
+            summaryEl.innerHTML = summary + hint;
+            summaryEl.style.display = '';
+        }
+
+        function generateChart() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            showLoading('AI 正在分析数据关系并生成图表…');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/generate-chart', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.success && res.chart_url) {
+                        var chartArea = document.getElementById('chartArea');
+                        var chartImg = document.getElementById('chartImage');
+                        var chartInfo = document.getElementById('chartInfo');
+
+                        chartImg.src = res.chart_url + '?t=' + Date.now();
+                        chartImg.style.display = 'block';
+
+                        // 显示拟合信息 + AI 分析理由
+                        var infoHtml = '';
+                        if (res.ai_reason) {
+                            infoHtml += '<div style="background:#e8f5e9; padding:8px 12px; border-radius:4px; margin-bottom:8px; font-size:13px; color:#2e7d32;"><strong>🧠 AI 分析：</strong>' + escapeHtml(res.ai_reason) + '</div>';
+                        }
+                        if (res.fit_result) {
+                            var f = res.fit_result;
+                            infoHtml += '<strong>线性拟合结果：</strong><br>'
+                                + '<span class="fit-eq">' + escapeHtml(f.equation) + '</span><br>'
+                                + '<span class="r2">R² = ' + f.R2 + '</span>';
+                        }
+                        if (infoHtml) {
+                            chartInfo.innerHTML = infoHtml;
+                            chartInfo.style.display = 'block';
+                        } else {
+                            chartInfo.style.display = 'none';
+                        }
+
+                        chartArea.style.display = 'block';
+                        chartArea.scrollIntoView({behavior: 'smooth'});
+
+                        // 存储图表信息用于报告生成
+                        lastChartInfo = {
+                            x_label: res.x_label || '',
+                            y_label: res.y_label || '',
+                            fit_result: res.fit_result || null,
+                            chart_url: res.chart_url,
+                            chart_path: res.chart_config ? res.chart_config.chart_path : null
+                        };
+
+                        showToast('图表生成完成！');
+                        hideLoading();
+                    } else {
+                        showToast(res.error || '图表生成失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('图表生成失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                columns: lastUserData.columns,
+                data: lastUserData.data,
+                experiment_name: '{{name}}',
+                save_name: 'chart_{{num}}.png'
+            }));
+        }
+        
+        function generateAIReport() {
+            if (!lastUserData) { showToast('请先提交数据'); return; }
+            var hasAbnormal = lastAbnormalReport && lastAbnormalReport.trim() !== '';
+            var hasChart = lastChartInfo !== null;
+            var msg = 'AI正在生成报告';
+            if (hasAbnormal && hasChart) msg += '（含异常检测分析+图表）…';
+            else if (hasAbnormal) msg += '（含异常检测分析）…';
+            else if (hasChart) msg += '（含图表）…';
+            else msg += '…';
+            showLoading(msg);
+        
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/generate-report', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.report) {
+                        var reportArea = document.getElementById('reportArea');
+                        reportArea.style.display = 'block';
+                        document.getElementById('reportContent').innerText = res.report;
+                        
+                        // 处理 TEX 下载链接
+                        var texBtn = document.getElementById('texDownloadBtn');
+                        if (res.tex_url) {
+                            texBtn.href = res.tex_url;
+                            texBtn.style.display = 'inline-flex';
+                        }
+
+                        // 处理 PDF 预览与下载（通过 pdf.js 在线预览，避免部分浏览器在 iframe 内强制下载 PDF）
+                        var pdfBtn = document.getElementById('pdfDownloadBtn');
+                        var preview = document.getElementById('reportPreview');
+                        var frame = document.getElementById('reportPdfFrame');
+                        var compileTip = document.getElementById('reportCompileTip');
+                        if (res.pdf_url) {
+                            pdfBtn.href = res.pdf_url + '?download=1';
+                            pdfBtn.style.display = 'inline-flex';
+                            frame.src = '/static/pdf-viewer.html?file=' + encodeURIComponent(res.pdf_url) + '&name=' + encodeURIComponent('{{name}}');
+                            preview.style.display = 'block';
+                            if (compileTip) { compileTip.textContent = ''; compileTip.style.display = 'none'; }
+                        } else {
+                            pdfBtn.style.display = 'none';
+                            frame.removeAttribute('src');
+                            preview.style.display = 'none';
+                            if (compileTip) {
+                                compileTip.textContent = res.pdf_error || '当前电脑未能编译 PDF，可下载 TEX 源码后使用本地 LaTeX 或 Overleaf 编译。';
+                                compileTip.style.display = 'block';
+                            }
+                        }
+
+                        // 处理图表下载链接
+                        var chartBtn = document.getElementById('chartDownloadBtn');
+                        var chartTip = document.getElementById('chartDownloadTip');
+                        if (res.has_chart && res.report_id) {
+                            chartBtn.href = '/api/report-chart/' + res.report_id;
+                            chartBtn.style.display = 'inline-flex';
+                            chartTip.style.display = 'block';
+                        } else {
+                            chartBtn.style.display = 'none';
+                            chartTip.style.display = 'none';
+                        }
+                        
+                        showToast('LaTeX 报告生成完成！');
+                        hideLoading();
+                        reportArea.scrollIntoView({behavior: 'smooth'});
+                    } else {
+                        showToast(res.error || '报告生成失败');
+                        hideLoading();
+                    }
+                } else {
+                    showToast('报告生成失败');
+                    hideLoading();
+                }
+            };
+            xhr.onerror = function() { showToast('网络错误'); hideLoading(); };
+            xhr.send(JSON.stringify({
+                experiment_name: '{{name}}',
+                user_data: lastUserData,
+                calc_results: lastCalcResult,
+                abnormal_report: lastAbnormalReport,
+                chart_info: lastChartInfo
+            }));
+        }
+
+        function copyReport() {
+            var text = document.getElementById('reportContent').innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('已复制到剪贴板');
+            }).catch(function() {
+                showToast('复制失败，请手动选择复制');
+            });
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(text));
+            return div.innerHTML;
+        }
+
+        var _loadingCancelFn = null;
+        function showLoading(msg, cancelFn) {
+            document.getElementById('loadingMsg').innerText = msg || '处理中，请稍候…';
+            document.getElementById('loadingOverlay').classList.add('active');
+            var btn = document.getElementById('loadingCancelBtn');
+            _loadingCancelFn = cancelFn || null;
+            if (btn) {
+                btn.style.display = cancelFn ? '' : 'none';
+                btn.onclick = function() {
+                    var fn = _loadingCancelFn;
+                    hideLoading();
+                    if (fn) fn();
+                };
+            }
+        }
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+            var btn = document.getElementById('loadingCancelBtn');
+            if (btn) btn.style.display = 'none';
+            _loadingCancelFn = null;
+        }
+        function showToast(msg, duration) {
+            var t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(function() { t.style.display = 'none'; }, duration || 2000);
+        }
+    </script>
+    <script src="/static/js/unified-experiment.js?v=7"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-09-05T13:31:39.571920+00:00",
+  "source_report_dir": "/root/107杯/main/evaluation_reports/rag_v1/dev_e2e_hybrid_20260905_02",
+  "source_artifacts": {
+    "predictions.jsonl": "sha256:63f78307923b953922b87bd55fb86da9483e875de6b5bb6be9f28c766271ef08",
+    "raw.jsonl": "sha256:80063a6fc39ccae79867e9e0bd62fd6635e06ffb8083f55ee997533a5a7db620",
+    "auto_report.json": "sha256:a83b0809af56726379e733bfe2d597f5effbaa43a956b2d8a5cc299d0c508f5f"
+  },
+  "split": "dev",
+  "question_count": 56,
+  "citation_contract_version": "2-rescored-legacy",
+  "model_citations": "unavailable_in_historical_artifacts",
+  "rag_calls": 0,
+  "llm_calls": 0,
+  "embedding_calls": 0
+}

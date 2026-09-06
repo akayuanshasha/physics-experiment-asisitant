@@ -1,0 +1,43 @@
+{
+  "version": "1.3",
+  "profiles": {
+    "lexical_retrieval": {
+      "recall_at_1": {"min": 0.93},
+      "recall_at_3": {"min": 0.98},
+      "recall_at_5": {"min": 1.0},
+      "source_metadata_complete_rate_at_5": {"min": 1.0},
+      "expected_source_tier_rate_at_5": {"min": 1.0},
+      "secondary_source_leak_rate_at_5": {"max": 0.0},
+      "example_data_misuse_count": {"max": 0},
+      "prediction_errors": {"max": 0},
+      "latency_ms.p95": {"max": 500.0}
+    },
+    "hybrid_retrieval": {
+      "recall_at_1": {"min": 0.93},
+      "recall_at_3": {"min": 0.98},
+      "recall_at_5": {"min": 1.0},
+      "source_metadata_complete_rate_at_5": {"min": 1.0},
+      "expected_source_tier_rate_at_5": {"min": 1.0},
+      "secondary_source_leak_rate_at_5": {"max": 0.0},
+      "example_data_misuse_count": {"max": 0},
+      "prediction_errors": {"max": 0},
+      "latency_ms.p95": {"max": 500.0},
+      "retrieval_runtime.hybrid_query_rate": {"min": 1.0},
+      "retrieval_runtime.bm25_fallback_rate": {"max": 0.0},
+      "retrieval_runtime.unknown_mode_rate": {"max": 0.0},
+      "retrieval_runtime.dense_nonzero_hit_count": {"min": 1},
+      "retrieval_runtime.document_vector_coverage": {"min": 1.0}
+    },
+    "end_to_end": {
+      "recall_at_5": {"min": 0.98},
+      "source_metadata_complete_rate_at_5": {"min": 1.0},
+      "expected_source_tier_rate_at_5": {"min": 1.0},
+      "secondary_source_leak_rate_at_5": {"max": 0.0},
+      "example_data_misuse_count": {"max": 0},
+      "citation_valid_rate": {"min": 0.95},
+      "boundary_pass_rate": {"min": 0.9},
+      "prediction_errors": {"max": 0},
+      "latency_ms.p95": {"max": 180000.0}
+    }
+  }
+}

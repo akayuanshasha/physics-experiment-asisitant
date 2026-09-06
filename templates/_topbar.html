@@ -1,0 +1,30 @@
+{# 内部页面共享顶栏：实验页可传 experiment_name，其他页面显示品牌。 #}
+{% import '_icons.html' as icons %}
+<header class="site-topbar">
+    <div class="site-topbar__inner">
+        <div class="site-topbar__identity">
+            {% if experiment_name %}
+            <a class="topbar-back" href="/" aria-label="返回实验目录">
+                {{ icons.icon('arrow-left') }}<span>实验目录</span>
+            </a>
+            <span class="topbar-divider" aria-hidden="true"></span>
+            <span class="topbar-experiment" title="{{ experiment_name }}">{{ experiment_name }}</span>
+            {% else %}
+            <a class="topbar-brand" href="/">
+                {{ icons.icon('flask') }}
+                <span>AI 物理实验助教系统</span>
+            </a>
+            {% endif %}
+        </div>
+        <nav class="site-topbar__nav" aria-label="主要功能">
+            <a class="topbar-link{% if active_page == 'experiments' %} is-active{% endif %}"
+               href="/"{% if active_page == 'experiments' %} aria-current="page"{% endif %}>
+                {{ icons.icon('table') }}<span>实验列表</span>
+            </a>
+            <a class="topbar-link{% if active_page == 'assistant' %} is-active{% endif %}"
+               href="/chat"{% if active_page == 'assistant' %} aria-current="page"{% endif %}>
+                {{ icons.icon('message') }}<span>AI助教问答</span>
+            </a>
+        </nav>
+    </div>
+</header>

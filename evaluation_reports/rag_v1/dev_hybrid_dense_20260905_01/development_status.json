@@ -1,0 +1,39 @@
+{
+  "run_id": "dev_hybrid_dense_20260905_01",
+  "scope": "dev_hybrid_retrieval_only",
+  "development_status": "PASS_WITH_WARNING",
+  "checks": {
+    "hybrid_correctness": {
+      "status": "PASS"
+    },
+    "hybrid_query_rate": {
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "bm25_fallback_rate": {
+      "actual": 0.0,
+      "status": "PASS"
+    },
+    "document_vector_coverage": {
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "recall_mrr": {
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 1.0,
+      "status": "PASS"
+    },
+    "latency_ms_p95": {
+      "actual": 1110.86,
+      "configured_maximum": 500.0,
+      "status": "WARNING",
+      "blocking_for_current_development_stage": false,
+      "note": "已知性能问题，不作为当前开发阶段的阻塞条件"
+    }
+  },
+  "original_regression_gate_passed": false,
+  "original_regression_gate_preserved": true,
+  "eligible_for_dev_end_to_end_evaluation": true
+}

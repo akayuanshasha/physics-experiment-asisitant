@@ -1,0 +1,510 @@
+{
+  "summary": {
+    "question_count": 15,
+    "chunk_count": 1011,
+    "experiment_count": 56,
+    "missing_experiment_ids": [],
+    "source_check_count": 16,
+    "source_path_presence_rate": 1.0,
+    "section_presence_rate": 1.0,
+    "anchor_presence_rate": 0.75
+  },
+  "chunks_by_experiment": {
+    "exp0": 5,
+    "exp1": 15,
+    "exp10": 12,
+    "exp11": 22,
+    "exp12": 24,
+    "exp13": 13,
+    "exp14": 6,
+    "exp15": 11,
+    "exp16": 13,
+    "exp17": 10,
+    "exp18_a": 17,
+    "exp18_b": 14,
+    "exp19": 12,
+    "exp2": 15,
+    "exp20": 11,
+    "exp21": 10,
+    "exp22": 14,
+    "exp23": 22,
+    "exp24": 21,
+    "exp25": 35,
+    "exp26": 8,
+    "exp27": 17,
+    "exp28": 10,
+    "exp29": 25,
+    "exp3": 16,
+    "exp30": 10,
+    "exp31": 17,
+    "exp32": 15,
+    "exp33": 10,
+    "exp34": 26,
+    "exp35": 15,
+    "exp36": 19,
+    "exp37": 33,
+    "exp38": 10,
+    "exp39": 11,
+    "exp4": 17,
+    "exp40": 7,
+    "exp41": 14,
+    "exp42": 13,
+    "exp43": 10,
+    "exp44": 9,
+    "exp45": 13,
+    "exp46": 24,
+    "exp47": 16,
+    "exp48": 8,
+    "exp49": 14,
+    "exp5": 14,
+    "exp50": 34,
+    "exp6": 7,
+    "exp7": 19,
+    "exp8": 24,
+    "exp9": 23,
+    "reference:experiment-summary": 1,
+    "reference:一级大雾出入门测_RAG文本-8f167dbd": 47,
+    "reference:二级大雾出入门测11_7_RAG文本-861ac53b": 56,
+    "reference:大雾实验不完全指北_RAG文本-f358d75e": 97
+  },
+  "details": [
+    {
+      "id": "R057",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp16"
+      ],
+      "available_chunk_count": 13,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp16/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "LED的I-U特性曲线、发光中心波长、混合色光强比",
+          "anchor_terms": [
+            "LED的I-U特性曲线",
+            "发光中心波长",
+            "混合色光强比"
+          ],
+          "matched_anchor_terms": [
+            "发光中心波长"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R058",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp17"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp17/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "待研究问题",
+          "section_hit": true,
+          "anchor": "平衡电桥灵敏度、非平衡电桥线性、Pt1000电阻温度系数",
+          "anchor_terms": [
+            "平衡电桥灵敏度",
+            "非平衡电桥线性",
+            "Pt1000电阻温度系数"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "R059",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp18_a"
+      ],
+      "available_chunk_count": 17,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp18_a/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "不写实验报告、计算光栅常数和光的波长",
+          "anchor_terms": [
+            "不写实验报告",
+            "计算光栅常数和光的波长"
+          ],
+          "matched_anchor_terms": [
+            "不写实验报告",
+            "计算光栅常数和光的波长"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R060",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp25"
+      ],
+      "available_chunk_count": 35,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp25/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "至少7个实验、实验记录单、不要求课后报告",
+          "anchor_terms": [
+            "至少7个实验",
+            "实验记录单",
+            "不要求课后报告"
+          ],
+          "matched_anchor_terms": [
+            "至少7个实验",
+            "实验记录单",
+            "不要求课后报告"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R061",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp42"
+      ],
+      "available_chunk_count": 13,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp42/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "时差法测量水中声速、S1、S2、t1、t2",
+          "anchor_terms": [
+            "时差法测量水中声速",
+            "S1",
+            "S2",
+            "t1",
+            "t2"
+          ],
+          "matched_anchor_terms": [
+            "时差法测量水中声速",
+            "S1",
+            "S2",
+            "t1",
+            "t2"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R062",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp43"
+      ],
+      "available_chunk_count": 10,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp43/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "扭摆运动50个周期、圆环的质心恰好在转动轴上",
+          "anchor_terms": [
+            "扭摆运动50个周期",
+            "圆环的质心恰好在转动轴上"
+          ],
+          "matched_anchor_terms": [
+            "扭摆运动50个周期",
+            "圆环的质心恰好在转动轴上"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R063",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp44"
+      ],
+      "available_chunk_count": 9,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp44/实验指导_提取文本.txt",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "10T1、10T2各五次、l和h1各三次、T1约等于T2",
+          "anchor_terms": [
+            "10T1",
+            "10T2各五次",
+            "l和h1各三次",
+            "T1约等于T2"
+          ],
+          "matched_anchor_terms": [
+            "10T1",
+            "10T2各五次"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R064",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp45"
+      ],
+      "available_chunk_count": 13,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp45/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "R=CρAv2、相同风速、相同横截面",
+          "anchor_terms": [
+            "R=CρAv2",
+            "相同风速",
+            "相同横截面"
+          ],
+          "matched_anchor_terms": [
+            "R=CρAv2"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R065",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp48"
+      ],
+      "available_chunk_count": 8,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp48/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "三种电桥的电压-形变特性及灵敏度、不需完整报告",
+          "anchor_terms": [
+            "三种电桥的电压-形变特性及灵敏度",
+            "不需完整报告"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "R066",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp49"
+      ],
+      "available_chunk_count": 14,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp49/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验内容",
+          "section_hit": true,
+          "anchor": "待测电容前需短接放电、12V、24V、不需写报告",
+          "anchor_terms": [
+            "待测电容前需短接放电",
+            "12V",
+            "24V",
+            "不需写报告"
+          ],
+          "matched_anchor_terms": [
+            "待测电容前需短接放电",
+            "12V",
+            "24V"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R067",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp50"
+      ],
+      "available_chunk_count": 34,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp50/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "ln Rt与1/T成线性关系、斜率求B、T为热力学温度",
+          "anchor_terms": [
+            "ln",
+            "Rt与1",
+            "T成线性关系",
+            "斜率求B",
+            "T为热力学温度"
+          ],
+          "matched_anchor_terms": [
+            "ln",
+            "Rt与1",
+            "T成线性关系",
+            "T为热力学温度"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "R068",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp25"
+      ],
+      "available_chunk_count": 35,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp25/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验要求",
+          "section_hit": true,
+          "anchor": "至少7个实验、实验记录单、不要求课后报告",
+          "anchor_terms": [
+            "至少7个实验",
+            "实验记录单",
+            "不要求课后报告"
+          ],
+          "matched_anchor_terms": [
+            "至少7个实验",
+            "实验记录单",
+            "不要求课后报告"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "B007",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp47"
+      ],
+      "available_chunk_count": 16,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp47/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "数据处理",
+          "section_hit": true,
+          "anchor": "接触角测量需要液滴图像",
+          "anchor_terms": [
+            "接触角测量需要液滴图像"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        }
+      ]
+    },
+    {
+      "id": "R069",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "exp6"
+      ],
+      "available_chunk_count": 7,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/experiment/exp6/实验指导_RAG文本.md",
+          "path_exists": true,
+          "section": "实验原理",
+          "section_hit": true,
+          "anchor": "切变模量计算量",
+          "anchor_terms": [
+            "切变模量计算量"
+          ],
+          "matched_anchor_terms": [],
+          "anchor_hit": false
+        },
+        {
+          "relative_path": "b_static/experiment/exp6/切变模量（示例数据）.csv",
+          "path_exists": true,
+          "section": "示例数据",
+          "section_hit": true,
+          "anchor": "钢丝直径、D内、D外、L、m、n0T0、n1T1",
+          "anchor_terms": [
+            "钢丝直径",
+            "D内",
+            "D外",
+            "n0T0",
+            "n1T1"
+          ],
+          "matched_anchor_terms": [
+            "钢丝直径",
+            "D内",
+            "D外",
+            "n0T0",
+            "n1T1"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    },
+    {
+      "id": "D021",
+      "split": "test",
+      "relevant_experiment_ids": [
+        "reference:大雾实验不完全指北_RAG文本-f358d75e"
+      ],
+      "available_chunk_count": 97,
+      "missing_experiment_ids": [],
+      "sources": [
+        {
+          "relative_path": "b_static/实验参考文档/大雾实验不完全指北_RAG文本.md",
+          "path_exists": true,
+          "section": "序",
+          "section_hit": true,
+          "anchor": "第一章、第二章、第三章、不确定度算法",
+          "anchor_terms": [
+            "第一章",
+            "第二章",
+            "第三章",
+            "不确定度算法"
+          ],
+          "matched_anchor_terms": [
+            "第一章",
+            "第二章",
+            "第三章",
+            "不确定度算法"
+          ],
+          "anchor_hit": true
+        }
+      ]
+    }
+  ]
+}

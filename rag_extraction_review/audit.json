@@ -1,0 +1,1684 @@
+{
+  "summary": {
+    "generated_at": "2026-08-31T10:07:09",
+    "experiment_dirs": 52,
+    "pdf_count": 48,
+    "old_txt_count": 51,
+    "extractors_available": [
+      "pypdf2-plain",
+      "pymupdf-fitz",
+      "pdfplumber",
+      "pdftotext-cli"
+    ],
+    "extractors_missing": [],
+    "dirs_without_pdf": [
+      "exp0",
+      "exp30",
+      "exp33",
+      "exp44"
+    ],
+    "dirs_without_any_text": [
+      "exp0"
+    ],
+    "dirs_needing_review": [
+      "exp10",
+      "exp11",
+      "exp12",
+      "exp13",
+      "exp15",
+      "exp16",
+      "exp17",
+      "exp19",
+      "exp2",
+      "exp20",
+      "exp23",
+      "exp24",
+      "exp25",
+      "exp26",
+      "exp27",
+      "exp28",
+      "exp29",
+      "exp3",
+      "exp30",
+      "exp31",
+      "exp32",
+      "exp33",
+      "exp34",
+      "exp35",
+      "exp36",
+      "exp37",
+      "exp38",
+      "exp39",
+      "exp4",
+      "exp40",
+      "exp41",
+      "exp43",
+      "exp44",
+      "exp45",
+      "exp46",
+      "exp48",
+      "exp5",
+      "exp50",
+      "exp6",
+      "exp7",
+      "exp8",
+      "exp9"
+    ]
+  },
+  "experiments": [
+    {
+      "experiment": "exp0",
+      "pdf_files": [],
+      "pdf_pages": null,
+      "old_txt": false,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": null,
+      "old_txt_other": null,
+      "old_txt_replace": null,
+      "old_txt_chars": null,
+      "old_txt_single_char_line_ratio": null,
+      "old_txt_sections": null,
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": [
+        "无 PDF/docx/旧文本（仅示例数据）"
+      ]
+    },
+    {
+      "experiment": "exp1",
+      "pdf_files": [
+        "单摆法测重力加速度B（实验指导）.pdf"
+      ],
+      "pdf_pages": 9,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4703,
+      "old_txt_single_char_line_ratio": 0.4106,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp10",
+      "pdf_files": [
+        "磁力摆B（实验指导）.pdf"
+      ],
+      "pdf_pages": 20,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 1,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 2168,
+      "old_txt_single_char_line_ratio": 0.0544,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验原理",
+        "实验目的",
+        "思考题",
+        "注意事项",
+        "能力培养"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [
+        2
+      ],
+      "empty_pages": [
+        1,
+        20
+      ],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": [
+        "文本过少页: [1, 20]",
+        "疑似目录页: [2]"
+      ]
+    },
+    {
+      "experiment": "exp11",
+      "pdf_files": [
+        "半导体温度计B（实验指导）.pdf"
+      ],
+      "pdf_pages": 16,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 21,
+      "old_txt_other": 16,
+      "old_txt_replace": 0,
+      "old_txt_chars": 9397,
+      "old_txt_single_char_line_ratio": 0.378,
+      "old_txt_sections": [
+        "参考资料",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "大学物理基础实验",
+          16
+        ],
+        [
+          "物理实验教学中心",
+          16
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp12",
+      "pdf_files": [
+        "示波器的使用B(实验指导).pdf"
+      ],
+      "pdf_pages": 17,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 1,
+      "old_txt_other": 81,
+      "old_txt_replace": 0,
+      "old_txt_chars": 8287,
+      "old_txt_single_char_line_ratio": 0.3962,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "大学物理基础实验",
+          17
+        ],
+        [
+          "物理实验教学中心",
+          17
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp13",
+      "pdf_files": [
+        "整流滤波B（实验指导）.pdf"
+      ],
+      "pdf_pages": 6,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 57,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3465,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp14",
+      "pdf_files": [
+        "直流电源特性B（实验指导）.pdf"
+      ],
+      "pdf_pages": 3,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 1265,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp15",
+      "pdf_files": [
+        "硅光电池B（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 50,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3746,
+      "old_txt_single_char_line_ratio": 0.0251,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp16",
+      "pdf_files": [
+        "配色实验B（实验指导）.pdf"
+      ],
+      "pdf_pages": 7,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 5,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 2904,
+      "old_txt_single_char_line_ratio": 0.0315,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp17",
+      "pdf_files": [
+        "数字体温计B（实验指导）.pdf"
+      ],
+      "pdf_pages": 18,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 8,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 2099,
+      "old_txt_single_char_line_ratio": 0.0148,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验原理",
+        "实验目的",
+        "思考题",
+        "注意事项",
+        "能力培养"
+      ],
+      "suspected_headers_footers": [
+        [
+          "科学素养",
+          7
+        ]
+      ],
+      "suspected_toc_pages": [
+        2
+      ],
+      "empty_pages": [
+        1,
+        18
+      ],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": [
+        "文本过少页: [1, 18]",
+        "疑似目录页: [2]"
+      ]
+    },
+    {
+      "experiment": "exp18_a",
+      "pdf_files": [
+        "分光计的调节和使用B（实验指导）.pdf"
+      ],
+      "pdf_pages": 12,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 7049,
+      "old_txt_single_char_line_ratio": 0.4266,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp18_b",
+      "pdf_files": [
+        "用分光计测三棱镜折射率B（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4193,
+      "old_txt_single_char_line_ratio": 0.5271,
+      "old_txt_sections": [
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp19",
+      "pdf_files": [
+        "干涉法测微小量（测头发丝直径）（实验指导）.pdf"
+      ],
+      "pdf_pages": 6,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 39,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3610,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp2",
+      "pdf_files": [
+        "表面张力B（实验指导）.pdf"
+      ],
+      "pdf_pages": 12,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 59,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5552,
+      "old_txt_single_char_line_ratio": 0.0136,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "液体表面张力系数测定",
+          12
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp20",
+      "pdf_files": [
+        "透镜参数测量（实验指导）.pdf"
+      ],
+      "pdf_pages": 9,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 13,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4675,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验要求",
+        "思考题",
+        "数据记录",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp21",
+      "pdf_files": [
+        "显微镜B（实验指导）.pdf"
+      ],
+      "pdf_pages": 17,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5050,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp22",
+      "pdf_files": [
+        "衍射实验B（实验指导）.pdf"
+      ],
+      "pdf_pages": 7,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4041,
+      "old_txt_single_char_line_ratio": 0.0054,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp23",
+      "pdf_files": [
+        "光电效应B（实验指导）.pdf"
+      ],
+      "pdf_pages": 10,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 28,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 9159,
+      "old_txt_single_char_line_ratio": 0.0085,
+      "old_txt_sections": [
+        "实验原理",
+        "实验目的",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp24",
+      "pdf_files": [
+        "密立根油滴实验B（实验指导）.pdf"
+      ],
+      "pdf_pages": 10,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 164,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 7266,
+      "old_txt_single_char_line_ratio": 0.0508,
+      "old_txt_sections": [
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "数据处理",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp25",
+      "pdf_files": [
+        "生活中的物理实验B（实验指导）.pdf"
+      ],
+      "pdf_pages": 44,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 1,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 20222,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验原理"
+      ],
+      "suspected_headers_footers": [
+        [
+          "实验讲义 -生活中的物理实验",
+          44
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp26",
+      "pdf_files": [
+        "磁阻效应（实验指导）.pdf"
+      ],
+      "pdf_pages": 3,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 5,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 2058,
+      "old_txt_single_char_line_ratio": 0.0674,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验要求"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp27",
+      "pdf_files": [
+        "非平衡电桥（实验指导）.pdf"
+      ],
+      "pdf_pages": 10,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 5,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 6471,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "实验讲义",
+          10
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp28",
+      "pdf_files": [
+        "霍尔效应（实验指导）.pdf"
+      ],
+      "pdf_pages": 5,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 6,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3078,
+      "old_txt_single_char_line_ratio": 0.0081,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp29",
+      "pdf_files": [
+        "交流谐振电路（实验指导）.pdf"
+      ],
+      "pdf_pages": 15,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 242,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 8788,
+      "old_txt_single_char_line_ratio": 0.0398,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [
+        [
+          "实验讲义",
+          15
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp3",
+      "pdf_files": [
+        "粘滞系数B（实验指导）.pdf"
+      ],
+      "pdf_pages": 12,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 184,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5782,
+      "old_txt_single_char_line_ratio": 0.0407,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "液体粘度的测定",
+          12
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp30",
+      "pdf_files": [],
+      "pdf_pages": null,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [
+        "介电常数（实验指导）.docx"
+      ],
+      "old_txt_pua": 1,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3401,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": [
+        "源文件为 docx，无 PDF，沿用旧提取文本"
+      ]
+    },
+    {
+      "experiment": "exp31",
+      "pdf_files": [
+        "数字表改装（实验指导）.pdf"
+      ],
+      "pdf_pages": 13,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 40,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 7066,
+      "old_txt_single_char_line_ratio": 0.0158,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "数字电表组装设计性实验",
+          13
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp32",
+      "pdf_files": [
+        "双臂电桥（实验指导）.pdf"
+      ],
+      "pdf_pages": 10,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 2,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4324,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "双臂电桥测量低电阻",
+          10
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp33",
+      "pdf_files": [],
+      "pdf_pages": null,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [
+        "对切透镜的光学实验（实验指导）.docx"
+      ],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 4832,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": [
+        "源文件为 docx，无 PDF，沿用旧提取文本"
+      ]
+    },
+    {
+      "experiment": "exp34",
+      "pdf_files": [
+        "光纤传感器（实验指导）.pdf"
+      ],
+      "pdf_pages": 19,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 218,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 13687,
+      "old_txt_single_char_line_ratio": 0.0151,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验原理",
+        "实验要求",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp35",
+      "pdf_files": [
+        "迈氏干涉仪（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 218,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5731,
+      "old_txt_single_char_line_ratio": 0.6268,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "中国科学技术大学",
+          7
+        ],
+        [
+          "物理实验教学中心",
+          7
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp36",
+      "pdf_files": [
+        "偏振光（实验指导）.pdf"
+      ],
+      "pdf_pages": 12,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 67,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5861,
+      "old_txt_single_char_line_ratio": 0.4017,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验要求",
+        "思考题",
+        "数据处理",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "中国科学技术大学",
+          11
+        ],
+        [
+          "物理实验教学中心",
+          11
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp37",
+      "pdf_files": [
+        "摄谱_单色仪（实验指导）.pdf"
+      ],
+      "pdf_pages": 28,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 119,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 15162,
+      "old_txt_single_char_line_ratio": 0.0268,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp38",
+      "pdf_files": [
+        "双光栅实验（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 53,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3872,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验内容",
+        "实验要求"
+      ],
+      "suspected_headers_footers": [
+        [
+          "光栅衍射和双光栅 Lau效应实验",
+          8
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp39",
+      "pdf_files": [
+        "F-H实验（实验指导）.pdf"
+      ],
+      "pdf_pages": 9,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 15,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3719,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp4",
+      "pdf_files": [
+        "密度的测量B（实验指导）.pdf"
+      ],
+      "pdf_pages": 11,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 61,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5865,
+      "old_txt_single_char_line_ratio": 0.029,
+      "old_txt_sections": [
+        "参考资料",
+        "实验原理",
+        "实验装置"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp40",
+      "pdf_files": [
+        "测量金属丝的杨氏模量及泊松比（实验指导）.pdf"
+      ],
+      "pdf_pages": 7,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 24,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 2857,
+      "old_txt_single_char_line_ratio": 0.0171,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp41",
+      "pdf_files": [
+        "超声光栅（实验指导）.pdf"
+      ],
+      "pdf_pages": 13,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 6,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 8200,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [
+        [
+          "物理实验教学中心  大学物理综合实验",
+          13
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp42",
+      "pdf_files": [
+        "超声定位与形貌成像（实验指导）.pdf"
+      ],
+      "pdf_pages": 16,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 6,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 8195,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [
+        [
+          "物理实验教学中心  大学物理综合实验",
+          16
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp43",
+      "pdf_files": [
+        "刚体转动惯量（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 55,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3377,
+      "old_txt_single_char_line_ratio": 0.0226,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验目的",
+        "实验要求"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp44",
+      "pdf_files": [],
+      "pdf_pages": null,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [
+        "凯特摆（实验指导）.docx"
+      ],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3281,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": [
+        "源文件为 docx，无 PDF，沿用旧提取文本"
+      ]
+    },
+    {
+      "experiment": "exp45",
+      "pdf_files": [
+        "空气阻尼测定实验（实验指导）.pdf"
+      ],
+      "pdf_pages": 16,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 20,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 7022,
+      "old_txt_single_char_line_ratio": 0.0154,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验原理",
+        "实验目的",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [
+        [
+          "物理实验教学中心  大学物理综合实验",
+          16
+        ]
+      ],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp46",
+      "pdf_files": [
+        "导热系数（实验指导）.pdf"
+      ],
+      "pdf_pages": 19,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 140,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 10295,
+      "old_txt_single_char_line_ratio": 0.0019,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp47",
+      "pdf_files": [
+        "接触角仪（实验指导）.pdf"
+      ],
+      "pdf_pages": 16,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 6808,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp48",
+      "pdf_files": [
+        "传感器（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 47,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3319,
+      "old_txt_single_char_line_ratio": 0.015,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验原理",
+        "实验报告",
+        "实验目的",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp49",
+      "pdf_files": [
+        "电子小制作（实验指导）.pdf"
+      ],
+      "pdf_pages": 12,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 0,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 5611,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": false,
+      "notes": []
+    },
+    {
+      "experiment": "exp5",
+      "pdf_files": [
+        "杨氏模量B（实验指导）.pdf"
+      ],
+      "pdf_pages": 8,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 51,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 3912,
+      "old_txt_single_char_line_ratio": 0.0,
+      "old_txt_sections": [
+        "参考资料",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp50",
+      "pdf_files": [
+        "医学物理实验（实验指导）.pdf"
+      ],
+      "pdf_pages": 22,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 2,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 14269,
+      "old_txt_single_char_line_ratio": 0.0038,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "思考题",
+        "数据处理"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp6",
+      "pdf_files": [
+        "切变模量（实验指导）.pdf"
+      ],
+      "pdf_pages": 4,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 58,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 1621,
+      "old_txt_single_char_line_ratio": 0.0294,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp7",
+      "pdf_files": [
+        "固体比热（实验指导）.pdf"
+      ],
+      "pdf_pages": 11,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 104,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 6176,
+      "old_txt_single_char_line_ratio": 0.0088,
+      "old_txt_sections": [
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [
+        11
+      ],
+      "scanned_suspect": true,
+      "needs_manual_review": true,
+      "notes": [
+        "文本过少页: [11]"
+      ]
+    },
+    {
+      "experiment": "exp8",
+      "pdf_files": [
+        "匀加速运动B（实验指导）.pdf"
+      ],
+      "pdf_pages": 13,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 31,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 7681,
+      "old_txt_single_char_line_ratio": 0.0163,
+      "old_txt_sections": [
+        "实验内容",
+        "实验原理",
+        "实验要求",
+        "思考题"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    },
+    {
+      "experiment": "exp9",
+      "pdf_files": [
+        "声速测量B（实验指导）.pdf"
+      ],
+      "pdf_pages": 17,
+      "old_txt": true,
+      "rag_md": false,
+      "docx_files": [],
+      "old_txt_pua": 92,
+      "old_txt_other": 0,
+      "old_txt_replace": 0,
+      "old_txt_chars": 9776,
+      "old_txt_single_char_line_ratio": 0.0051,
+      "old_txt_sections": [
+        "参考资料",
+        "实验仪器",
+        "实验内容",
+        "实验原理",
+        "实验目的",
+        "实验装置",
+        "实验要求",
+        "思考题",
+        "注意事项"
+      ],
+      "suspected_headers_footers": [],
+      "suspected_toc_pages": [],
+      "empty_pages": [],
+      "scanned_suspect": false,
+      "needs_manual_review": true,
+      "notes": []
+    }
+  ]
+}

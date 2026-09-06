@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-09-05T14:00:24.099079+00:00",
+  "policy": "boundary-v2-qualified-post-refusal-supplement",
+  "baseline_predictions": {
+    "path": "/root/107杯/main/evaluation_reports/rag_v1/dev_e2e_hybrid_20260905_02_rescore_v3/predictions.jsonl",
+    "sha256": "cdb302f3eafa8c1a3c5f9a344a1ac5cfcce3c49dc0b4d5f5aa8ab162db6c27e3",
+    "question_count_used": 55
+  },
+  "d006_prediction": {
+    "path": "/root/107杯/main/evaluation_reports/rag_v1/grounding_prompt_smoke_20260905/predictions.jsonl",
+    "sha256": "7e2b75770a2f6704c509a5b804bd6eface2a839b7ba47f83b48c0c0a5b5a8b7f",
+    "question_count_used": 1
+  },
+  "rag_calls": 0,
+  "llm_calls": 0,
+  "embedding_calls": 0
+}

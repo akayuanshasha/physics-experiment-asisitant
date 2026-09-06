@@ -1,0 +1,343 @@
+{
+  "published_at": "2026-09-04T18:33:42",
+  "backup_created": false,
+  "documents": 48,
+  "records": [
+    {
+      "experiment": "exp1",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp1\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp1\\实验指导_RAG文本.md",
+      "body_chars": 5225,
+      "page_markers": 9
+    },
+    {
+      "experiment": "exp10",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp10\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp10\\实验指导_RAG文本.md",
+      "body_chars": 2304,
+      "page_markers": 20
+    },
+    {
+      "experiment": "exp11",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp11\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp11\\实验指导_RAG文本.md",
+      "body_chars": 11664,
+      "page_markers": 16
+    },
+    {
+      "experiment": "exp12",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp12\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp12\\实验指导_RAG文本.md",
+      "body_chars": 9528,
+      "page_markers": 17
+    },
+    {
+      "experiment": "exp13",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp13\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp13\\实验指导_RAG文本.md",
+      "body_chars": 4381,
+      "page_markers": 6
+    },
+    {
+      "experiment": "exp14",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp14\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp14\\实验指导_RAG文本.md",
+      "body_chars": 1269,
+      "page_markers": 3
+    },
+    {
+      "experiment": "exp15",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp15\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp15\\实验指导_RAG文本.md",
+      "body_chars": 4482,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp16",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp16\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp16\\实验指导_RAG文本.md",
+      "body_chars": 3195,
+      "page_markers": 7
+    },
+    {
+      "experiment": "exp17",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp17\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp17\\实验指导_RAG文本.md",
+      "body_chars": 2401,
+      "page_markers": 18
+    },
+    {
+      "experiment": "exp18_a",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp18_a\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp18_a\\实验指导_RAG文本.md",
+      "body_chars": 7569,
+      "page_markers": 12
+    },
+    {
+      "experiment": "exp18_b",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp18_b\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp18_b\\实验指导_RAG文本.md",
+      "body_chars": 4738,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp19",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp19\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp19\\实验指导_RAG文本.md",
+      "body_chars": 4366,
+      "page_markers": 6
+    },
+    {
+      "experiment": "exp2",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp2\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp2\\实验指导_RAG文本.md",
+      "body_chars": 6179,
+      "page_markers": 12
+    },
+    {
+      "experiment": "exp20",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp20\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp20\\实验指导_RAG文本.md",
+      "body_chars": 5154,
+      "page_markers": 9
+    },
+    {
+      "experiment": "exp21",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp21\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp21\\实验指导_RAG文本.md",
+      "body_chars": 5590,
+      "page_markers": 17
+    },
+    {
+      "experiment": "exp22",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp22\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp22\\实验指导_RAG文本.md",
+      "body_chars": 4569,
+      "page_markers": 7
+    },
+    {
+      "experiment": "exp23",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp23\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp23\\实验指导_RAG文本.md",
+      "body_chars": 10940,
+      "page_markers": 10
+    },
+    {
+      "experiment": "exp24",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp24\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp24\\实验指导_RAG文本.md",
+      "body_chars": 9966,
+      "page_markers": 10
+    },
+    {
+      "experiment": "exp25",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp25\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp25\\实验指导_RAG文本.md",
+      "body_chars": 21102,
+      "page_markers": 44
+    },
+    {
+      "experiment": "exp26",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp26\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp26\\实验指导_RAG文本.md",
+      "body_chars": 2149,
+      "page_markers": 3
+    },
+    {
+      "experiment": "exp27",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp27\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp27\\实验指导_RAG文本.md",
+      "body_chars": 7631,
+      "page_markers": 10
+    },
+    {
+      "experiment": "exp28",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp28\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp28\\实验指导_RAG文本.md",
+      "body_chars": 3302,
+      "page_markers": 5
+    },
+    {
+      "experiment": "exp29",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp29\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp29\\实验指导_RAG文本.md",
+      "body_chars": 12483,
+      "page_markers": 15
+    },
+    {
+      "experiment": "exp3",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp3\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp3\\实验指导_RAG文本.md",
+      "body_chars": 7879,
+      "page_markers": 12
+    },
+    {
+      "experiment": "exp31",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp31\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp31\\实验指导_RAG文本.md",
+      "body_chars": 8291,
+      "page_markers": 13
+    },
+    {
+      "experiment": "exp32",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp32\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp32\\实验指导_RAG文本.md",
+      "body_chars": 4705,
+      "page_markers": 10
+    },
+    {
+      "experiment": "exp34",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp34\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp34\\实验指导_RAG文本.md",
+      "body_chars": 16177,
+      "page_markers": 19
+    },
+    {
+      "experiment": "exp35",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp35\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp35\\实验指导_RAG文本.md",
+      "body_chars": 7159,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp36",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp36\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp36\\实验指导_RAG文本.md",
+      "body_chars": 6406,
+      "page_markers": 12
+    },
+    {
+      "experiment": "exp37",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp37\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp37\\实验指导_RAG文本.md",
+      "body_chars": 17476,
+      "page_markers": 28
+    },
+    {
+      "experiment": "exp38",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp38\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp38\\实验指导_RAG文本.md",
+      "body_chars": 4429,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp39",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp39\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp39\\实验指导_RAG文本.md",
+      "body_chars": 4139,
+      "page_markers": 9
+    },
+    {
+      "experiment": "exp4",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp4\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp4\\实验指导_RAG文本.md",
+      "body_chars": 7315,
+      "page_markers": 11
+    },
+    {
+      "experiment": "exp40",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp40\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp40\\实验指导_RAG文本.md",
+      "body_chars": 3245,
+      "page_markers": 7
+    },
+    {
+      "experiment": "exp41",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp41\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp41\\实验指导_RAG文本.md",
+      "body_chars": 8848,
+      "page_markers": 13
+    },
+    {
+      "experiment": "exp42",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp42\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp42\\实验指导_RAG文本.md",
+      "body_chars": 7863,
+      "page_markers": 16
+    },
+    {
+      "experiment": "exp43",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp43\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp43\\实验指导_RAG文本.md",
+      "body_chars": 4380,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp45",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp45\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp45\\实验指导_RAG文本.md",
+      "body_chars": 8055,
+      "page_markers": 16
+    },
+    {
+      "experiment": "exp46",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp46\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp46\\实验指导_RAG文本.md",
+      "body_chars": 12440,
+      "page_markers": 19
+    },
+    {
+      "experiment": "exp47",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp47\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp47\\实验指导_RAG文本.md",
+      "body_chars": 7520,
+      "page_markers": 16
+    },
+    {
+      "experiment": "exp48",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp48\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp48\\实验指导_RAG文本.md",
+      "body_chars": 4038,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp49",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp49\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp49\\实验指导_RAG文本.md",
+      "body_chars": 6298,
+      "page_markers": 12
+    },
+    {
+      "experiment": "exp5",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp5\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp5\\实验指导_RAG文本.md",
+      "body_chars": 4518,
+      "page_markers": 8
+    },
+    {
+      "experiment": "exp50",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp50\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp50\\实验指导_RAG文本.md",
+      "body_chars": 15568,
+      "page_markers": 22
+    },
+    {
+      "experiment": "exp6",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp6\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp6\\实验指导_RAG文本.md",
+      "body_chars": 2444,
+      "page_markers": 4
+    },
+    {
+      "experiment": "exp7",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp7\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp7\\实验指导_RAG文本.md",
+      "body_chars": 7022,
+      "page_markers": 11
+    },
+    {
+      "experiment": "exp8",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp8\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp8\\实验指导_RAG文本.md",
+      "body_chars": 10146,
+      "page_markers": 13
+    },
+    {
+      "experiment": "exp9",
+      "source": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp9\\实验指导_RAG文本.md",
+      "destination": "D:\\107杯\\final0902\\main\\b_static\\experiment\\exp9\\实验指导_RAG文本.md",
+      "body_chars": 11761,
+      "page_markers": 17
+    }
+  ]
+}

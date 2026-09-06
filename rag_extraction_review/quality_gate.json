@@ -1,0 +1,968 @@
+{
+  "generated_at": "2026-09-04T18:33:42",
+  "documents": 48,
+  "passed": 48,
+  "failed": 0,
+  "results": [
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp1\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 5225,
+        "page_markers": 9,
+        "first_page": 1,
+        "last_page": 9,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 11,
+        "scan_markers": 0
+      },
+      "experiment": "exp1"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp10\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 2304,
+        "page_markers": 20,
+        "first_page": 1,
+        "last_page": 20,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 2,
+        "scan_markers": 0
+      },
+      "experiment": "exp10"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp11\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 11664,
+        "page_markers": 16,
+        "first_page": 1,
+        "last_page": 16,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 32,
+        "scan_markers": 0
+      },
+      "experiment": "exp11"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp12\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 9528,
+        "page_markers": 17,
+        "first_page": 1,
+        "last_page": 17,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 2,
+        "formula_lines": 30,
+        "scan_markers": 0
+      },
+      "experiment": "exp12"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp13\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4381,
+        "page_markers": 6,
+        "first_page": 1,
+        "last_page": 6,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 26,
+        "scan_markers": 0
+      },
+      "experiment": "exp13"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp14\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 1269,
+        "page_markers": 3,
+        "first_page": 1,
+        "last_page": 3,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 1,
+        "scan_markers": 0
+      },
+      "experiment": "exp14"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp15\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4482,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 13,
+        "scan_markers": 0
+      },
+      "experiment": "exp15"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp16\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 3195,
+        "page_markers": 7,
+        "first_page": 1,
+        "last_page": 7,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 14,
+        "scan_markers": 0
+      },
+      "experiment": "exp16"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp17\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 2401,
+        "page_markers": 18,
+        "first_page": 1,
+        "last_page": 18,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 9,
+        "scan_markers": 0
+      },
+      "experiment": "exp17"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp18_a\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7569,
+        "page_markers": 12,
+        "first_page": 1,
+        "last_page": 12,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 7,
+        "scan_markers": 0
+      },
+      "experiment": "exp18_a"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp18_b\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4738,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 13,
+        "scan_markers": 0
+      },
+      "experiment": "exp18_b"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp19\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4366,
+        "page_markers": 6,
+        "first_page": 1,
+        "last_page": 6,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 16,
+        "scan_markers": 0
+      },
+      "experiment": "exp19"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp2\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 6179,
+        "page_markers": 12,
+        "first_page": 1,
+        "last_page": 12,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 15,
+        "scan_markers": 0
+      },
+      "experiment": "exp2"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp20\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 5154,
+        "page_markers": 9,
+        "first_page": 1,
+        "last_page": 9,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 5,
+        "scan_markers": 0
+      },
+      "experiment": "exp20"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp21\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 5590,
+        "page_markers": 17,
+        "first_page": 1,
+        "last_page": 17,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 2,
+        "scan_markers": 0
+      },
+      "experiment": "exp21"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp22\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4569,
+        "page_markers": 7,
+        "first_page": 1,
+        "last_page": 7,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 35,
+        "scan_markers": 0
+      },
+      "experiment": "exp22"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp23\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 10940,
+        "page_markers": 10,
+        "first_page": 1,
+        "last_page": 10,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 1,
+        "formula_lines": 26,
+        "scan_markers": 0
+      },
+      "experiment": "exp23"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp24\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 9966,
+        "page_markers": 10,
+        "first_page": 1,
+        "last_page": 10,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 47,
+        "scan_markers": 0
+      },
+      "experiment": "exp24"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp25\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 21102,
+        "page_markers": 44,
+        "first_page": 1,
+        "last_page": 44,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 19,
+        "scan_markers": 0
+      },
+      "experiment": "exp25"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp26\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 2149,
+        "page_markers": 3,
+        "first_page": 1,
+        "last_page": 3,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 2,
+        "scan_markers": 0
+      },
+      "experiment": "exp26"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp27\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7631,
+        "page_markers": 10,
+        "first_page": 1,
+        "last_page": 10,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 7,
+        "formula_lines": 47,
+        "scan_markers": 0
+      },
+      "experiment": "exp27"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp28\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 3302,
+        "page_markers": 5,
+        "first_page": 1,
+        "last_page": 5,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 17,
+        "scan_markers": 0
+      },
+      "experiment": "exp28"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp29\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 12483,
+        "page_markers": 15,
+        "first_page": 1,
+        "last_page": 15,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 3,
+        "formula_lines": 127,
+        "scan_markers": 0
+      },
+      "experiment": "exp29"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp3\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7879,
+        "page_markers": 12,
+        "first_page": 1,
+        "last_page": 12,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 27,
+        "scan_markers": 0
+      },
+      "experiment": "exp3"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp31\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 8291,
+        "page_markers": 13,
+        "first_page": 1,
+        "last_page": 13,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 1,
+        "formula_lines": 29,
+        "scan_markers": 0
+      },
+      "experiment": "exp31"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp32\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4705,
+        "page_markers": 10,
+        "first_page": 1,
+        "last_page": 10,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 14,
+        "scan_markers": 0
+      },
+      "experiment": "exp32"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp34\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 16177,
+        "page_markers": 19,
+        "first_page": 1,
+        "last_page": 19,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 66,
+        "scan_markers": 0
+      },
+      "experiment": "exp34"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp35\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7159,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 36,
+        "scan_markers": 0
+      },
+      "experiment": "exp35"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp36\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 6406,
+        "page_markers": 12,
+        "first_page": 1,
+        "last_page": 12,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 11,
+        "scan_markers": 0
+      },
+      "experiment": "exp36"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp37\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 17476,
+        "page_markers": 28,
+        "first_page": 1,
+        "last_page": 28,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 39,
+        "scan_markers": 0
+      },
+      "experiment": "exp37"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp38\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4429,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 15,
+        "scan_markers": 0
+      },
+      "experiment": "exp38"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp39\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4139,
+        "page_markers": 9,
+        "first_page": 1,
+        "last_page": 9,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 2,
+        "scan_markers": 0
+      },
+      "experiment": "exp39"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp4\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7315,
+        "page_markers": 11,
+        "first_page": 1,
+        "last_page": 11,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 22,
+        "scan_markers": 0
+      },
+      "experiment": "exp4"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp40\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 3245,
+        "page_markers": 7,
+        "first_page": 1,
+        "last_page": 7,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 1,
+        "formula_lines": 8,
+        "scan_markers": 0
+      },
+      "experiment": "exp40"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp41\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 8848,
+        "page_markers": 13,
+        "first_page": 1,
+        "last_page": 13,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 37,
+        "scan_markers": 0
+      },
+      "experiment": "exp41"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp42\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7863,
+        "page_markers": 16,
+        "first_page": 1,
+        "last_page": 16,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 1,
+        "formula_lines": 10,
+        "scan_markers": 0
+      },
+      "experiment": "exp42"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp43\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4380,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 23,
+        "scan_markers": 0
+      },
+      "experiment": "exp43"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp45\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 8055,
+        "page_markers": 16,
+        "first_page": 1,
+        "last_page": 16,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 25,
+        "scan_markers": 0
+      },
+      "experiment": "exp45"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp46\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 12440,
+        "page_markers": 19,
+        "first_page": 1,
+        "last_page": 19,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 2,
+        "formula_lines": 47,
+        "scan_markers": 0
+      },
+      "experiment": "exp46"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp47\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7520,
+        "page_markers": 16,
+        "first_page": 1,
+        "last_page": 16,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 6,
+        "scan_markers": 0
+      },
+      "experiment": "exp47"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp48\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4038,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 25,
+        "scan_markers": 0
+      },
+      "experiment": "exp48"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp49\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 6298,
+        "page_markers": 12,
+        "first_page": 1,
+        "last_page": 12,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 3,
+        "scan_markers": 0
+      },
+      "experiment": "exp49"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp5\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 4518,
+        "page_markers": 8,
+        "first_page": 1,
+        "last_page": 8,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 14,
+        "scan_markers": 0
+      },
+      "experiment": "exp5"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp50\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 15568,
+        "page_markers": 22,
+        "first_page": 1,
+        "last_page": 22,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 22,
+        "scan_markers": 0
+      },
+      "experiment": "exp50"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp6\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 2444,
+        "page_markers": 4,
+        "first_page": 1,
+        "last_page": 4,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 24,
+        "scan_markers": 0
+      },
+      "experiment": "exp6"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp7\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 7022,
+        "page_markers": 11,
+        "first_page": 1,
+        "last_page": 11,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 15,
+        "scan_markers": 0
+      },
+      "experiment": "exp7"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp8\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 10146,
+        "page_markers": 13,
+        "first_page": 1,
+        "last_page": 13,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 0,
+        "formula_lines": 49,
+        "scan_markers": 0
+      },
+      "experiment": "exp8"
+    },
+    {
+      "path": "D:\\107杯\\final0902\\main\\rag_extraction_review\\selected\\exp9\\实验指导_RAG文本.md",
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "body_chars": 11761,
+        "page_markers": 17,
+        "first_page": 1,
+        "last_page": 17,
+        "pua_count": 0,
+        "other_script_count": 0,
+        "replacement_count": 0,
+        "unresolved_review_markers": 0,
+        "table_lines": 1,
+        "formula_lines": 43,
+        "scan_markers": 0
+      },
+      "experiment": "exp9"
+    }
+  ]
+}

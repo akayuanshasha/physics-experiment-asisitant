@@ -1,0 +1,962 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 689,
+          "lines": 32,
+          "cjk_ratio": 0.8287,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0348,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验要求"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 36.48
+        },
+        "pymupdf-fitz": {
+          "chars": 689,
+          "lines": 32,
+          "cjk_ratio": 0.8287,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0348,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验要求"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 36.48
+        },
+        "pdfplumber": {
+          "chars": 689,
+          "lines": 32,
+          "cjk_ratio": 0.8287,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0348,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验要求"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 36.48
+        },
+        "pdftotext-cli": {
+          "chars": 690,
+          "lines": 32,
+          "cjk_ratio": 0.8275,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0348,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验要求"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 36.48
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(36.48), pdfplumber(36.48), pdftotext-cli(36.48)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 2,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 984,
+          "lines": 33,
+          "cjk_ratio": 0.8547,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0173,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验原理",
+            "实验目的"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 37.73
+        },
+        "pymupdf-fitz": {
+          "chars": 984,
+          "lines": 34,
+          "cjk_ratio": 0.8547,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0173,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验原理",
+            "实验目的"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 37.73
+        },
+        "pdfplumber": {
+          "chars": 984,
+          "lines": 34,
+          "cjk_ratio": 0.8547,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0173,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验原理",
+            "实验目的"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 37.73
+        },
+        "pdftotext-cli": {
+          "chars": 985,
+          "lines": 33,
+          "cjk_ratio": 0.8538,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0173,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验原理",
+            "实验目的"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 37.73
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(37.73), pdfplumber(37.73), pdftotext-cli(37.73)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 3,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 569,
+          "lines": 29,
+          "cjk_ratio": 0.71,
+          "pua_count": 3,
+          "pua_ratio": 0.0053,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0404,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 33.51
+        },
+        "pymupdf-fitz": {
+          "chars": 569,
+          "lines": 33,
+          "cjk_ratio": 0.71,
+          "pua_count": 3,
+          "pua_ratio": 0.0053,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0404,
+          "single_char_line_ratio": 0.1212,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.09
+        },
+        "pdfplumber": {
+          "chars": 569,
+          "lines": 31,
+          "cjk_ratio": 0.71,
+          "pua_count": 3,
+          "pua_ratio": 0.0053,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0404,
+          "single_char_line_ratio": 0.129,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 30.93
+        },
+        "pdftotext-cli": {
+          "chars": 570,
+          "lines": 29,
+          "cjk_ratio": 0.7088,
+          "pua_count": 3,
+          "pua_ratio": 0.0053,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0404,
+          "single_char_line_ratio": 0.2414,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 28.68
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(31.09), pdfplumber(30.93), pdftotext-cli(28.68)）",
+      "needs_manual_review": true
+    },
+    {
+      "page": 4,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 816,
+          "lines": 28,
+          "cjk_ratio": 0.8554,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0159,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.59
+        },
+        "pymupdf-fitz": {
+          "chars": 816,
+          "lines": 28,
+          "cjk_ratio": 0.8554,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0159,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.59
+        },
+        "pdfplumber": {
+          "chars": 816,
+          "lines": 28,
+          "cjk_ratio": 0.8554,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0159,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.59
+        },
+        "pdftotext-cli": {
+          "chars": 817,
+          "lines": 28,
+          "cjk_ratio": 0.8543,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0159,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.59
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(31.59), pdfplumber(31.59), pdftotext-cli(31.59)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 5,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 637,
+          "lines": 22,
+          "cjk_ratio": 0.8053,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0377,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 33.77
+        },
+        "pymupdf-fitz": {
+          "chars": 637,
+          "lines": 25,
+          "cjk_ratio": 0.8053,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0377,
+          "single_char_line_ratio": 0.04,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 32.97
+        },
+        "pdfplumber": {
+          "chars": 637,
+          "lines": 22,
+          "cjk_ratio": 0.8053,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0377,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 33.77
+        },
+        "pdftotext-cli": {
+          "chars": 638,
+          "lines": 22,
+          "cjk_ratio": 0.8041,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0376,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 33.76
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(32.97), pdfplumber(33.77), pdftotext-cli(33.76)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 6,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 331,
+          "lines": 20,
+          "cjk_ratio": 0.6918,
+          "pua_count": 3,
+          "pua_ratio": 0.0091,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0604,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 1,
+          "score": 32.78
+        },
+        "pymupdf-fitz": {
+          "chars": 331,
+          "lines": 30,
+          "cjk_ratio": 0.6918,
+          "pua_count": 3,
+          "pua_ratio": 0.0091,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0604,
+          "single_char_line_ratio": 0.2,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 30.78
+        },
+        "pdfplumber": {
+          "chars": 331,
+          "lines": 28,
+          "cjk_ratio": 0.6918,
+          "pua_count": 3,
+          "pua_ratio": 0.0091,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0604,
+          "single_char_line_ratio": 0.1429,
+          "section_titles": [],
+          "garbled_formula_lines": 1,
+          "score": 29.92
+        },
+        "pdftotext-cli": {
+          "chars": 332,
+          "lines": 23,
+          "cjk_ratio": 0.6898,
+          "pua_count": 3,
+          "pua_ratio": 0.009,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0602,
+          "single_char_line_ratio": 0.087,
+          "section_titles": [],
+          "garbled_formula_lines": 1,
+          "score": 30.94
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(30.78), pdfplumber(29.92), pdftotext-cli(30.94)）",
+      "needs_manual_review": true
+    },
+    {
+      "page": 7,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 550,
+          "lines": 26,
+          "cjk_ratio": 0.5945,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.1273,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验仪器"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 36.48
+        },
+        "pymupdf-fitz": {
+          "chars": 550,
+          "lines": 29,
+          "cjk_ratio": 0.5945,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.1273,
+          "single_char_line_ratio": 0.1034,
+          "section_titles": [
+            "实验仪器"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 34.41
+        },
+        "pdfplumber": {
+          "chars": 550,
+          "lines": 32,
+          "cjk_ratio": 0.5945,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.1273,
+          "single_char_line_ratio": 0.125,
+          "section_titles": [
+            "实验仪器"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 33.98
+        },
+        "pdftotext-cli": {
+          "chars": 551,
+          "lines": 28,
+          "cjk_ratio": 0.5935,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.127,
+          "single_char_line_ratio": 0.0714,
+          "section_titles": [
+            "实验仪器"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 35.01
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(34.41), pdfplumber(33.98), pdftotext-cli(35.01)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 8,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 935,
+          "lines": 36,
+          "cjk_ratio": 0.7658,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0631,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验内容"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 39.31
+        },
+        "pymupdf-fitz": {
+          "chars": 935,
+          "lines": 36,
+          "cjk_ratio": 0.7658,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0631,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验内容"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 39.31
+        },
+        "pdfplumber": {
+          "chars": 935,
+          "lines": 36,
+          "cjk_ratio": 0.7658,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0631,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验内容"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 39.31
+        },
+        "pdftotext-cli": {
+          "chars": 936,
+          "lines": 36,
+          "cjk_ratio": 0.765,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.063,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "实验内容"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 39.3
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(39.31), pdfplumber(39.31), pdftotext-cli(39.3)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 9,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 357,
+          "lines": 18,
+          "cjk_ratio": 0.7423,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0644,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料",
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 42.44
+        },
+        "pymupdf-fitz": {
+          "chars": 357,
+          "lines": 18,
+          "cjk_ratio": 0.7423,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0644,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料",
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 42.44
+        },
+        "pdfplumber": {
+          "chars": 357,
+          "lines": 18,
+          "cjk_ratio": 0.7423,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0644,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料",
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 42.44
+        },
+        "pdftotext-cli": {
+          "chars": 358,
+          "lines": 18,
+          "cjk_ratio": 0.7402,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0642,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料",
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 42.42
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(42.44), pdfplumber(42.44), pdftotext-cli(42.42)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 10,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 819,
+          "lines": 26,
+          "cjk_ratio": 0.8144,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0171,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.71
+        },
+        "pymupdf-fitz": {
+          "chars": 819,
+          "lines": 26,
+          "cjk_ratio": 0.8144,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0171,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.71
+        },
+        "pdfplumber": {
+          "chars": 819,
+          "lines": 27,
+          "cjk_ratio": 0.8144,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0171,
+          "single_char_line_ratio": 0.037,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 30.97
+        },
+        "pdftotext-cli": {
+          "chars": 820,
+          "lines": 26,
+          "cjk_ratio": 0.8134,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0171,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 31.71
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(31.71), pdfplumber(30.97), pdftotext-cli(31.71)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 11,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 887,
+          "lines": 35,
+          "cjk_ratio": 0.522,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.071,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 32.47
+        },
+        "pymupdf-fitz": {
+          "chars": 887,
+          "lines": 44,
+          "cjk_ratio": 0.522,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.071,
+          "single_char_line_ratio": 0.0682,
+          "section_titles": [
+            "参考资料"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 31.11
+        },
+        "pdfplumber": {
+          "chars": 887,
+          "lines": 56,
+          "cjk_ratio": 0.522,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.071,
+          "single_char_line_ratio": 0.125,
+          "section_titles": [
+            "参考资料"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 29.97
+        },
+        "pdftotext-cli": {
+          "chars": 888,
+          "lines": 38,
+          "cjk_ratio": 0.5214,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0709,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "参考资料"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 32.44
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(31.11), pdfplumber(29.97), pdftotext-cli(32.44)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 12,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 288,
+          "lines": 19,
+          "cjk_ratio": 0.4028,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0451,
+          "single_char_line_ratio": 0.3158,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 15.46
+        },
+        "pymupdf-fitz": {
+          "chars": 288,
+          "lines": 28,
+          "cjk_ratio": 0.4028,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0451,
+          "single_char_line_ratio": 0.25,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 16.77
+        },
+        "pdfplumber": {
+          "chars": 288,
+          "lines": 22,
+          "cjk_ratio": 0.4028,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0451,
+          "single_char_line_ratio": 0.3182,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 15.41
+        },
+        "pdftotext-cli": {
+          "chars": 289,
+          "lines": 20,
+          "cjk_ratio": 0.4014,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.045,
+          "single_char_line_ratio": 0.3,
+          "section_titles": [],
+          "garbled_formula_lines": 0,
+          "score": 15.7
+        }
+      },
+      "selected": "pymupdf-fitz",
+      "reason": "得分最高（对比 pypdf2-plain(15.46), pdfplumber(15.41), pdftotext-cli(15.7)）",
+      "needs_manual_review": false
+    },
+    {
+      "page": 13,
+      "candidates": {
+        "pypdf2-plain": {
+          "chars": 232,
+          "lines": 21,
+          "cjk_ratio": 0.306,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.069,
+          "single_char_line_ratio": 0.0,
+          "section_titles": [
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 23.01
+        },
+        "pymupdf-fitz": {
+          "chars": 232,
+          "lines": 25,
+          "cjk_ratio": 0.306,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.069,
+          "single_char_line_ratio": 0.04,
+          "section_titles": [
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 22.21
+        },
+        "pdfplumber": {
+          "chars": 232,
+          "lines": 25,
+          "cjk_ratio": 0.306,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.069,
+          "single_char_line_ratio": 0.08,
+          "section_titles": [
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 21.41
+        },
+        "pdftotext-cli": {
+          "chars": 233,
+          "lines": 21,
+          "cjk_ratio": 0.3047,
+          "pua_count": 0,
+          "pua_ratio": 0.0,
+          "other_script_count": 0,
+          "other_script_ratio": 0.0,
+          "replace_count": 0,
+          "digit_ratio": 0.0687,
+          "single_char_line_ratio": 0.0476,
+          "section_titles": [
+            "思考题"
+          ],
+          "garbled_formula_lines": 0,
+          "score": 21.98
+        }
+      },
+      "selected": "pypdf2-plain",
+      "reason": "得分最高（对比 pymupdf-fitz(22.21), pdfplumber(21.41), pdftotext-cli(21.98)）",
+      "needs_manual_review": false
+    }
+  ],
+  "pages_total": 13,
+  "extractors_available": [
+    "pypdf2-plain",
+    "pymupdf-fitz",
+    "pdfplumber",
+    "pdftotext-cli"
+  ],
+  "extractors_missing": [],
+  "experiment": "exp41",
+  "pdf_file": "超声光栅（实验指导）.pdf"
+}

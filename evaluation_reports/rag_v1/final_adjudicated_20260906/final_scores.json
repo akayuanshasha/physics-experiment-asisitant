@@ -1,0 +1,408 @@
+{
+  "schema_version": "rag_v1_final_adjudication_v1",
+  "created_utc": "2026-09-06",
+  "generation_mode": "offline_existing_artifacts_only",
+  "frozen_inputs_untouched": true,
+  "tests_rerun": false,
+  "external_model_calls": 0,
+  "source_artifacts": [
+    "evaluation_reports/rag_v1/three_way_offline_analysis.json",
+    "evaluation_reports/rag_v1/test_e2e_llm_only_20260905_final/auto_report.json",
+    "evaluation_reports/rag_v1/test_e2e_bm25_20260905_final/auto_report.json",
+    "evaluation_reports/rag_v1/test_e2e_hybrid_20260905_final/auto_report.json"
+  ],
+  "score_definitions": {
+    "answer_quality_score": "冻结 scorer 的共同回答维度：Factual 30 + Completeness 15 + Boundary 10 + Clarity 5，满分 60 后归一化为 100；不含 Retrieval 与 Evidence。",
+    "e2e_system_capability_score": "冻结六维系统总分：Retrieval 20 + Factual 30 + Evidence/Groundedness 20 + Completeness 15 + Boundary 10 + Clarity 5。人工口径只替换已裁定回答维度，冻结 Retrieval/Evidence 分保持不变。",
+    "evidence_validity_rate": "原字段 citation_valid_rate；仅表示附带 Context evidence ID 属于合法 Context 集合，是 Evidence Validity / Traceability 指标，不是模型逐结论引用准确率。",
+    "model_citation_observation_rate": "是否保存并能观测模型原始 citation selection；本实验三组均为 0.0，因此不能评估模型真实逐结论 citation accuracy。",
+    "llm_only_retrieval_evidence": "LLM Only 关闭检索且没有证据链，系统能力总分中 Retrieval 与 Evidence 按既定口径记 0；Answer Quality 另行公平比较。",
+    "boundary": "pass_rate 的分母为 test 中 answerable=false 的题（本测试为 B007，共 1 题）；automatic 与 human_adjudicated 分开报告。"
+  },
+  "systems": {
+    "llm_only": {
+      "label": "LLM Only",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 71.39,
+        "e2e_system_capability_score": 42.83
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 70,
+        "e2e_system_capability_score": 42
+      },
+      "retrieval": {
+        "applicable": false,
+        "recall_at_1": 0,
+        "recall_at_3": 0,
+        "recall_at_5": 0,
+        "mrr": 0,
+        "anchor_recall_at_5": 0
+      },
+      "evidence_traceability": {
+        "applicable": false,
+        "evidence_validity_rate": 0,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 0,
+          "pass_rate": 0
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 21091.73,
+        "p50": 19328.3,
+        "p95": 39963.54
+      }
+    },
+    "bm25": {
+      "label": "BM25 RAG",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 90.56,
+        "e2e_system_capability_score": 94.33
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 90.56,
+        "e2e_system_capability_score": 94.33
+      },
+      "retrieval": {
+        "applicable": true,
+        "recall_at_1": 0.9333,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9667,
+        "anchor_recall_at_5": 0.7
+      },
+      "evidence_traceability": {
+        "applicable": true,
+        "evidence_validity_rate": 1,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 1,
+          "pass_rate": 1
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 23246.42,
+        "p50": 18350.91,
+        "p95": 53829.47
+      }
+    },
+    "hybrid": {
+      "label": "Hybrid RAG",
+      "question_count": 15,
+      "automatic": {
+        "answer_quality_score": 93.75,
+        "e2e_system_capability_score": 96.25
+      },
+      "human_adjudicated": {
+        "answer_quality_score": 93.75,
+        "e2e_system_capability_score": 96.25
+      },
+      "retrieval": {
+        "applicable": true,
+        "recall_at_1": 0.9333,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9667,
+        "anchor_recall_at_5": 0.6333
+      },
+      "evidence_traceability": {
+        "applicable": true,
+        "evidence_validity_rate": 1,
+        "source_field": "citation_valid_rate",
+        "model_citation_observation_rate": 0
+      },
+      "boundary": {
+        "denominator_unanswerable_questions": 1,
+        "automatic": {
+          "passed": 1,
+          "pass_rate": 1
+        },
+        "human_adjudicated": {
+          "passed": 1,
+          "pass_rate": 1
+        }
+      },
+      "latency_ms": {
+        "average": 21686.79,
+        "p50": 16137.55,
+        "p95": 48531.55
+      }
+    }
+  },
+  "automatic_human_disagreements": [
+    {
+      "question_id": "R061",
+      "system": "LLM Only",
+      "automatic_answer_quality_score": 81.25,
+      "human_answer_quality_score": 100,
+      "automatic_e2e_score": 48.75,
+      "human_e2e_score": 60,
+      "automatic_boundary_ok": true,
+      "human_boundary_ok": true,
+      "reason": "x1/x2 与 S1/S2 表示同一组目标距离，带系数 2 的公式和往返解释完整。"
+    },
+    {
+      "question_id": "R066",
+      "system": "LLM Only",
+      "automatic_answer_quality_score": 100,
+      "human_answer_quality_score": 43.75,
+      "automatic_e2e_score": 60,
+      "human_e2e_score": 26.25,
+      "automatic_boundary_ok": true,
+      "human_boundary_ok": true,
+      "reason": "四个冻结要点仅“短接放电”正确；36V 主规则不等于 12V/24V，完整报告结论反向，且未说明下课前提交数据处理。"
+    },
+    {
+      "question_id": "B007",
+      "system": "LLM Only",
+      "automatic_answer_quality_score": 83.33,
+      "human_answer_quality_score": 100,
+      "automatic_e2e_score": 50,
+      "human_e2e_score": 60,
+      "automatic_boundary_ok": false,
+      "human_boundary_ok": true,
+      "reason": "明确拒绝把示例数据当作实测数据，并要求上传图像或提供测量值；自动 refusal 词表漏检。"
+    }
+  ],
+  "review_mapping": {
+    "review_items": 9,
+    "system_question_cells": 12,
+    "mapped_cells": 12,
+    "unmapped_cells": 0
+  },
+  "unresolved_manual_disputes": [],
+  "comparisons": {
+    "llm_only_to_bm25": [
+      {
+        "question_id": "R057",
+        "from_score": 43.75,
+        "to_score": 100,
+        "delta": 56.25,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R058",
+        "from_score": 62.5,
+        "to_score": 100,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R059",
+        "from_score": 62.5,
+        "to_score": 100,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R060",
+        "from_score": 81.25,
+        "to_score": 100,
+        "delta": 18.75,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R061",
+        "from_score": 100,
+        "to_score": 33.33,
+        "delta": -66.67,
+        "direction": "declined"
+      },
+      {
+        "question_id": "R062",
+        "from_score": 43.75,
+        "to_score": 62.5,
+        "delta": 18.75,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R063",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R064",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R065",
+        "from_score": 62.5,
+        "to_score": 100,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R066",
+        "from_score": 43.75,
+        "to_score": 81.25,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R067",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R068",
+        "from_score": 43.75,
+        "to_score": 81.25,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "B007",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R069",
+        "from_score": 62.5,
+        "to_score": 100,
+        "delta": 37.5,
+        "direction": "improved"
+      },
+      {
+        "question_id": "D021",
+        "from_score": 43.75,
+        "to_score": 100,
+        "delta": 56.25,
+        "direction": "improved"
+      }
+    ],
+    "bm25_to_hybrid": [
+      {
+        "question_id": "R057",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R058",
+        "from_score": 100,
+        "to_score": 81.25,
+        "delta": -18.75,
+        "direction": "declined"
+      },
+      {
+        "question_id": "R059",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R060",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R061",
+        "from_score": 33.33,
+        "to_score": 100,
+        "delta": 66.67,
+        "direction": "improved"
+      },
+      {
+        "question_id": "R062",
+        "from_score": 62.5,
+        "to_score": 62.5,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R063",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R064",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R065",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R066",
+        "from_score": 81.25,
+        "to_score": 81.25,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R067",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R068",
+        "from_score": 81.25,
+        "to_score": 81.25,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "B007",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "R069",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      },
+      {
+        "question_id": "D021",
+        "from_score": 100,
+        "to_score": 100,
+        "delta": 0,
+        "direction": "unchanged"
+      }
+    ]
+  }
+}

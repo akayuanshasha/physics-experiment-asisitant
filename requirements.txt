@@ -1,0 +1,44 @@
+# ============================================
+# AI物理实验助教系统 —— 依赖清单
+# ============================================
+# 安装方式：pip install -r requirements.txt
+# 依据全仓代码实际 import 整理（2026-09-05 AST 扫描）。
+
+# --- AI/LLM ---
+openai>=1.0.0            # OpenAI 兼容 API SDK（llm_client.py 非RAG功能、online_rag/chat.py）
+python-dotenv>=1.0.0     # 从 .env 文件加载 API 密钥等环境变量
+
+# --- Web框架 ---
+flask>=2.3.0             # Web应用框架
+
+# --- 科学计算与图表 ---
+numpy>=1.24.0            # 数组与统计运算（head.py 万能头及各 exp 模块）
+scipy>=1.10.0            # curve_fit 数据拟合
+matplotlib>=3.7.0        # 科学图表绘制（chart_generator.py、exp 模块）
+Pillow>=10.0.0           # 摄谱仪谱图读取、增强、拼接与标注（b_modules/exp37.py）
+uncertainties>=3.1.7     # 自动不确定度传递（api/calc.py）
+sympy>=1.12              # 符号计算（api/calc.py、api/transformer.py）
+pandas>=1.5.0            # 表格数据处理（b_adapter.py 及 exp 模块）
+chardet>=5.0.0           # 文件编码检测（head.py、exp16/47/50）
+
+# --- 报告生成 ---
+python-docx>=0.8.11      # Word报告生成（api/insert.py 及各 exp 模块）
+lxml>=4.9.0              # XML/XSLT转换（api/insert.py）
+latex2mathml>=3.80.0     # LaTeX转MathML（api/insert.py）
+
+# --- PDF 文本抽取 ---
+PyPDF2>=3.0.0            # 基线抽取器：用户上传语料（user_corpus.py）、异常检测知识库（main.py）、RAG PDF 回退（corpus.py）
+pdfplumber>=0.10.0       # corpus.py 第二回退；tools/build_reference_rag_texts.py 主抽取器
+pymupdf>=1.22.0          # corpus.py 第三回退；tools/rebuild_guide_texts.py 默认主抽取器（import 名 fitz）
+
+# --- 离线工具链 ---
+fontTools>=4.45.0        # 取证/审计脚本解析 PDF 内嵌字体（tools/forensic_pua_decode.py、audit_cambria_math.py）
+
+# --- 可选（按需安装，代码均为延迟加载，不装不影响服务运行）---
+# pypdf>=4.0                     # corpus.py 对 PyPDF2 的替代（未装 PyPDF2 时回退）
+# sentence-transformers>=2.2.0   # 本地 embedding / cross-encoder 重排（embeddings.py、reranker.py）
+# redis>=5.0                     # REDIS_URL 会话存储（session_store.py，默认 SQLite）
+# docling>=1.0                   # rebuild_guide_texts.py 可选 PDF 解析器
+
+# --- 开发/测试 ---
+# pytest>=8.0                    # 测试运行器（tests/ 未直接 import，但需 pytest 收集运行）

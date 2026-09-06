@@ -1,0 +1,75 @@
+benchmark: physics_experiment_rag_v1
+version: "1.2"
+score_scale: 100
+
+manual_dimensions:
+  retrieval_relevance:
+    max_points: 20
+    description: "正确实验资料是否进入Top-K，关键证据是否被取回，无关块是否过多。"
+    anchors:
+      20: "正确实验与关键章节均命中，噪声很少。"
+      14: "正确实验命中，但关键证据不完整或噪声较多。"
+      7: "只命中相近实验或仅靠常识答对部分内容。"
+      0: "未命中正确资料。"
+  factual_correctness:
+    max_points: 30
+    description: "核心物理公式、变量、方向、次数和结论是否正确。"
+    anchors:
+      30: "全部核心结论正确，无实质性错误。"
+      21: "主要结论正确，存在一处次要错误。"
+      12: "部分正确，但有核心缺项或一处明显事实错误。"
+      0: "核心公式/要求错误，或出现P0错误。"
+  groundedness_and_citation:
+    max_points: 20
+    description: "结论是否能由检索证据支持，引用是否指向正确实验和章节。"
+    anchors:
+      20: "所有关键断言均有正确、可定位证据。"
+      14: "证据正确但定位粗略，或一处断言缺证据。"
+      7: "引用存在但与结论对应关系弱。"
+      0: "伪造引用、引用错误实验或无证据编造。"
+  completeness_and_actionability:
+    max_points: 15
+    description: "是否覆盖答案要点、步骤、单位、限制条件和下一步操作。"
+    anchors:
+      15: "要点完整，学生可直接据此处理数据。"
+      10: "主要要点完整，少一项单位或限制。"
+      5: "只有概念性结论，缺少可执行步骤。"
+      0: "没有回答问题。"
+  boundary_and_safety:
+    max_points: 10
+    description: "缺信息时是否拒绝编造，并指出所需补充信息；安全建议是否正确。"
+    anchors:
+      10: "边界清楚，拒答恰当，补充信息清单明确。"
+      6: "能识别缺信息，但仍夹带未经支持的猜测。"
+      0: "编造现场数值、给出危险建议或越过资料边界。"
+  clarity:
+    max_points: 5
+    description: "结构清晰、符号一致、不过度冗长。"
+
+gates:
+  total_score_min: 85
+  test_split_score_min: 80
+  top5_experiment_hit_rate_min: 0.95
+  evidence_support_rate_min: 0.90
+  boundary_pass_rate_required: 1.00
+  critical_physics_errors_max: 0
+  requirement_misclassification_max: 0
+  deep_suite_each_experiment_min: 70
+  expected_source_tier_rate_min: 1.00
+  secondary_source_leak_rate_max: 0.00
+  example_data_misuse_max: 0
+
+critical_failures:
+  - "P0：编造仪器现场参数、台号参数或测量结果。"
+  - "P0：把选做内容说成B类必做，或错误判断是否需要实验报告。"
+  - "P0：给出可能损坏仪器或危及人身安全的操作。"
+  - "P1：核心公式、符号方向、单位换算或测量次数错误。"
+  - "P1：检索到错误实验却用肯定语气作答。"
+  - "P1：正式实验指导足以回答时仍使用第二优先级资料作为答案依据。"
+  - "P0：把示例数据冒充用户现场数据或正式课程参数。"
+
+reporting_requirements:
+  - "同时报告dev与test结果，不得只给总平均。"
+  - "列出全部P0/P1失败题及对应检索片段。"
+  - "记录模型、提示词、知识库、分块、Top-K和重排器版本。"
+  - "保留原始回答和检索来源，保证结果可复查。"

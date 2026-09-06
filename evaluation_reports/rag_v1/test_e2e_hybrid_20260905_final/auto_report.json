@@ -1,0 +1,1681 @@
+{
+  "benchmark_version": "1.2",
+  "notice": "自动评分用于定位问题，物理事实正确性与P0/P1仍需人工复核。",
+  "summary": {
+    "question_count": 15,
+    "average_auto_score": 96.25,
+    "recall_at_1": 0.9333,
+    "recall_at_3": 1.0,
+    "recall_at_5": 1.0,
+    "mrr": 0.9667,
+    "anchor_recall_at_5": 0.6333,
+    "irrelevant_chunk_ratio_at_5": 0.56,
+    "source_metadata_complete_rate_at_5": 1.0,
+    "expected_source_tier_rate_at_5": 0.96,
+    "secondary_source_leak_rate_at_5": 0.0,
+    "example_data_misuse_count": 1,
+    "citation_valid_rate": 1.0,
+    "model_citation_observation_rate": 0.0,
+    "boundary_pass_rate": 1.0,
+    "prediction_errors": 0,
+    "flagged_questions": 7,
+    "latency_ms": {
+      "average": 21686.79,
+      "p50": 16137.55,
+      "p95": 48531.55
+    },
+    "retrieval_runtime": {
+      "retrieval_mode_counts": {
+        "hybrid": 15
+      },
+      "hybrid_query_rate": 1.0,
+      "bm25_fallback_rate": 0.0,
+      "unknown_mode_rate": 0.0,
+      "dense_nonzero_hit_count": 143,
+      "dense_nonzero_hit_rate": 0.7944,
+      "dense_available": true,
+      "document_vector_count": 1291,
+      "expected_document_vector_count": 1291,
+      "document_vector_coverage": 1.0
+    }
+  },
+  "breakdowns": {
+    "by_split": {
+      "test": {
+        "question_count": 15,
+        "average_auto_score": 96.25,
+        "recall_at_1": 0.9333,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 0.9667,
+        "anchor_recall_at_5": 0.6333,
+        "irrelevant_chunk_ratio_at_5": 0.56,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 0.96,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 1,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 1.0,
+        "prediction_errors": 0,
+        "flagged_questions": 7,
+        "latency_ms": {
+          "average": 21686.79,
+          "p50": 16137.55,
+          "p95": 48531.55
+        }
+      }
+    },
+    "by_suite": {
+      "boundary": {
+        "question_count": 3,
+        "average_auto_score": 96.25,
+        "recall_at_1": 0.6667,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 0.8333,
+        "anchor_recall_at_5": 0.8333,
+        "irrelevant_chunk_ratio_at_5": 0.5333,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 0.8,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 1,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 1.0,
+        "prediction_errors": 0,
+        "flagged_questions": 2,
+        "latency_ms": {
+          "average": 16844.62,
+          "p50": 14409.79,
+          "p95": 29572.48
+        }
+      },
+      "deep": {
+        "question_count": 1,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 0,
+        "latency_ms": {
+          "average": 17610.27,
+          "p50": 17610.27,
+          "p95": 17610.27
+        }
+      },
+      "representative": {
+        "question_count": 11,
+        "average_auto_score": 95.91,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.5455,
+        "irrelevant_chunk_ratio_at_5": 0.6182,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 5,
+        "latency_ms": {
+          "average": 23377.98,
+          "p50": 16137.55,
+          "p95": 59404.96
+        }
+      }
+    },
+    "by_category": {
+      "data_processing": {
+        "question_count": 1,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 0,
+        "latency_ms": {
+          "average": 29971.59,
+          "p50": 29971.59,
+          "p95": 29971.59
+        }
+      },
+      "example_allowed": {
+        "question_count": 1,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.4,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 0,
+        "latency_ms": {
+          "average": 31257.22,
+          "p50": 31257.22,
+          "p95": 31257.22
+        }
+      },
+      "example_boundary": {
+        "question_count": 1,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.4,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 0.4,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 1,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 1.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 14409.79,
+          "p50": 14409.79,
+          "p95": 14409.79
+        }
+      },
+      "formula": {
+        "question_count": 2,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 22037.94,
+          "p50": 22037.94,
+          "p95": 28453.94
+        }
+      },
+      "procedure": {
+        "question_count": 2,
+        "average_auto_score": 88.75,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.5,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 54522.93,
+          "p50": 54522.93,
+          "p95": 85406.78
+        }
+      },
+      "requirements": {
+        "question_count": 5,
+        "average_auto_score": 97.75,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 0.4,
+        "irrelevant_chunk_ratio_at_5": 0.64,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 2,
+        "latency_ms": {
+          "average": 12974.3,
+          "p50": 15908.67,
+          "p95": 20314.21
+        }
+      },
+      "safety": {
+        "question_count": 1,
+        "average_auto_score": 88.75,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 9192.93,
+          "p50": 9192.93,
+          "p95": 9192.93
+        }
+      },
+      "secondary_scope": {
+        "question_count": 1,
+        "average_auto_score": 100.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 0,
+        "latency_ms": {
+          "average": 17610.27,
+          "p50": 17610.27,
+          "p95": 17610.27
+        }
+      },
+      "source_conflict": {
+        "question_count": 1,
+        "average_auto_score": 88.75,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "mrr": 0.5,
+        "anchor_recall_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.8,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse_count": 0,
+        "citation_valid_rate": 1.0,
+        "model_citation_observation_rate": 0.0,
+        "boundary_pass_rate": 0.0,
+        "prediction_errors": 0,
+        "flagged_questions": 1,
+        "latency_ms": {
+          "average": 4866.85,
+          "p50": 4866.85,
+          "p95": 4866.85
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "R057",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp16",
+          "exp16",
+          "exp12",
+          "exp33",
+          "exp40",
+          "exp2",
+          "exp45",
+          "exp23",
+          "exp41",
+          "exp37",
+          "exp36",
+          "exp24"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 182
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 322.85909401252866,
+        "generation": 7615.06795900641,
+        "total": 7939.65188000584
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R058",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "blind",
+      "auto_score": 88.75,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp17",
+          "exp17",
+          "exp50",
+          "exp50",
+          "exp27",
+          "exp31",
+          "exp33",
+          "exp11",
+          "exp1",
+          "exp30",
+          "exp7",
+          "exp7"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 0.75,
+        "missing_term_groups": [
+          [
+            "30.00",
+            "45.00"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 646
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 366.97345098946244,
+        "generation": 15769.701017008629,
+        "total": 16137.552217987832
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R059",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp18_a",
+          "exp18_a",
+          "exp18_b",
+          "exp5",
+          "exp38",
+          "exp40",
+          "exp45",
+          "exp18_b",
+          "exp2",
+          "exp18_a",
+          "exp18_a",
+          "exp18_a"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 103
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 538.2202959735878,
+        "generation": 2988.73967200052,
+        "total": 3527.234718960244
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R060",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.8,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp25",
+          "exp33",
+          "exp12",
+          "exp38",
+          "exp41",
+          "exp11",
+          "exp23",
+          "exp24",
+          "exp50",
+          "exp34",
+          "exp45",
+          "exp48"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 283
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 385.59626101050526,
+        "generation": 20971.498892002273,
+        "total": 21358.3697109716
+      },
+      "error": null,
+      "flags": [
+        "retrieval_noise"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R061",
+      "split": "test",
+      "suite": "representative",
+      "category": "formula",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp42",
+          "exp42",
+          "exp9",
+          "exp41",
+          "exp41",
+          "exp9",
+          "exp42",
+          "exp42",
+          "exp9",
+          "exp9",
+          "exp9",
+          "exp9"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [
+          "v=(S2-S1)/(t2-t1)"
+        ],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 588
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 239.06806798186153,
+        "generation": 28913.173323962837,
+        "total": 29166.83301399462
+      },
+      "error": null,
+      "flags": [
+        "possible_forbidden_paraphrase"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R062",
+      "split": "test",
+      "suite": "representative",
+      "category": "procedure",
+      "mode": "blind",
+      "auto_score": 77.5,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp43",
+          "exp43",
+          "exp6",
+          "exp44",
+          "exp44",
+          "exp4",
+          "exp4",
+          "exp43",
+          "exp43",
+          "exp43",
+          "exp43",
+          "exp43"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 0.5,
+        "missing_term_groups": [
+          [
+            "I0",
+            "I1"
+          ],
+          [
+            "理论值",
+            "比较"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 460
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 318.83522897260264,
+        "generation": 19887.377512990497,
+        "total": 20207.531651016325
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R063",
+      "split": "test",
+      "suite": "representative",
+      "category": "procedure",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp44",
+          "exp44",
+          "exp1",
+          "exp6",
+          "exp10",
+          "exp33",
+          "exp10",
+          "exp1",
+          "exp39",
+          "exp44",
+          "exp44",
+          "exp44"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 539
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 366.16035300539806,
+        "generation": 88467.5618110341,
+        "total": 88838.32276100293
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R064",
+      "split": "test",
+      "suite": "representative",
+      "category": "formula",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp45",
+          "exp45",
+          "exp7",
+          "exp46",
+          "exp25",
+          "exp24",
+          "exp47",
+          "exp45",
+          "exp45",
+          "exp45",
+          "exp45",
+          "exp45"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 631
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 275.20299796015024,
+        "generation": 14626.725365000311,
+        "total": 14909.046449989546
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R065",
+      "split": "test",
+      "suite": "representative",
+      "category": "requirements",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.0,
+        "returned_experiment_ids": [
+          "exp48",
+          "exp48",
+          "exp32",
+          "exp40",
+          "exp32",
+          "exp40",
+          "exp11",
+          "exp27",
+          "exp27",
+          "exp44",
+          "exp16",
+          "exp48"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 366
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 311.0415650298819,
+        "generation": 15588.81243999349,
+        "total": 15908.671865006909
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R066",
+      "split": "test",
+      "suite": "representative",
+      "category": "safety",
+      "mode": "blind",
+      "auto_score": 88.75,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp49",
+          "exp49",
+          "exp31",
+          "exp34",
+          "exp24",
+          "exp29",
+          "exp11",
+          "exp12",
+          "exp14",
+          "exp28",
+          "exp31",
+          "exp38"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 0.75,
+        "missing_term_groups": [
+          [
+            "下课之前",
+            "数据处理"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 328
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 271.6693330439739,
+        "generation": 8919.966343033593,
+        "total": 9192.931653000414
+      },
+      "error": null,
+      "flags": [
+        "missing_answer_points"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R067",
+      "split": "test",
+      "suite": "representative",
+      "category": "data_processing",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.6,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp50",
+          "exp11",
+          "exp50",
+          "exp11",
+          "exp27",
+          "exp17",
+          "exp27",
+          "exp17",
+          "exp49",
+          "exp50",
+          "exp50",
+          "exp11"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 656
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 302.71631403593346,
+        "generation": 29662.946544995066,
+        "total": 29971.587402978912
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "R068",
+      "split": "test",
+      "suite": "boundary",
+      "category": "source_conflict",
+      "mode": "blind",
+      "auto_score": 88.75,
+      "retrieval": {
+        "first_relevant_rank": 2,
+        "recall_at_1": false,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 0.5,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.8,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp12",
+          "exp25",
+          "exp31",
+          "exp41",
+          "exp33",
+          "exp50",
+          "exp40",
+          "exp36",
+          "exp19",
+          "exp38",
+          "exp48",
+          "exp45"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 0.75,
+        "missing_term_groups": [
+          [
+            "正式实验讲义",
+            "最高依据"
+          ]
+        ],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 107
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 330.1856190082617,
+        "generation": 4535.49513098551,
+        "total": 4866.848584963009
+      },
+      "error": null,
+      "flags": [
+        "retrieval_noise",
+        "missing_answer_points"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "B007",
+      "split": "test",
+      "suite": "boundary",
+      "category": "example_boundary",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.4,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "exp47",
+          "exp47",
+          "exp47",
+          "exp36",
+          "exp4",
+          "exp30",
+          "exp36",
+          "exp2",
+          "exp2",
+          "exp24",
+          "exp2",
+          "exp38"
+        ],
+        "returned_source_tiers": [
+          "primary",
+          "primary",
+          "example",
+          "example",
+          "example",
+          "example",
+          "primary",
+          "example",
+          "primary",
+          "example",
+          "example",
+          "primary"
+        ],
+        "expected_source_tier_rate_at_5": 0.4,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": true
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": true,
+        "boundary_ok": true,
+        "boundary_class": "insufficient_with_qualified_supplement",
+        "answer_chars": 405
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 290.43764498783275,
+        "generation": 14100.620667042676,
+        "total": 14409.794736013282
+      },
+      "error": null,
+      "flags": [
+        "unexpected_source_tier",
+        "example_data_misuse"
+      ],
+      "manual_review_required": true
+    },
+    {
+      "id": "R069",
+      "split": "test",
+      "suite": "boundary",
+      "category": "example_allowed",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.4,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 0.5,
+        "returned_experiment_ids": [
+          "exp6",
+          "exp6",
+          "exp6",
+          "exp30",
+          "exp5",
+          "exp9",
+          "exp12",
+          "exp40",
+          "exp12",
+          "exp2",
+          "exp44",
+          "exp33"
+        ],
+        "returned_source_tiers": [
+          "example",
+          "primary",
+          "primary",
+          "example",
+          "example",
+          "example",
+          "example",
+          "primary",
+          "example",
+          "example",
+          "example",
+          "example"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 671
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 390.35078400047496,
+        "generation": 30865.08936295286,
+        "total": 31257.224725035485
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    },
+    {
+      "id": "D021",
+      "split": "test",
+      "suite": "deep",
+      "category": "secondary_scope",
+      "mode": "blind",
+      "auto_score": 100.0,
+      "retrieval": {
+        "first_relevant_rank": 1,
+        "recall_at_1": true,
+        "recall_at_3": true,
+        "recall_at_5": true,
+        "reciprocal_rank": 1.0,
+        "multi_experiment_coverage_at_5": 1.0,
+        "irrelevant_chunk_ratio_at_5": 0.0,
+        "source_metadata_complete_rate_at_5": 1.0,
+        "anchor_recall_at_5": 1.0,
+        "returned_experiment_ids": [
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e",
+          "reference:大雾实验不完全指北_RAG文本-f358d75e"
+        ],
+        "returned_source_tiers": [
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary",
+          "secondary"
+        ],
+        "expected_source_tier_rate_at_5": 1.0,
+        "secondary_source_leak_rate_at_5": 0.0,
+        "example_data_misuse": false
+      },
+      "answer": {
+        "required_term_coverage": 1.0,
+        "missing_term_groups": [],
+        "forbidden_hits": [],
+        "forbidden_suspicions": [],
+        "refusal_detected": null,
+        "boundary_ok": true,
+        "boundary_class": "answerable_response",
+        "answer_chars": 393
+      },
+      "citations": {
+        "scope": "attached_context_evidence",
+        "count": 6,
+        "valid_count": 6,
+        "invalid_ids": [],
+        "valid_rate": 1.0,
+        "all_cited_evidence_from_relevant_experiments": null,
+        "legal_context_evidence_count": 6,
+        "context_expansion_evidence_count": 6,
+        "model_citations": {
+          "available": false,
+          "count": null,
+          "valid_count": null,
+          "invalid_ids": null
+        },
+        "grounded": true
+      },
+      "timings_ms": {
+        "retrieval": 1067.4755460349843,
+        "generation": 16505.15968602849,
+        "total": 17610.271675046533
+      },
+      "error": null,
+      "flags": [],
+      "manual_review_required": true
+    }
+  ]
+}

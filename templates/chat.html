@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>AI智能助教 - AI物理实验助教系统</title>
+    <link rel="icon" href="/static/icon.svg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/rich-text.css">
+    <style>
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .home-hero { flex-shrink: 0; }
+        .chat-shell {
+            width: min(100%, 900px);
+            min-height: 0;
+            margin: 0 auto;
+            padding: 0 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-toolbar {
+            min-height: 54px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--line);
+        }
+        .chat-toolbar__title { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: 13.5px; font-weight: 650; }
+        .chat-toolbar__title svg { width: 16px; height: 16px; color: var(--accent); }
+        .chat-toolbar__status { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); font-size: 12px; }
+        .chat-toolbar__status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #34a875; box-shadow: 0 0 0 3px rgba(52,168,117,.11); }
+        .ghost-button {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius-sm);
+            background: var(--surface);
+            color: var(--ink-2);
+            cursor: pointer;
+            font-size: 12.5px;
+            transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+        }
+        .ghost-button svg { width: 13px; height: 13px; }
+        .ghost-button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+        .messages { min-height: 0; padding: 22px 2px 12px; flex: 1; overflow-y: auto; }
+        .message { display: flex; gap: 11px; margin-bottom: 18px; }
+        .message.user { flex-direction: row-reverse; }
+        .message .avatar {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--line-strong);
+            border-radius: 50%;
+            background: var(--surface-2);
+            color: var(--ink-2);
+        }
+        .message .avatar svg { width: 17px; height: 17px; }
+        .message.user .avatar { border-color: var(--accent); background: var(--accent); color: #fff; }
+        .message .bubble { max-width: 76%; padding: 11px 16px; border-radius: var(--radius-lg); font-size: 14px; line-height: 1.75; word-break: break-word; white-space: pre-wrap; }
+        .message.assistant .bubble { border: 1px solid var(--line); border-top-left-radius: 3px; background: var(--surface); box-shadow: var(--shadow-card); color: var(--ink); white-space: normal; }
+        .message.user .bubble { border-top-right-radius: 3px; background: var(--accent); color: #fff; }
+        .source-list { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 12px; }
+        .source-list summary { cursor: pointer; color: var(--accent); font-weight: 650; }
+        .source-items { display: grid; gap: 6px; margin-top: 8px; }
+        .source-item { padding: 7px 9px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); }
+        .source-item__title { color: var(--ink); font-weight: 650; }
+        .source-item__meta { margin-top: 2px; color: var(--ink-3); line-height: 1.5; }
+
+        .welcome { padding: 52px 18px 28px; color: var(--ink-2); text-align: center; }
+        .welcome-kicker { margin: 0 0 10px; color: var(--accent); font-size: 12px; font-weight: 650; letter-spacing: .18em; }
+        .welcome h2 { margin: 0 0 10px; color: var(--ink); font-size: 21px; }
+        .welcome p { margin: 0; color: var(--ink-2); font-size: 14px; }
+        .welcome .tips { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin-top: 22px; }
+        .welcome .tip { padding: 7px 15px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink-2); cursor: pointer; font-size: 13px; transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease; }
+        .welcome .tip:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+        .input-area { padding: 12px 0 16px; flex-shrink: 0; display: flex; align-items: flex-end; gap: 9px; }
+        .attach-btn {
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--ink-2);
+            cursor: pointer;
+            transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+        }
+        .attach-btn:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+        .attach-btn svg { width: 18px; height: 18px; }
+        .attach-btn input { display: none; }
+        .input-area textarea { min-height: 46px; max-height: 120px; padding: 12px 15px; flex: 1; resize: none; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); outline: 0; background: var(--surface); font-size: 14px; transition: border-color 160ms ease, box-shadow 160ms ease; }
+        .input-area textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--ring); }
+        .send-btn { min-height: 46px; padding: 11px 20px; display: inline-flex; align-items: center; gap: 7px; border: 0; border-radius: var(--radius-lg); background: var(--accent); color: #fff; cursor: pointer; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background-color 160ms ease; }
+        .send-btn svg { width: 15px; height: 15px; }
+        .send-btn:hover:not(:disabled) { background: var(--accent-strong); }
+        .send-btn:disabled { opacity: .45; cursor: not-allowed; }
+        .loading-dots::after { content: ""; animation: dots 1.5s infinite; }
+        @keyframes dots { 0%,20% { content: "."; } 40% { content: ".."; } 60%,100% { content: "..."; } }
+
+        @media (max-width: 680px) {
+            .chat-shell { padding: 0 11px; }
+            .chat-toolbar__status { display: none; }
+            .message .bubble { max-width: 84%; }
+            .send-btn { width: 46px; padding: 0; justify-content: center; }
+            .send-btn span { display: none; }
+            .welcome { padding: 38px 8px 22px; }
+        }
+    </style>
+</head>
+<body>
+    {% import '_icons.html' as icons %}
+    <header class="home-hero">
+        <div class="home-hero__inner">
+            <div class="home-hero__top">
+                <a class="home-brand" href="/">{{ icons.icon('flask') }}<span>AI 物理实验助教系统</span></a>
+                <nav class="home-nav" aria-label="主要功能">
+                    <a class="home-nav__link" href="/">{{ icons.icon('table') }}<span>实验列表</span></a>
+                    <a class="home-nav__link is-active" href="/chat" aria-current="page">{{ icons.icon('message') }}<span>AI助教问答</span></a>
+                </nav>
+            </div>
+            <div class="home-hero__content">
+                <h1>AI 物理实验助教系统</h1>
+                <p class="home-hero__lede">智能数据处理 · 自动报告生成 · AI助教问答 · 知识库检索</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-shell">
+        <div class="chat-toolbar">
+            <span class="chat-toolbar__title">{{ icons.icon('robot') }}<span>AI 智能实验助教</span></span>
+            <span class="chat-toolbar__status">助教在线</span>
+            <button type="button" class="ghost-button" onclick="resetChat()">{{ icons.icon('refresh') }}<span>新对话</span></button>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="welcome" id="welcome">
+                <p class="welcome-kicker">AI 实验助教</p>
+                <h2>你好！我是AI物理实验助教</h2>
+                <p>我可以帮你解答物理实验相关的问题，试试点击下面的问题：</p>
+                <div class="tips">
+                    <div class="tip" onclick="askQuestion(this)">不确定度怎么计算？</div>
+                    <div class="tip" onclick="askQuestion(this)">杨氏模量实验的原理是什么？</div>
+                    <div class="tip" onclick="askQuestion(this)">最小二乘法怎么用？</div>
+                    <div class="tip" onclick="askQuestion(this)">霍尔效应实验注意事项</div>
+                    <div class="tip" onclick="askQuestion(this)">如何减小实验误差？</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <label class="attach-btn" title="上传知识资料（PDF/TXT/MD/CSV）">
+                {{ icons.icon('paperclip') }}
+                <input type="file" accept=".txt,.md,.csv,.pdf" onchange="uploadKnowledge(this)">
+            </label>
+            <textarea id="userInput" placeholder="输入你的问题…" rows="1" onkeydown="handleKey(event)"></textarea>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">{{ icons.icon('send') }}<span>发送</span></button>
+        </div>
+    </div>
+
+    <script>
+        window.MathJax = {
+            loader: {
+                paths: {
+                    mathjax: '/static/vendor/mathjax',
+                    'mathjax-newcm': '/static/vendor/mathjax',
+                    fonts: '/static/vendor/mathjax'
+                }
+            },
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true
+            },
+            chtml: {
+                fontURL: '/static/vendor/mathjax/chtml/woff2',
+                dynamicPrefix: '/static/vendor/mathjax/chtml/dynamic'
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="/static/vendor/markdown-it/markdown-it.min.js"></script>
+    <script src="/static/vendor/dompurify/purify.min.js"></script>
+    <script id="MathJax-script" src="/static/vendor/mathjax/tex-mml-chtml-mathjax-newcm.js"></script>
+    <script src="/static/js/rich-text-renderer.js"></script>
+    <script src="/static/js/icons.js"></script>
+
+    <script>
+        const SHOW_RELATED_SOURCES = false;
+
+        function createSessionId() {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                return 'session_' + window.crypto.randomUUID();
+            }
+            return 'session_' + Date.now() + '_' + Math.random().toString(16).slice(2);
+        }
+
+        var sessionId = createSessionId();
+        var isLoading = false;
+        var activeRequest = null;
+
+        function handleKey(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function askQuestion(el) {
+            document.getElementById('userInput').value = el.innerText;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            var input = document.getElementById('userInput');
+            var msg = input.value.trim();
+            if (!msg || isLoading) return;
+
+            var welcome = document.getElementById('welcome');
+            if (welcome) welcome.style.display = 'none';
+
+            appendMessage('user', msg);
+            input.value = '';
+            input.style.height = 'auto';
+
+            isLoading = true;
+            document.getElementById('sendBtn').disabled = true;
+            var loadingEl = appendMessage('assistant', '思考中', true);
+
+            var controller = new AbortController();
+            activeRequest = controller;
+            var streamingEl = null;
+            var streamedText = '';
+            var terminalEventReceived = false;
+
+            function finishRequest() {
+                if (activeRequest === controller) activeRequest = null;
+                isLoading = false;
+                document.getElementById('sendBtn').disabled = false;
+                if (loadingEl.parentNode) loadingEl.remove();
+            }
+
+            function ensureStreamingMessage() {
+                if (loadingEl.parentNode) loadingEl.remove();
+                if (!streamingEl) streamingEl = appendMessage('assistant', '');
+                return streamingEl.querySelector('.bubble');
+            }
+
+            function showRequestError(message, requestId) {
+                var bubble = ensureStreamingMessage();
+                var detail = '❌ ' + (message || '请求失败');
+                if (requestId) detail += '\n请求编号：' + requestId;
+                bubble.textContent = streamedText
+                    ? streamedText + '\n\n' + detail
+                    : detail;
+                finishRequest();
+            }
+
+            function handleStreamEvent(eventName, payload) {
+                if (eventName === 'token') {
+                    streamedText += payload.text || '';
+                    ensureStreamingMessage().textContent = streamedText;
+                } else if (eventName === 'done') {
+                    terminalEventReceived = true;
+                    var reply = payload.reply || streamedText || '抱歉，无法获取回答。';
+                    var bubble = ensureStreamingMessage();
+                    bubble.classList.add('rich-text');
+                    RichTextRenderer.renderInto(bubble, reply);
+                    appendSources(streamingEl, payload.sources || []);
+                    finishRequest();
+                } else if (eventName === 'error') {
+                    terminalEventReceived = true;
+                    showRequestError(payload.message, payload.request_id);
+                }
+            }
+
+            fetch('/api/chat/stream', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: msg, session_id: sessionId}),
+                signal: controller.signal
+            }).then(function(response) {
+                if (!response.ok || !response.body) throw new Error('HTTP ' + response.status);
+                var reader = response.body.getReader();
+                var decoder = new TextDecoder('utf-8');
+                var buffer = '';
+
+                function readNext() {
+                    return reader.read().then(function(chunk) {
+                        buffer += decoder.decode(chunk.value || new Uint8Array(), {stream: !chunk.done});
+                        var boundary;
+                        while ((boundary = buffer.indexOf('\n\n')) >= 0) {
+                            var block = buffer.slice(0, boundary);
+                            buffer = buffer.slice(boundary + 2);
+                            var eventName = 'message';
+                            var dataLines = [];
+                            block.split('\n').forEach(function(line) {
+                                if (line.indexOf('event:') === 0) eventName = line.slice(6).trim();
+                                if (line.indexOf('data:') === 0) dataLines.push(line.slice(5).trim());
+                            });
+                            if (dataLines.length) {
+                                handleStreamEvent(eventName, JSON.parse(dataLines.join('\n')));
+                            }
+                        }
+                        if (!chunk.done) return readNext();
+                        if (isLoading && !terminalEventReceived) {
+                            showRequestError('AI 回答传输中断，请稍后重试。', '');
+                        }
+                    });
+                }
+                return readNext();
+            }).catch(function(error) {
+                if (error.name === 'AbortError') return;
+                showRequestError('网络错误：' + error.message, '');
+            });
+        }
+
+        function appendMessage(role, text, isLoadingMsg) {
+            var container = document.getElementById('messages');
+            var div = document.createElement('div');
+            div.className = 'message ' + role;
+
+            var avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = role === 'user' ? AppIcons.user : AppIcons.robot;
+
+            var bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            if (isLoadingMsg) {
+                bubble.className = 'bubble loading-dots';
+                bubble.innerText = text;
+            } else if (role === 'assistant') {
+                bubble.classList.add('rich-text');
+                RichTextRenderer.renderInto(bubble, text);
+            } else {
+                bubble.innerText = text;
+            }
+
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div;
+        }
+
+        function appendSources(messageEl, sources) {
+            if (!SHOW_RELATED_SOURCES) return;
+            if (!messageEl || !Array.isArray(sources) || sources.length === 0) return;
+            var bubble = messageEl.querySelector('.bubble');
+            if (!bubble) return;
+
+            var details = document.createElement('details');
+            details.className = 'source-list';
+            var summary = document.createElement('summary');
+            summary.textContent = '相关资料来源（' + sources.length + '）';
+            details.appendChild(summary);
+
+            var items = document.createElement('div');
+            items.className = 'source-items';
+            sources.forEach(function(source, index) {
+                var item = document.createElement('div');
+                item.className = 'source-item';
+                var title = document.createElement('div');
+                title.className = 'source-item__title';
+                title.textContent = source.experiment_name
+                    || source.source
+                    || ('来源 ' + (index + 1));
+
+                var metaParts = [];
+                if (source.source && source.source !== source.experiment_name) metaParts.push(source.source);
+                if (source.section) metaParts.push(source.section);
+                if (source.page_start) {
+                    var pageLabel = source.page_end && source.page_end !== source.page_start
+                        ? source.page_start + '-' + source.page_end
+                        : source.page_start;
+                    metaParts.push('第 ' + pageLabel + ' 页');
+                }
+                var meta = document.createElement('div');
+                meta.className = 'source-item__meta';
+                meta.textContent = metaParts.join(' · ');
+                item.appendChild(title);
+                if (metaParts.length) item.appendChild(meta);
+                items.appendChild(item);
+            });
+            details.appendChild(items);
+            bubble.appendChild(details);
+        }
+
+        function resetChat() {
+            var oldSessionId = sessionId;
+            if (activeRequest) {
+                activeRequest.abort();
+                activeRequest = null;
+            }
+            isLoading = false;
+            document.getElementById('sendBtn').disabled = false;
+            sessionId = createSessionId();
+            var container = document.getElementById('messages');
+            container.innerHTML = '<div class="welcome" id="welcome"><p class="welcome-kicker">AI 实验助教</p><h2>你好！我是AI物理实验助教</h2><p>新对话已开始，有什么可以帮你的？</p></div>';
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/chat/reset', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({ session_id: oldSessionId }));
+        }
+
+        function uploadKnowledge(input) {
+            if (!input.files || input.files.length === 0) return;
+            var file = input.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            appendMessage('assistant', '📎 正在上传知识资料「' + file.name + '」…');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/knowledge-upload', true);
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    appendMessage('assistant', '✅ 知识资料「' + file.name + '」已添加到知识库，现在可以直接提问相关问题。');
+                } else {
+                    var reason = '请重试。';
+                    try {
+                        reason = JSON.parse(xhr.responseText).error || reason;
+                    } catch (ignore) {}
+                    appendMessage('assistant', '❌ 上传失败：' + reason);
+                }
+            };
+            xhr.onerror = function() {
+                appendMessage('assistant', '❌ 网络错误，上传失败。');
+            };
+            xhr.send(formData);
+            input.value = '';
+        }
+
+        document.getElementById('userInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "run_id": "test_e2e_bm25_20260905_final",
+  "split": "test",
+  "mode": "blind",
+  "run_scope": "end_to_end",
+  "status": "complete",
+  "completed_count": 15,
+  "completed_ids": [
+    "R057",
+    "R058",
+    "R059",
+    "R060",
+    "R061",
+    "R062",
+    "R063",
+    "R064",
+    "R065",
+    "R066",
+    "R067",
+    "R068",
+    "B007",
+    "R069",
+    "D021"
+  ],
+  "last_completed_id": "D021",
+  "updated_at": "2026-09-05T15:55:46.853413+00:00",
+  "error": null,
+  "success_count": 15,
+  "fail_count": 0,
+  "failed_questions": []
+}
