@@ -1567,12 +1567,12 @@ def error_404(e):
 # 启动
 # ==============================================
 
+# 在模块导入时即注册所有实验插件。
+# 生产环境使用 `gunicorn main:app` 直接 import main，不会执行下面的 __main__ 分支；
+# 若只在 __main__ 里注册，PluginRegistry 始终为空，首页会显示“暂无可用实验模块”。
+register_all_plugins()
+
 if __name__ == '__main__':
-    from plugins import PluginRegistry
-
-    # 注册所有实验插件
-    register_all_plugins()
-
     # 预创建非RAG功能共用的LLM客户端
     _create_llm_client()
 
